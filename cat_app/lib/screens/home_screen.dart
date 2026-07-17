@@ -4,12 +4,18 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   static const _categories = <Map<String, String>>[
-    {'emoji': '🐱', 'title': 'نژادها'},
-    {'emoji': '🍖', 'title': 'تغذیه'},
-    {'emoji': '🏥', 'title': 'سلامت'},
-    {'emoji': '🎓', 'title': 'آموزش'},
-    {'emoji': '🎮', 'title': 'سرگرمی'},
-    {'emoji': '💉', 'title': 'واکسن'},
+    {'emoji': '🐱', 'title': 'نژادها', 'desc': 'آشنایی با انواع نژادهای گربه'},
+    {'emoji': '🍖', 'title': 'تغذیه', 'desc': 'رژیم غذایی و غذاهای مناسب'},
+    {'emoji': '🏥', 'title': 'سلامت', 'desc': 'بیماری\u200Cها، واکسن و مراقبت'},
+    {'emoji': '🎓', 'title': 'آموزش', 'desc': 'رفتار و تربیت گربه'},
+    {'emoji': '🎮', 'title': 'سرگرمی', 'desc': 'بازی و فعالیت\u200Cهای روزانه'},
+    {'emoji': '💉', 'title': 'واکسن', 'desc': 'برنامه واکسیناسیون'},
+  ];
+  static const _popularBreeds = <Map<String, String>>[
+    {'name': 'Persian', 'origin': 'Iran (Persia)', 'emoji': '👑'},
+    {'name': 'British Shorthair', 'origin': 'United Kingdom', 'emoji': '🎩'},
+    {'name': 'Maine Coon', 'origin': 'United States', 'emoji': '🦁'},
+    {'name': 'Scottish Fold', 'origin': 'Scotland', 'emoji': '🦉'},
   ];
 
   @override
@@ -25,7 +31,9 @@ class HomeScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 28),
               _WelcomeSection(theme: theme),
-              const SizedBox(height: 36),
+              const SizedBox(height: 24),
+              _SearchBar(theme: theme),
+              const SizedBox(height: 28),
               Text(
                 'دسته\u200Cبندی\u200Cها',
                 style: theme.textTheme.titleLarge?.copyWith(
@@ -34,6 +42,15 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 18),
               _CategoryGrid(categories: _categories),
+              const SizedBox(height: 36),
+              Text(
+                'نژادهای محبوب',
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 16),
+              _PopularBreedsList(theme: theme, breeds: _popularBreeds),
               const SizedBox(height: 32),
             ],
           ),
@@ -56,7 +73,7 @@ class _WelcomeSection extends StatelessWidget {
         Text(
           'گربه\u200Cها',
           style: TextStyle(
-            fontSize: 44,
+            fontSize: 46,
             fontWeight: FontWeight.w800,
             height: 1.1,
             letterSpacing: -1.2,
@@ -68,10 +85,105 @@ class _WelcomeSection extends StatelessWidget {
           'مرجع جامع شناخت، نگهداری و سلامت گربه\u200Cها',
           style: theme.textTheme.bodyLarge?.copyWith(
             color: theme.colorScheme.onSurface.withValues(alpha: 0.55),
-            height: 1.5,
+            height: 1.6,
+          ),
+        ),
+        const SizedBox(height: 24),
+        Container(
+          width: double.infinity,
+          height: 200,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(28),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                theme.colorScheme.primaryContainer,
+                theme.colorScheme.secondaryContainer,
+              ],
+            ),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 28),
+          child: Row(
+            children: [
+              const Text(
+                '🐱',
+                style: TextStyle(fontSize: 66),
+              ),
+              const SizedBox(width: 22),
+              Expanded(
+                child: Text(
+                  'همه چیز برای داشتن یک گربه سالم و شاد',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: theme.colorScheme.onPrimaryContainer,
+                    height: 1.4,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
+    );
+  }
+}
+
+class _SearchBar extends StatelessWidget {
+  final ThemeData theme;
+
+  const _SearchBar({required this.theme});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 52,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(20),
+        child: InkWell(
+          onTap: () {},
+          borderRadius: BorderRadius.circular(20),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.search_rounded,
+                  size: 22,
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.35),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    'جستجوی نژاد، بیماری، غذا...',
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.35),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Icon(
+                  Icons.mic_none_rounded,
+                  size: 22,
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.35),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -90,12 +202,13 @@ class _CategoryGrid extends StatelessWidget {
         crossAxisCount: 2,
         mainAxisSpacing: 16,
         crossAxisSpacing: 16,
-        childAspectRatio: 0.92,
+        childAspectRatio: 0.56,
       ),
       itemCount: categories.length,
       itemBuilder: (context, index) => _CategoryCard(
         emoji: categories[index]['emoji']!,
         title: categories[index]['title']!,
+        description: categories[index]['desc']!,
       ),
     );
   }
@@ -104,8 +217,13 @@ class _CategoryGrid extends StatelessWidget {
 class _CategoryCard extends StatelessWidget {
   final String emoji;
   final String title;
+  final String description;
 
-  const _CategoryCard({required this.emoji, required this.title});
+  const _CategoryCard({
+    required this.emoji,
+    required this.title,
+    required this.description,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -113,35 +231,191 @@ class _CategoryCard extends StatelessWidget {
 
     return Card(
       elevation: 0,
-      shadowColor: Colors.black.withValues(alpha: 0.04),
+      shadowColor: Colors.black.withValues(alpha: 0.08),
       surfaceTintColor: Colors.transparent,
-      color: Colors.white,
+      color: Colors.transparent,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(20),
       ),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: () {},
-        borderRadius: BorderRadius.circular(24),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 28, horizontal: 16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Colors.white, Color(0xFFF6F5F1)],
+            ),
+          ),
+          padding: const EdgeInsets.fromLTRB(18, 16, 12, 16),
+          child: Row(
             children: [
               Text(
                 emoji,
-                style: const TextStyle(fontSize: 44),
+                style: const TextStyle(fontSize: 38),
               ),
-              const SizedBox(height: 16),
-              Text(
-                title,
-                style: theme.textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w600,
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      title,
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      description,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                        height: 1.3,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
-                textAlign: TextAlign.center,
+              ),
+              const SizedBox(width: 4),
+              Icon(
+                Icons.chevron_left_rounded,
+                size: 20,
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.25),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PopularBreedsList extends StatelessWidget {
+  final ThemeData theme;
+  final List<Map<String, String>> breeds;
+
+  const _PopularBreedsList({required this.theme, required this.breeds});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 248,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.zero,
+        itemCount: breeds.length,
+        separatorBuilder: (_, _) => const SizedBox(width: 14),
+        itemBuilder: (context, index) {
+          final breed = breeds[index];
+          return _BreedCard(
+            emoji: breed['emoji']!,
+            name: breed['name']!,
+            origin: breed['origin']!,
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _BreedCard extends StatelessWidget {
+  final String emoji;
+  final String name;
+  final String origin;
+
+  const _BreedCard({
+    required this.emoji,
+    required this.name,
+    required this.origin,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Card(
+      elevation: 0,
+      shadowColor: Colors.black.withValues(alpha: 0.07),
+      surfaceTintColor: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: SizedBox(
+        width: 170,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              height: 130,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    theme.colorScheme.primaryContainer,
+                    theme.colorScheme.secondaryContainer,
+                  ],
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  emoji,
+                  style: const TextStyle(fontSize: 48),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    origin,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.secondaryContainer,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      'دوستانه',
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: theme.colorScheme.onSecondaryContainer,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
