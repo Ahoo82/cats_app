@@ -2,22 +2,26 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../utils/app_images.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  static const _categories = <Map<String, String>>[
-    {'emoji': '🐱', 'title': 'نژادها', 'desc': 'آشنایی با انواع نژادهای گربه'},
-    {'emoji': '🍖', 'title': 'تغذیه', 'desc': 'رژیم غذایی و غذاهای مناسب'},
-    {'emoji': '🏥', 'title': 'سلامت', 'desc': 'بیماری\u200Cها، واکسن و مراقبت'},
-    {'emoji': '🎓', 'title': 'آموزش', 'desc': 'رفتار و تربیت گربه'},
-    {'emoji': '🎮', 'title': 'سرگرمی', 'desc': 'بازی و فعالیت\u200Cهای روزانه'},
-    {'emoji': '💉', 'title': 'واکسن و پزشکی', 'desc': 'واکسیناسیون و مراقبت\u200Cهای پزشکی'},
+  static const _categories = <Map<String, Object>>[
+    {'icon': Icons.pets_rounded, 'title': 'نژادها', 'desc': 'آشنایی با انواع نژادهای گربه'},
+    {'icon': Icons.restaurant_rounded, 'title': 'تغذیه', 'desc': 'رژیم غذایی و غذاهای مناسب'},
+    {'icon': Icons.medical_services_rounded, 'title': 'سلامت', 'desc': 'بیماری\u200Cها، واکسن و مراقبت'},
+    {'icon': Icons.school_rounded, 'title': 'آموزش', 'desc': 'رفتار و تربیت گربه'},
+    {'icon': Icons.sports_esports_rounded, 'title': 'سرگرمی', 'desc': 'بازی و فعالیت\u200Cهای روزانه'},
+    {'icon': Icons.vaccines_rounded, 'title': 'واکسن و پزشکی', 'desc': 'واکسیناسیون و مراقبت\u200Cهای پزشکی'},
   ];
-  static const _popularBreeds = <Map<String, String>>[
-    {'name': 'Persian', 'origin': 'Iran (Persia)', 'emoji': '👑'},
-    {'name': 'British Shorthair', 'origin': 'United Kingdom', 'emoji': '🎩'},
-    {'name': 'Maine Coon', 'origin': 'United States', 'emoji': '🦁'},
-    {'name': 'Scottish Fold', 'origin': 'Scotland', 'emoji': '🦉'},
+  static const _popularBreeds = <Map<String, Object>>[
+    {'name': 'Persian', 'origin': 'Iran (Persia)', 'image': AppImages.persian},
+    {'name': 'British Shorthair', 'origin': 'United Kingdom', 'image': AppImages.britishShorthair},
+    {'name': 'Maine Coon', 'origin': 'United States', 'image': AppImages.maineCoon},
+    {'name': 'Scottish Fold', 'origin': 'Scotland', 'image': AppImages.scottishFold},
+    {'name': 'Siamese', 'origin': 'Thailand', 'image': AppImages.siamese},
+    {'name': 'Ragdoll', 'origin': 'United States', 'image': AppImages.ragdoll},
   ];
 
   @override
@@ -29,6 +33,7 @@ class HomeScreen extends StatelessWidget {
         child: Stack(
           children: [
             SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.symmetric(horizontal: 22),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                   _WelcomeSection(theme: theme),
                   const SizedBox(height: 24),
                   _SearchBar(theme: theme),
-                  const SizedBox(height: 28),
+                  const SizedBox(height: 32),
                   Text(
                     'دسته\u200Cبندی\u200Cها',
                     style: theme.textTheme.titleLarge?.copyWith(
@@ -47,6 +52,8 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(height: 18),
                   _CategoryGrid(categories: _categories),
                   const SizedBox(height: 36),
+                  _TipOfTheDay(theme: theme),
+                  const SizedBox(height: 36),
                   Text(
                     'نژادهای محبوب',
                     style: theme.textTheme.titleLarge?.copyWith(
@@ -55,6 +62,17 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   _PopularBreedsList(theme: theme, breeds: _popularBreeds),
+                  const SizedBox(height: 36),
+                  Text(
+                    'مطالب جدید',
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  _LatestArticles(theme: theme),
+                  const SizedBox(height: 36),
+                  _DidYouKnow(theme: theme),
                   const SizedBox(height: 110),
                 ],
               ),
@@ -116,12 +134,21 @@ class _WelcomeSection extends StatelessWidget {
             ),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 28),
-          child: Row(
-            children: [
-              const Text(
-                '🐱',
-                style: TextStyle(fontSize: 66),
-              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 64,
+                    height: 64,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.35),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Icon(
+                      Icons.pets_rounded,
+                      size: 36,
+                      color: theme.colorScheme.onPrimaryContainer,
+                    ),
+                  ),
               const SizedBox(width: 22),
               Expanded(
                 child: Text(
@@ -201,7 +228,7 @@ class _SearchBar extends StatelessWidget {
 }
 
 class _CategoryGrid extends StatelessWidget {
-  final List<Map<String, String>> categories;
+  final List<Map<String, Object>> categories;
 
   const _CategoryGrid({required this.categories});
 
@@ -218,21 +245,21 @@ class _CategoryGrid extends StatelessWidget {
       ),
       itemCount: categories.length,
       itemBuilder: (context, index) => _CategoryCard(
-        emoji: categories[index]['emoji']!,
-        title: categories[index]['title']!,
-        description: categories[index]['desc']!,
+        icon: categories[index]['icon'] as IconData,
+        title: categories[index]['title'] as String,
+        description: categories[index]['desc'] as String,
       ),
     );
   }
 }
 
 class _CategoryCard extends StatelessWidget {
-  final String emoji;
+  final IconData icon;
   final String title;
   final String description;
 
   const _CategoryCard({
-    required this.emoji,
+    required this.icon,
     required this.title,
     required this.description,
   });
@@ -275,9 +302,10 @@ class _CategoryCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Center(
-                  child: Text(
-                    emoji,
-                    style: const TextStyle(fontSize: 26),
+                  child: Icon(
+                    icon,
+                    size: 26,
+                    color: theme.colorScheme.onPrimaryContainer,
                   ),
                 ),
               ),
@@ -323,7 +351,7 @@ class _CategoryCard extends StatelessWidget {
 
 class _PopularBreedsList extends StatelessWidget {
   final ThemeData theme;
-  final List<Map<String, String>> breeds;
+  final List<Map<String, Object>> breeds;
 
   const _PopularBreedsList({required this.theme, required this.breeds});
 
@@ -339,9 +367,9 @@ class _PopularBreedsList extends StatelessWidget {
         itemBuilder: (context, index) {
           final breed = breeds[index];
           return _BreedCard(
-            emoji: breed['emoji']!,
-            name: breed['name']!,
-            origin: breed['origin']!,
+            name: breed['name'] as String,
+            origin: breed['origin'] as String,
+            image: breed['image'] as String,
           );
         },
       ),
@@ -350,14 +378,14 @@ class _PopularBreedsList extends StatelessWidget {
 }
 
 class _BreedCard extends StatelessWidget {
-  final String emoji;
   final String name;
   final String origin;
+  final String image;
 
   const _BreedCard({
-    required this.emoji,
     required this.name,
     required this.origin,
+    required this.image,
   });
 
   @override
@@ -383,22 +411,27 @@ class _BreedCard extends StatelessWidget {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          theme.colorScheme.primaryContainer,
-                          theme.colorScheme.secondaryContainer,
-                        ],
+                  Image.asset(
+                    image,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, _, _) => Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            theme.colorScheme.primaryContainer,
+                            theme.colorScheme.secondaryContainer,
+                          ],
+                        ),
                       ),
-                    ),
-                  ),
-                  Center(
-                    child: Text(
-                      emoji,
-                      style: const TextStyle(fontSize: 56),
+                      child: Center(
+                        child: Icon(
+                          Icons.pets_rounded,
+                          size: 56,
+                          color: theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.5),
+                        ),
+                      ),
                     ),
                   ),
                   Positioned(
@@ -481,6 +514,324 @@ class _BreedCard extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TipOfTheDay extends StatelessWidget {
+  final ThemeData theme;
+
+  const _TipOfTheDay({required this.theme});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0,
+      shadowColor: Colors.black.withValues(alpha: 0.05),
+      surfaceTintColor: Colors.transparent,
+      color: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: theme.colorScheme.primary.withValues(alpha: 0.12),
+            width: 1,
+          ),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              theme.colorScheme.primaryContainer.withValues(alpha: 0.25),
+              Colors.white,
+            ],
+          ),
+        ),
+        padding: const EdgeInsets.all(18),
+        child: Row(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.primary,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: const Icon(
+                Icons.lightbulb_outline_rounded,
+                color: Colors.white,
+                size: 26,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'نکته امروز',
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: theme.colorScheme.primary,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    'برای حفظ سلامت گربه، حداقل سالی یک\u200Cبار او را برای چکاپ کامل نزد دامپزشک ببرید.',
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.65),
+                      height: 1.5,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LatestArticles extends StatelessWidget {
+  final ThemeData theme;
+
+  const _LatestArticles({required this.theme});
+
+  static const _articles = [
+    {
+      'title': 'بهترین نژادهای گربه برای آپارتمان',
+      'summary': 'اگر در آپارتمان زندگی می\u200Cکنید، این نژادها最适合 سبک زندگی شما هستند.',
+      'time': '۵ دقیقه',
+      'icon': Icons.apartment_rounded,
+    },
+    {
+      'title': 'راهنمای کامل تغذیه گربه',
+      'summary': 'هر آنچه باید درباره غذای خشک، کنسروی و تغذیه خانگی بدانید.',
+      'time': '۸ دقیقه',
+      'icon': Icons.restaurant_menu_rounded,
+    },
+    {
+      'title': 'علائم بیماری در گربه\u200Cها',
+      'summary': 'با شناخت این علائم هشداردهنده، سلامت گربه خود را تضمین کنید.',
+      'time': '۶ دقیقه',
+      'icon': Icons.medical_services_rounded,
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = this.theme;
+
+    return Column(
+      children: _articles.map((article) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 14),
+          child: _ArticleCard(
+            icon: article['icon'] as IconData,
+            title: article['title'] as String,
+            summary: article['summary'] as String,
+            time: article['time'] as String,
+            theme: theme,
+          ),
+        );
+      }).toList(),
+    );
+  }
+}
+
+class _ArticleCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String summary;
+  final String time;
+  final ThemeData theme;
+
+  const _ArticleCard({
+    required this.icon,
+    required this.title,
+    required this.summary,
+    required this.time,
+    required this.theme,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0,
+      shadowColor: Colors.black.withValues(alpha: 0.06),
+      surfaceTintColor: Colors.transparent,
+      color: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.white, Color(0xFFF6F5F1)],
+          ),
+        ),
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.primaryContainer.withValues(alpha: 0.45),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Center(
+                child: Icon(
+                  icon,
+                  size: 28,
+                  color: theme.colorScheme.onPrimaryContainer,
+                ),
+              ),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    summary,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                      height: 1.4,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 3,
+                    ),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.surfaceContainerHighest,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.access_time_rounded,
+                          size: 12,
+                          color: theme.colorScheme.onSurface.withValues(alpha: 0.45),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          time,
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: theme.colorScheme.onSurface.withValues(alpha: 0.45),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 4),
+            Icon(
+              Icons.chevron_left_rounded,
+              size: 20,
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DidYouKnow extends StatelessWidget {
+  final ThemeData theme;
+
+  const _DidYouKnow({required this.theme});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0,
+      shadowColor: Colors.black.withValues(alpha: 0.05),
+      surfaceTintColor: Colors.transparent,
+      color: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              theme.colorScheme.secondaryContainer.withValues(alpha: 0.5),
+              Colors.white,
+            ],
+          ),
+        ),
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.secondary,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(
+                    Icons.emoji_objects_rounded,
+                    color: Colors.white,
+                    size: 22,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  'آیا می\u200Cدانستید؟',
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: theme.colorScheme.secondary,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 14),
+            Text(
+              'گربه\u200Cها می\u200Cتوانند بیش از ۱۰۰ صدای مختلف تولید کنند، در حالی که سگ\u200Cها تنها قادر به تولید حدود ۱۰ صدای مختلف هستند. گربه\u200Cها میو میو کردن را منحصراً برای ارتباط با انسان\u200Cها استفاده می\u200Cکنند.',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.65),
+                height: 1.6,
               ),
             ),
           ],
