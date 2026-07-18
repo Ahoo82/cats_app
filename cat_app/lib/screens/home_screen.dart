@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -9,7 +11,7 @@ class HomeScreen extends StatelessWidget {
     {'emoji': '🏥', 'title': 'سلامت', 'desc': 'بیماری\u200Cها، واکسن و مراقبت'},
     {'emoji': '🎓', 'title': 'آموزش', 'desc': 'رفتار و تربیت گربه'},
     {'emoji': '🎮', 'title': 'سرگرمی', 'desc': 'بازی و فعالیت\u200Cهای روزانه'},
-    {'emoji': '💉', 'title': 'واکسن', 'desc': 'برنامه واکسیناسیون'},
+    {'emoji': '💉', 'title': 'واکسن و پزشکی', 'desc': 'واکسیناسیون و مراقبت\u200Cهای پزشکی'},
   ];
   static const _popularBreeds = <Map<String, String>>[
     {'name': 'Persian', 'origin': 'Iran (Persia)', 'emoji': '👑'},
@@ -24,36 +26,46 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 22),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 28),
-              _WelcomeSection(theme: theme),
-              const SizedBox(height: 24),
-              _SearchBar(theme: theme),
-              const SizedBox(height: 28),
-              Text(
-                'دسته\u200Cبندی\u200Cها',
-                style: theme.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 22),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 28),
+                  _WelcomeSection(theme: theme),
+                  const SizedBox(height: 24),
+                  _SearchBar(theme: theme),
+                  const SizedBox(height: 28),
+                  Text(
+                    'دسته\u200Cبندی\u200Cها',
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                  _CategoryGrid(categories: _categories),
+                  const SizedBox(height: 36),
+                  Text(
+                    'نژادهای محبوب',
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  _PopularBreedsList(theme: theme, breeds: _popularBreeds),
+                  const SizedBox(height: 110),
+                ],
               ),
-              const SizedBox(height: 18),
-              _CategoryGrid(categories: _categories),
-              const SizedBox(height: 36),
-              Text(
-                'نژادهای محبوب',
-                style: theme.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 16),
-              _PopularBreedsList(theme: theme, breeds: _popularBreeds),
-              const SizedBox(height: 32),
-            ],
-          ),
+            ),
+            Positioned(
+              left: 22,
+              right: 22,
+              bottom: 12,
+              child: _FloatingNavBar(theme: theme),
+            ),
+          ],
         ),
       ),
     );
@@ -240,6 +252,9 @@ class _CategoryCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: () {},
+        hoverColor: theme.colorScheme.primary.withValues(alpha: 0.05),
+        splashColor: theme.colorScheme.primary.withValues(alpha: 0.1),
+        highlightColor: theme.colorScheme.primary.withValues(alpha: 0.06),
         borderRadius: BorderRadius.circular(20),
         child: Container(
           decoration: const BoxDecoration(
@@ -249,12 +264,22 @@ class _CategoryCard extends StatelessWidget {
               colors: [Colors.white, Color(0xFFF6F5F1)],
             ),
           ),
-          padding: const EdgeInsets.fromLTRB(18, 16, 12, 16),
+          padding: const EdgeInsets.fromLTRB(16, 16, 12, 16),
           child: Row(
             children: [
-              Text(
-                emoji,
-                style: const TextStyle(fontSize: 38),
+              Container(
+                width: 52,
+                height: 52,
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primaryContainer.withValues(alpha: 0.55),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Center(
+                  child: Text(
+                    emoji,
+                    style: const TextStyle(fontSize: 26),
+                  ),
+                ),
               ),
               const SizedBox(width: 16),
               Expanded(
@@ -276,7 +301,7 @@ class _CategoryCard extends StatelessWidget {
                         color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
                         height: 1.3,
                       ),
-                      maxLines: 2,
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],
@@ -305,7 +330,7 @@ class _PopularBreedsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 248,
+      height: 268,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.zero,
@@ -348,28 +373,59 @@ class _BreedCard extends StatelessWidget {
       ),
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
-        width: 170,
+        width: 175,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              height: 130,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    theme.colorScheme.primaryContainer,
-                    theme.colorScheme.secondaryContainer,
-                  ],
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  emoji,
-                  style: const TextStyle(fontSize: 48),
-                ),
+            SizedBox(
+              height: 140,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          theme.colorScheme.primaryContainer,
+                          theme.colorScheme.secondaryContainer,
+                        ],
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      emoji,
+                      style: const TextStyle(fontSize: 56),
+                    ),
+                  ),
+                  Positioned(
+                    top: 10,
+                    right: 10,
+                    child: Container(
+                      width: 32,
+                      height: 32,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.85),
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.06),
+                            blurRadius: 6,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        Icons.favorite_border_rounded,
+                        size: 18,
+                        color: theme.colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             Padding(
@@ -385,16 +441,28 @@ class _BreedCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 2),
-                  Text(
-                    origin,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  const SizedBox(height: 3),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.location_on_outlined,
+                        size: 14,
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+                      ),
+                      const SizedBox(width: 3),
+                      Expanded(
+                        child: Text(
+                          origin,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 10),
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
@@ -413,6 +481,121 @@ class _BreedCard extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FloatingNavBar extends StatefulWidget {
+  final ThemeData theme;
+
+  const _FloatingNavBar({required this.theme});
+
+  @override
+  State<_FloatingNavBar> createState() => _FloatingNavBarState();
+}
+
+class _FloatingNavBarState extends State<_FloatingNavBar> {
+  int _selectedIndex = 0;
+
+  static const _items = <Map<String, Object>>[
+    {'icon': Icons.home_rounded, 'label': 'خانه'},
+    {'icon': Icons.pets_rounded, 'label': 'نژادها'},
+    {'icon': Icons.search_rounded, 'label': 'جستجو'},
+    {'icon': Icons.lightbulb_rounded, 'label': 'دانستنی\u200Cها'},
+    {'icon': Icons.person_rounded, 'label': 'پروفایل'},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = widget.theme;
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(24),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+        child: Container(
+          height: 68,
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.72),
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.08),
+                blurRadius: 20,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: List.generate(_items.length, (index) {
+              final isSelected = _selectedIndex == index;
+              return _NavItem(
+                icon: _items[index]['icon'] as IconData,
+                label: _items[index]['label'] as String,
+                isSelected: isSelected,
+                theme: theme,
+                onTap: () => setState(() => _selectedIndex = index),
+              );
+            }),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _NavItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final bool isSelected;
+  final ThemeData theme;
+  final VoidCallback onTap;
+
+  const _NavItem({
+    required this.icon,
+    required this.label,
+    required this.isSelected,
+    required this.theme,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final color = isSelected
+        ? theme.colorScheme.primary
+        : theme.colorScheme.onSurface.withValues(alpha: 0.4);
+
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 220),
+        curve: Curves.easeOut,
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? theme.colorScheme.primaryContainer.withValues(alpha: 0.5)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 22, color: color),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                color: color,
               ),
             ),
           ],
