@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../utils/app_images.dart';
+import 'breeds_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -54,10 +55,41 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(height: 36),
                   _TipOfTheDay(theme: theme),
                   const SizedBox(height: 36),
-                  Text(
-                    'نژادهای محبوب',
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w700,
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (_, _, _) => const BreedsScreen(),
+                          transitionsBuilder: (_, animation, _, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 300),
+                        ),
+                      );
+                    },
+                    borderRadius: BorderRadius.circular(12),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Row(
+                        children: [
+                          Text(
+                            'نژادهای محبوب',
+                            style: theme.textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            size: 16,
+                            color: theme.colorScheme.primary,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -248,6 +280,21 @@ class _CategoryGrid extends StatelessWidget {
         icon: categories[index]['icon'] as IconData,
         title: categories[index]['title'] as String,
         description: categories[index]['desc'] as String,
+        onTap: index == 0
+            ? () => Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (_, _, _) => const BreedsScreen(),
+                    transitionsBuilder: (_, animation, _, child) {
+                      return FadeTransition(
+                        opacity: animation,
+                        child: child,
+                      );
+                    },
+                    transitionDuration: const Duration(milliseconds: 300),
+                  ),
+                )
+            : null,
       ),
     );
   }
@@ -257,11 +304,13 @@ class _CategoryCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final String description;
+  final VoidCallback? onTap;
 
   const _CategoryCard({
     required this.icon,
     required this.title,
     required this.description,
+    this.onTap,
   });
 
   @override
@@ -278,7 +327,7 @@ class _CategoryCard extends StatelessWidget {
       ),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () {},
+        onTap: onTap,
         hoverColor: theme.colorScheme.primary.withValues(alpha: 0.05),
         splashColor: theme.colorScheme.primary.withValues(alpha: 0.1),
         highlightColor: theme.colorScheme.primary.withValues(alpha: 0.06),
