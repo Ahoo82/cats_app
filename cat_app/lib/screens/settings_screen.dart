@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../services/settings_service.dart';
+import 'about_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -223,6 +224,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
         child: ListTile(
+          onTap: () {
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (_, _, _) => const AboutScreen(),
+                transitionsBuilder: (_, animation, _, child) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
+                transitionDuration: const Duration(milliseconds: 250),
+              ),
+            );
+          },
           title: Text('درباره گربه\u200Cها', style: theme.textTheme.bodyLarge),
           subtitle: Text(
             'مرجع جامع شناخت و نگهداری گربه',
@@ -242,6 +255,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               size: 20,
               color: theme.colorScheme.primary,
             ),
+          ),
+          trailing: Icon(
+            Icons.chevron_left_rounded,
+            size: 20,
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.3),
           ),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         ),
