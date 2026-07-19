@@ -168,16 +168,56 @@ class _WelcomeSection extends StatelessWidget {
                 theme.colorScheme.secondaryContainer,
               ],
             ),
+            boxShadow: [
+              BoxShadow(
+                color: theme.colorScheme.primary.withValues(alpha: 0.08),
+                blurRadius: 20,
+                offset: const Offset(0, 6),
+              ),
+            ],
           ),
           padding: const EdgeInsets.symmetric(horizontal: 28),
-              child: Row(
+          child: Stack(
+            children: [
+              Positioned(
+                top: -30,
+                right: -20,
+                child: Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primary.withValues(alpha: 0.06),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: -20,
+                left: 40,
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.secondary.withValues(alpha: 0.08),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+              Row(
                 children: [
                   Container(
                     width: 64,
                     height: 64,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.35),
+                      color: Colors.white.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
                     child: Icon(
                       Icons.pets_rounded,
@@ -197,7 +237,9 @@ class _WelcomeSection extends StatelessWidget {
                 ),
               ),
             ],
-          ),
+            ),
+          ],
+        ),
         ),
       ],
     );
@@ -271,22 +313,28 @@ class _CategoryGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 16,
-        crossAxisSpacing: 16,
-        childAspectRatio: 0.56,
-      ),
-      itemCount: categories.length,
-      itemBuilder: (context, index) => _CategoryCard(
-        icon: categories[index]['icon'] as IconData,
-        title: categories[index]['title'] as String,
-        description: categories[index]['desc'] as String,
-        onTap: index == 0
-            ? () => Navigator.push(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final crossAxisCount = constraints.maxWidth >= 500
+            ? 3
+            : 2;
+
+        return GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: crossAxisCount,
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 16,
+            childAspectRatio: 0.56,
+          ),
+          itemCount: categories.length,
+          itemBuilder: (context, index) => _CategoryCard(
+            icon: categories[index]['icon'] as IconData,
+            title: categories[index]['title'] as String,
+            description: categories[index]['desc'] as String,
+            onTap: index == 0
+                ? () => Navigator.push(
                   context,
                   PageRouteBuilder(
                     pageBuilder: (_, _, _) => const BreedsScreen(),
@@ -299,9 +347,11 @@ class _CategoryGrid extends StatelessWidget {
                     transitionDuration: const Duration(milliseconds: 250),
                   ),
                 )
-            : null,
+                : null,
       ),
     );
+  },
+);
   }
 }
 
