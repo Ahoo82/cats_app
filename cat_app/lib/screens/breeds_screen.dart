@@ -386,7 +386,7 @@ class _BreedGridCardState extends State<_BreedGridCard> {
                         child: Icon(
                           _isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
                           size: 16,
-                          color: _isFavorite ? Colors.red : theme.colorScheme.primary,
+                          color: _isFavorite ? theme.colorScheme.error : theme.colorScheme.primary,
                         ),
                       ),
                     ),

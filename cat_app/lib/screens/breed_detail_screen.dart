@@ -280,7 +280,7 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
           child: IconButton(
             icon: Icon(
               _isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-              color: _isFavorite ? Colors.red : theme.colorScheme.onSurface,
+              color: _isFavorite ? theme.colorScheme.error : theme.colorScheme.onSurface,
               size: 20,
             ),
             onPressed: () => _service.toggle(widget.breed.name),
@@ -566,7 +566,7 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
             end: Alignment.bottomCenter,
             colors: [
               accent.withValues(alpha: 0.06),
-              Colors.white,
+              theme.colorScheme.surface,
             ],
           ),
         ),
@@ -728,7 +728,7 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
             end: Alignment.bottomRight,
             colors: [
               theme.colorScheme.secondaryContainer.withValues(alpha: 0.5),
-              Colors.white,
+              theme.colorScheme.surface,
             ],
           ),
         ),

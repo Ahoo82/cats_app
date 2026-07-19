@@ -544,7 +544,7 @@ class _BreedCardState extends State<_BreedCard> {
                         child: Icon(
                           _isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
                           size: 18,
-                          color: _isFavorite ? Colors.red : theme.colorScheme.primary,
+                          color: _isFavorite ? theme.colorScheme.error : theme.colorScheme.primary,
                         ),
                       ),
                     ),
@@ -642,7 +642,7 @@ class _TipOfTheDay extends StatelessWidget {
             end: Alignment.bottomRight,
             colors: [
               theme.colorScheme.primaryContainer.withValues(alpha: 0.35),
-              Colors.white,
+              theme.colorScheme.surface,
             ],
           ),
         ),
@@ -884,7 +884,7 @@ class _DidYouKnow extends StatelessWidget {
             end: Alignment.bottomRight,
             colors: [
               theme.colorScheme.secondaryContainer.withValues(alpha: 0.5),
-              Colors.white,
+              theme.colorScheme.surface,
             ],
           ),
         ),
