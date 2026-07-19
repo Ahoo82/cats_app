@@ -190,7 +190,7 @@ class _BreedsScreenState extends State<BreedsScreen> {
       child: Container(
         height: 48,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
@@ -328,11 +328,11 @@ class _BreedGridCardState extends State<_BreedGridCard> {
         highlightColor: theme.colorScheme.primary.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(20),
         child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Colors.white, Color(0xFFF6F5F1)],
+            colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest],
           ),
         ),
         child: Column(

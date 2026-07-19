@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../utils/app_images.dart';
 import 'breeds_screen.dart';
 import 'favorites_screen.dart';
+import 'settings_screen.dart';
 import '../services/favorites_service.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -213,7 +214,7 @@ class _SearchBar extends StatelessWidget {
     return Container(
       height: 52,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -337,11 +338,11 @@ class _CategoryCard extends StatelessWidget {
         highlightColor: theme.colorScheme.primary.withValues(alpha: 0.06),
         borderRadius: BorderRadius.circular(20),
         child: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [Colors.white, Color(0xFFF6F5F1)],
+              colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest],
             ),
           ),
           padding: const EdgeInsets.fromLTRB(16, 16, 12, 16),
@@ -392,7 +393,7 @@ class _CategoryCard extends StatelessWidget {
               Icon(
                 Icons.chevron_left_rounded,
                 size: 20,
-                color: theme.colorScheme.onSurface.withValues(alpha: 0.25),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.35),
               ),
             ],
           ),
@@ -640,7 +641,7 @@ class _TipOfTheDay extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              theme.colorScheme.primaryContainer.withValues(alpha: 0.25),
+              theme.colorScheme.primaryContainer.withValues(alpha: 0.35),
               Colors.white,
             ],
           ),
@@ -765,11 +766,11 @@ class _ArticleCard extends StatelessWidget {
       ),
       clipBehavior: Clip.antiAlias,
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Colors.white, Color(0xFFF6F5F1)],
+            colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest],
           ),
         ),
         padding: const EdgeInsets.all(16),
@@ -850,7 +851,7 @@ class _ArticleCard extends StatelessWidget {
             Icon(
               Icons.chevron_left_rounded,
               size: 20,
-              color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.3),
             ),
           ],
         ),
@@ -990,6 +991,20 @@ class _FloatingNavBarState extends State<_FloatingNavBar> {
                       context,
                       PageRouteBuilder(
                         pageBuilder: (_, _, _) => const FavoritesScreen(),
+                        transitionsBuilder: (_, animation, _, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
+                        transitionDuration: const Duration(milliseconds: 250),
+                      ),
+                    );
+                  } else if (index == 5) {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (_, _, _) => const SettingsScreen(),
                         transitionsBuilder: (_, animation, _, child) {
                           return FadeTransition(
                             opacity: animation,

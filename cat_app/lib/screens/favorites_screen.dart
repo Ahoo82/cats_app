@@ -196,11 +196,11 @@ class _FavoriteBreedCard extends StatelessWidget {
         highlightColor: theme.colorScheme.primary.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(20),
         child: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [Colors.white, Color(0xFFF6F5F1)],
+              colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest],
             ),
           ),
           child: Column(

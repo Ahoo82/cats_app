@@ -615,11 +615,11 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
       ),
       clipBehavior: Clip.antiAlias,
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Colors.white, Color(0xFFF6F5F1)],
+            colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest],
           ),
         ),
         padding: const EdgeInsets.all(18),
@@ -663,11 +663,11 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
       ),
       clipBehavior: Clip.antiAlias,
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Colors.white, Color(0xFFF6F5F1)],
+            colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest],
           ),
         ),
         padding: const EdgeInsets.all(18),
