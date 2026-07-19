@@ -290,11 +290,23 @@ class _BreedGridCard extends StatelessWidget {
             SizedBox(
               height: 110,
               child: imagePath != null
-                  ? Image.asset(
-                      imagePath!,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      errorBuilder: (_, _, _) => _buildPlaceholder(theme),
+                  ? Hero(
+                      tag: 'breed-image-${breed.name}',
+                      child: Image.asset(
+                        imagePath!,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                          if (wasSynchronouslyLoaded) return child;
+                          return AnimatedOpacity(
+                            opacity: frame == null ? 0 : 1,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeOut,
+                            child: child,
+                          );
+                        },
+                        errorBuilder: (_, _, _) => _buildPlaceholder(theme),
+                      ),
                     )
                   : _buildPlaceholder(theme),
             ),

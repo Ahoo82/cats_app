@@ -145,48 +145,48 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
           _buildHeader(theme, breed, persianName, imagePath),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(22, 20, 22, 32),
+              padding: const EdgeInsets.fromLTRB(22, 24, 22, 40),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildStatsRow(theme, breed),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 28),
                   _buildSectionTitle(theme, 'شخصیت'),
-                  const SizedBox(height: 10),
-                  _buildDescriptionCard(theme, breed.temperament, Icons.psychology_rounded),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 12),
+                  _buildPersonalityChips(theme, breed),
+                  const SizedBox(height: 28),
                   _buildSectionTitle(theme, 'مشخصات'),
-                  const SizedBox(height: 10),
-                  _buildSpecsGrid(theme, breed, extra),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 14),
+                  _buildIndicators(theme, extra),
+                  const SizedBox(height: 28),
                   _buildSectionTitle(theme, 'سلامت و تغذیه'),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 14),
                   _buildInfoCard(
                     theme,
                     Icons.healing_rounded,
                     'مشکلات سلامتی',
                     extra['healthIssues'] ?? 'اطلاعات موجود نیست',
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 12),
                   _buildInfoCard(
                     theme,
                     Icons.restaurant_rounded,
                     'تغذیه',
                     extra['nutrition'] ?? 'اطلاعات موجود نیست',
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 12),
                   _buildInfoCard(
                     theme,
                     Icons.brush_rounded,
                     'نگهداری',
                     extra['care'] ?? 'اطلاعات موجود نیست',
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 28),
                   if (extra['funFacts'] != null) ...[
                     _buildSectionTitle(theme, 'دانستنی\u200Cها'),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 12),
                     _buildFunFactCard(theme, extra['funFacts']!),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 28),
                   ],
                   _buildDescriptionCard(theme, breed.description, Icons.info_outline_rounded),
                 ],
@@ -273,10 +273,22 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
           fit: StackFit.expand,
           children: [
             if (imagePath != null)
-              Image.asset(
-                imagePath,
-                fit: BoxFit.cover,
-                errorBuilder: (_, _, _) => _buildHeaderPlaceholder(theme),
+              Hero(
+                tag: 'breed-image-${breed.name}',
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.cover,
+                  frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                    if (wasSynchronouslyLoaded) return child;
+                    return AnimatedOpacity(
+                      opacity: frame == null ? 0 : 1,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeOut,
+                      child: child,
+                    );
+                  },
+                  errorBuilder: (_, _, _) => _buildHeaderPlaceholder(theme),
+                ),
               )
             else
               _buildHeaderPlaceholder(theme),
@@ -392,10 +404,183 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
   }
 
   Widget _buildSectionTitle(ThemeData theme, String title) {
-    return Text(
-      title,
-      style: theme.textTheme.titleMedium?.copyWith(
-        fontWeight: FontWeight.w700,
+    return Row(
+      children: [
+        Container(
+          width: 4,
+          height: 22,
+          decoration: BoxDecoration(
+            color: theme.colorScheme.primary,
+            borderRadius: BorderRadius.circular(2),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          title,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w700,
+            fontSize: 19,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPersonalityChips(ThemeData theme, CatBreed breed) {
+    final traits = breed.temperament.split(', ');
+
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: traits.map((trait) {
+        return Chip(
+          label: Text(
+            trait,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: theme.colorScheme.onPrimaryContainer,
+            ),
+          ),
+          backgroundColor: theme.colorScheme.primaryContainer.withValues(alpha: 0.5),
+          side: BorderSide.none,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          visualDensity: VisualDensity.compact,
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _buildIndicators(ThemeData theme, Map<String, String> extra) {
+    return Row(
+      children: [
+        Expanded(
+          child: _buildIndicatorCard(
+            theme,
+            Icons.directions_run_rounded,
+            'سطح انرژی',
+            _energyLevel(extra['activityLevel']),
+            theme.colorScheme.tertiary,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _buildIndicatorCard(
+            theme,
+            Icons.child_care_rounded,
+            'مناسب خانواده',
+            _familyLevel(extra['suitableForChildren']),
+            theme.colorScheme.secondary,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _buildIndicatorCard(
+            theme,
+            Icons.brush_rounded,
+            'نگهداری',
+            _careLevel(extra['activityLevel']),
+            theme.colorScheme.primary,
+          ),
+        ),
+      ],
+    );
+  }
+
+  String _energyLevel(String? activity) {
+    switch (activity) {
+      case 'زیاد':
+        return 'بالا';
+      case 'متوسط':
+        return 'متوسط';
+      case 'کم':
+        return 'پایین';
+      default:
+        return '--';
+    }
+  }
+
+  String _familyLevel(String? suitable) {
+    if (suitable == null) return '--';
+    if (suitable.contains('عالی') || suitable.contains('فوق')) return 'عالی';
+    if (suitable.contains('بله')) return 'خوب';
+    return 'متوسط';
+  }
+
+  String _careLevel(String? activity) {
+    switch (activity) {
+      case 'زیاد':
+        return 'متوسط';
+      case 'متوسط':
+        return 'کم';
+      case 'کم':
+        return 'آسان';
+      default:
+        return '--';
+    }
+  }
+
+  Widget _buildIndicatorCard(
+    ThemeData theme,
+    IconData icon,
+    String label,
+    String value,
+    Color accent,
+  ) {
+    return Card(
+      elevation: 0,
+      shadowColor: Colors.black.withValues(alpha: 0.04),
+      surfaceTintColor: Colors.transparent,
+      color: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              accent.withValues(alpha: 0.06),
+              Colors.white,
+            ],
+          ),
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+        child: Column(
+          children: [
+            Container(
+              width: 42,
+              height: 42,
+              decoration: BoxDecoration(
+                color: accent.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Icon(icon, size: 22, color: accent),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              value,
+              style: theme.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w700,
+                color: accent,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -418,18 +603,18 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
             colors: [Colors.white, Color(0xFFF6F5F1)],
           ),
         ),
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(18),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 40,
-              height: 40,
+              width: 44,
+              height: 44,
               decoration: BoxDecoration(
                 color: theme.colorScheme.primaryContainer.withValues(alpha: 0.5),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(14),
               ),
-              child: Icon(icon, size: 20, color: theme.colorScheme.onPrimaryContainer),
+              child: Icon(icon, size: 22, color: theme.colorScheme.onPrimaryContainer),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -437,84 +622,10 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
                 text,
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
-                  height: 1.6,
+                  height: 1.7,
+                  fontSize: 14,
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSpecsGrid(ThemeData theme, CatBreed breed, Map<String, String> extra) {
-    return Row(
-      children: [
-        Expanded(
-          child: _buildSpecCard(
-            theme,
-            Icons.child_care_rounded,
-            'مناسب کودکان',
-            extra['suitableForChildren'] ?? '--',
-          ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: _buildSpecCard(
-            theme,
-            Icons.directions_run_rounded,
-            'سطح فعالیت',
-            extra['activityLevel'] ?? '--',
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSpecCard(ThemeData theme, IconData icon, String title, String value) {
-    return Card(
-      elevation: 0,
-      shadowColor: Colors.black.withValues(alpha: 0.04),
-      surfaceTintColor: Colors.transparent,
-      color: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Colors.white, Color(0xFFF6F5F1)],
-          ),
-        ),
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Container(
-              width: 44,
-              height: 44,
-              decoration: BoxDecoration(
-                color: theme.colorScheme.tertiaryContainer.withValues(alpha: 0.5),
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: Icon(icon, size: 22, color: theme.colorScheme.onTertiaryContainer),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              value,
-              style: theme.textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              title,
-              style: theme.textTheme.labelSmall?.copyWith(
-                color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
-              ),
-              textAlign: TextAlign.center,
             ),
           ],
         ),
@@ -540,14 +651,22 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
             colors: [Colors.white, Color(0xFFF6F5F1)],
           ),
         ),
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(18),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Icon(icon, size: 20, color: theme.colorScheme.primary),
-                const SizedBox(width: 10),
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(icon, size: 20, color: theme.colorScheme.primary),
+                ),
+                const SizedBox(width: 12),
                 Text(
                   title,
                   style: theme.textTheme.titleSmall?.copyWith(
@@ -557,12 +676,13 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
             Text(
               content,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
-                height: 1.6,
+                height: 1.7,
+                fontSize: 14,
               ),
             ),
           ],
