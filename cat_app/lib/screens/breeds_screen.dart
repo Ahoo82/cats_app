@@ -116,7 +116,7 @@ class _BreedsScreenState extends State<BreedsScreen> {
                                     child: child,
                                   );
                                 },
-                                transitionDuration: const Duration(milliseconds: 300),
+                                transitionDuration: const Duration(milliseconds: 250),
                               ),
                             );
                           },
@@ -172,30 +172,31 @@ class _BreedsScreenState extends State<BreedsScreen> {
         child: Material(
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(20),
-          child: InkWell(
-            onTap: () {},
-            borderRadius: BorderRadius.circular(20),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.search_rounded,
-                    size: 20,
+        child: InkWell(
+          onTap: () {},
+          hoverColor: theme.colorScheme.onSurface.withValues(alpha: 0.03),
+          borderRadius: BorderRadius.circular(20),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.search_rounded,
+                  size: 20,
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.35),
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  'جستجوی نژاد...',
+                  style: theme.textTheme.bodyLarge?.copyWith(
                     color: theme.colorScheme.onSurface.withValues(alpha: 0.35),
                   ),
-                  const SizedBox(width: 12),
-                  Text(
-                    'جستجوی نژاد...',
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.35),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
+      ),
       ),
     );
   }
@@ -275,6 +276,9 @@ class _BreedGridCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
+        hoverColor: theme.colorScheme.primary.withValues(alpha: 0.04),
+        splashColor: theme.colorScheme.primary.withValues(alpha: 0.08),
+        highlightColor: theme.colorScheme.primary.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(20),
         child: Container(
         decoration: const BoxDecoration(
@@ -300,7 +304,7 @@ class _BreedGridCard extends StatelessWidget {
                           if (wasSynchronouslyLoaded) return child;
                           return AnimatedOpacity(
                             opacity: frame == null ? 0 : 1,
-                            duration: const Duration(milliseconds: 300),
+                            duration: const Duration(milliseconds: 250),
                             curve: Curves.easeOut,
                             child: child,
                           );

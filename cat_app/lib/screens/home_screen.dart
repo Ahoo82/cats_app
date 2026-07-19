@@ -67,10 +67,11 @@ class HomeScreen extends StatelessWidget {
                               child: child,
                             );
                           },
-                          transitionDuration: const Duration(milliseconds: 300),
+                          transitionDuration: const Duration(milliseconds: 250),
                         ),
                       );
                     },
+                    hoverColor: theme.colorScheme.onSurface.withValues(alpha: 0.03),
                     borderRadius: BorderRadius.circular(12),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -225,6 +226,7 @@ class _SearchBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         child: InkWell(
           onTap: () {},
+          hoverColor: theme.colorScheme.onSurface.withValues(alpha: 0.03),
           borderRadius: BorderRadius.circular(20),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -291,7 +293,7 @@ class _CategoryGrid extends StatelessWidget {
                         child: child,
                       );
                     },
-                    transitionDuration: const Duration(milliseconds: 300),
+                    transitionDuration: const Duration(milliseconds: 250),
                   ),
                 )
             : null,
@@ -467,7 +469,7 @@ class _BreedCard extends StatelessWidget {
                       if (wasSynchronouslyLoaded) return child;
                       return AnimatedOpacity(
                         opacity: frame == null ? 0 : 1,
-                        duration: const Duration(milliseconds: 300),
+                        duration: const Duration(milliseconds: 250),
                         curve: Curves.easeOut,
                         child: child,
                       );
