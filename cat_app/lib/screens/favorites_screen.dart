@@ -77,81 +77,85 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            if (breeds.isEmpty)
-              Expanded(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 80,
-                        height: 80,
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.primaryContainer.withValues(alpha: 0.4),
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        child: Icon(
-                          Icons.favorite_border_rounded,
-                          size: 36,
-                          color: theme.colorScheme.primary.withValues(alpha: 0.5),
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 250),
+              child: breeds.isEmpty
+                  ? Expanded(
+                      key: const ValueKey('empty'),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 80,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                color: theme.colorScheme.primaryContainer.withValues(alpha: 0.4),
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              child: Icon(
+                                Icons.favorite_border_rounded,
+                                size: 36,
+                                color: theme.colorScheme.primary.withValues(alpha: 0.5),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              'هنوز علاقه\u200Cمندی نداری',
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'با زدن دکمه قلب، نژادهای مورد علاقه\u200Cات رو ذخیره کن',
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      Text(
-                        'هنوز علاقه\u200Cمندی نداری',
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                    )
+                  : Expanded(
+                      key: const ValueKey('grid'),
+                      child: GridView.builder(
+                        padding: const EdgeInsets.symmetric(horizontal: 22),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 14,
+                          crossAxisSpacing: 14,
+                          childAspectRatio: 0.58,
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'با زدن دکمه قلب، نژادهای مورد علاقه\u200Cات رو ذخیره کن',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            else
-              Expanded(
-                child: GridView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 22),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 14,
-                    crossAxisSpacing: 14,
-                    childAspectRatio: 0.58,
-                  ),
-                  itemCount: breeds.length,
-                  itemBuilder: (context, index) {
-                    final breed = breeds[index];
-                    return _FavoriteBreedCard(
-                      breed: breed,
-                      persianName: _persianNames[breed.name] ?? breed.name,
-                      imagePath: _breedImages[breed.name],
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (_, _, _) => BreedDetailScreen(breed: breed),
-                            transitionsBuilder: (_, animation, _, child) {
-                              return FadeTransition(
-                                opacity: animation,
-                                child: child,
+                        itemCount: breeds.length,
+                        itemBuilder: (context, index) {
+                          final breed = breeds[index];
+                          return _FavoriteBreedCard(
+                            breed: breed,
+                            persianName: _persianNames[breed.name] ?? breed.name,
+                            imagePath: _breedImages[breed.name],
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                PageRouteBuilder(
+                                  pageBuilder: (_, _, _) => BreedDetailScreen(breed: breed),
+                                  transitionsBuilder: (_, animation, _, child) {
+                                    return FadeTransition(
+                                      opacity: animation,
+                                      child: child,
+                                    );
+                                  },
+                                  transitionDuration: const Duration(milliseconds: 250),
+                                ),
                               );
                             },
-                            transitionDuration: const Duration(milliseconds: 250),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
+                          );
+                        },
+                      ),
+                    ),
+            ),
           ],
         ),
       ),

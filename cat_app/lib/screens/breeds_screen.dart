@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/cat_breed.dart';
 import '../utils/app_images.dart';
+import '../services/favorites_service.dart';
 import 'breed_detail_screen.dart';
 
 class BreedsScreen extends StatefulWidget {
@@ -268,7 +269,7 @@ class _BreedsScreenState extends State<BreedsScreen> {
   }
 }
 
-class _BreedGridCard extends StatelessWidget {
+class _BreedGridCard extends StatefulWidget {
   final CatBreed breed;
   final String persianName;
   final String? imagePath;
@@ -282,8 +283,34 @@ class _BreedGridCard extends StatelessWidget {
   });
 
   @override
+  State<_BreedGridCard> createState() => _BreedGridCardState();
+}
+
+class _BreedGridCardState extends State<_BreedGridCard> {
+  final _service = FavoritesService();
+  bool _isFavorite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _isFavorite = _service.isFavorite(widget.breed.name);
+    _service.addListener(_onChanged);
+  }
+
+  @override
+  void dispose() {
+    _service.removeListener(_onChanged);
+    super.dispose();
+  }
+
+  void _onChanged() {
+    setState(() => _isFavorite = _service.isFavorite(widget.breed.name));
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final breed = widget.breed;
 
     return Card(
       elevation: 0,
@@ -295,7 +322,7 @@ class _BreedGridCard extends StatelessWidget {
       ),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: onTap,
+        onTap: widget.onTap,
         hoverColor: theme.colorScheme.primary.withValues(alpha: 0.04),
         splashColor: theme.colorScheme.primary.withValues(alpha: 0.08),
         highlightColor: theme.colorScheme.primary.withValues(alpha: 0.05),
@@ -313,11 +340,14 @@ class _BreedGridCard extends StatelessWidget {
           children: [
             SizedBox(
               height: 110,
-              child: imagePath != null
-                  ? Hero(
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  if (widget.imagePath != null)
+                    Hero(
                       tag: 'breed-image-${breed.name}',
                       child: Image.asset(
-                        imagePath!,
+                        widget.imagePath!,
                         fit: BoxFit.cover,
                         width: double.infinity,
                         frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
@@ -332,7 +362,37 @@ class _BreedGridCard extends StatelessWidget {
                         errorBuilder: (_, _, _) => _buildPlaceholder(theme),
                       ),
                     )
-                  : _buildPlaceholder(theme),
+                  else
+                    _buildPlaceholder(theme),
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: GestureDetector(
+                      onTap: () => _service.toggle(breed.name),
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.85),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.08),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          _isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                          size: 16,
+                          color: _isFavorite ? Colors.red : theme.colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
@@ -340,7 +400,7 @@ class _BreedGridCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    persianName,
+                    widget.persianName,
                     style: theme.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
