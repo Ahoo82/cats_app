@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/cat_breed.dart';
 import '../utils/app_images.dart';
+import '../services/favorites_service.dart';
 
 class BreedDetailScreen extends StatefulWidget {
   final CatBreed breed;
@@ -13,7 +14,25 @@ class BreedDetailScreen extends StatefulWidget {
 }
 
 class _BreedDetailScreenState extends State<BreedDetailScreen> {
+  final _service = FavoritesService();
   bool _isFavorite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _isFavorite = _service.isFavorite(widget.breed.name);
+    _service.addListener(_onChanged);
+  }
+
+  @override
+  void dispose() {
+    _service.removeListener(_onChanged);
+    super.dispose();
+  }
+
+  void _onChanged() {
+    setState(() => _isFavorite = _service.isFavorite(widget.breed.name));
+  }
 
   static const _persianNames = <String, String>{
     'Persian': 'پرشین',
@@ -264,7 +283,7 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
               color: _isFavorite ? Colors.red : theme.colorScheme.onSurface,
               size: 20,
             ),
-            onPressed: () => setState(() => _isFavorite = !_isFavorite),
+            onPressed: () => _service.toggle(widget.breed.name),
           ),
         ),
       ],

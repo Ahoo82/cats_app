@@ -13,6 +13,8 @@ class BreedsScreen extends StatefulWidget {
 
 class _BreedsScreenState extends State<BreedsScreen> {
   final _selectedFilters = <String>{};
+  final _searchController = TextEditingController();
+  String _searchQuery = '';
 
   static const _persianNames = <String, String>{
     'Persian': 'پرشین',
@@ -51,17 +53,45 @@ class _BreedsScreenState extends State<BreedsScreen> {
   static const _family = {'Persian', 'Maine Coon', 'British Shorthair', 'Ragdoll', 'Scottish Fold'};
 
   List<CatBreed> get _filteredBreeds {
-    if (_selectedFilters.isEmpty) return catBreeds;
+    var breeds = catBreeds.toList();
 
-    final sets = <Set<String>>[];
-    if (_selectedFilters.contains('longhair')) sets.add(_longhair);
-    if (_selectedFilters.contains('shorthair')) sets.add(_shorthair);
-    if (_selectedFilters.contains('large')) sets.add(_large);
-    if (_selectedFilters.contains('small')) sets.add(_small);
-    if (_selectedFilters.contains('family')) sets.add(_family);
+    if (_selectedFilters.isNotEmpty) {
+      final sets = <Set<String>>[];
+      if (_selectedFilters.contains('longhair')) sets.add(_longhair);
+      if (_selectedFilters.contains('shorthair')) sets.add(_shorthair);
+      if (_selectedFilters.contains('large')) sets.add(_large);
+      if (_selectedFilters.contains('small')) sets.add(_small);
+      if (_selectedFilters.contains('family')) sets.add(_family);
 
-    final allowed = sets.reduce((a, b) => a.union(b));
-    return catBreeds.where((b) => allowed.contains(b.name)).toList();
+      final allowed = sets.reduce((a, b) => a.union(b));
+      breeds = breeds.where((b) => allowed.contains(b.name)).toList();
+    }
+
+    if (_searchQuery.isNotEmpty) {
+      final query = _searchQuery.toLowerCase();
+      breeds = breeds.where((b) {
+        final persian = _persianNames[b.name] ?? '';
+        return b.name.toLowerCase().contains(query) ||
+            persian.contains(query) ||
+            b.origin.toLowerCase().contains(query);
+      }).toList();
+    }
+
+    return breeds;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(() {
+      setState(() => _searchQuery = _searchController.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -74,7 +104,7 @@ class _BreedsScreenState extends State<BreedsScreen> {
         child: Column(
           children: [
             const SizedBox(height: 16),
-            _buildHeader(theme),
+            _buildHeader(theme, breeds.length),
             const SizedBox(height: 16),
             _buildSearchBar(theme),
             const SizedBox(height: 14),
@@ -130,7 +160,7 @@ class _BreedsScreenState extends State<BreedsScreen> {
     );
   }
 
-  Widget _buildHeader(ThemeData theme) {
+  Widget _buildHeader(ThemeData theme, int count) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22),
       child: Row(
@@ -143,7 +173,7 @@ class _BreedsScreenState extends State<BreedsScreen> {
           ),
           const Spacer(),
           Text(
-            '${catBreeds.length} نژاد',
+            '$count نژاد',
             style: theme.textTheme.bodyMedium?.copyWith(
               color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
             ),
@@ -169,34 +199,24 @@ class _BreedsScreenState extends State<BreedsScreen> {
             ),
           ],
         ),
-        child: Material(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
-        child: InkWell(
-          onTap: () {},
-          hoverColor: theme.colorScheme.onSurface.withValues(alpha: 0.03),
-          borderRadius: BorderRadius.circular(20),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.search_rounded,
-                  size: 20,
-                  color: theme.colorScheme.onSurface.withValues(alpha: 0.35),
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  'جستجوی نژاد...',
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    color: theme.colorScheme.onSurface.withValues(alpha: 0.35),
-                  ),
-                ),
-              ],
+        child: TextField(
+          controller: _searchController,
+          textDirection: TextDirection.rtl,
+          decoration: InputDecoration(
+            hintText: 'جستجوی نژاد...',
+            hintStyle: theme.textTheme.bodyLarge?.copyWith(
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.35),
             ),
+            prefixIcon: Icon(
+              Icons.search_rounded,
+              size: 20,
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.35),
+            ),
+            border: InputBorder.none,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
           ),
+          style: theme.textTheme.bodyLarge,
         ),
-      ),
       ),
     );
   }

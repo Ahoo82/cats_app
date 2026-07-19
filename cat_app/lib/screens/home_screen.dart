@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../utils/app_images.dart';
 import 'breeds_screen.dart';
+import 'favorites_screen.dart';
+import '../services/favorites_service.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -428,7 +430,7 @@ class _PopularBreedsList extends StatelessWidget {
   }
 }
 
-class _BreedCard extends StatelessWidget {
+class _BreedCard extends StatefulWidget {
   final String name;
   final String origin;
   final String image;
@@ -438,6 +440,31 @@ class _BreedCard extends StatelessWidget {
     required this.origin,
     required this.image,
   });
+
+  @override
+  State<_BreedCard> createState() => _BreedCardState();
+}
+
+class _BreedCardState extends State<_BreedCard> {
+  final _service = FavoritesService();
+  bool _isFavorite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _isFavorite = _service.isFavorite(widget.name);
+    _service.addListener(_onChanged);
+  }
+
+  @override
+  void dispose() {
+    _service.removeListener(_onChanged);
+    super.dispose();
+  }
+
+  void _onChanged() {
+    setState(() => _isFavorite = _service.isFavorite(widget.name));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -463,7 +490,7 @@ class _BreedCard extends StatelessWidget {
                 fit: StackFit.expand,
                 children: [
                   Image.asset(
-                    image,
+                    widget.image,
                     fit: BoxFit.cover,
                     frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
                       if (wasSynchronouslyLoaded) return child;
@@ -497,24 +524,27 @@ class _BreedCard extends StatelessWidget {
                   Positioned(
                     top: 10,
                     right: 10,
-                    child: Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.85),
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.06),
-                            blurRadius: 6,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Icon(
-                        Icons.favorite_border_rounded,
-                        size: 18,
-                        color: theme.colorScheme.primary,
+                    child: GestureDetector(
+                      onTap: () => _service.toggle(widget.name),
+                      child: Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.85),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.06),
+                              blurRadius: 6,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          _isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                          size: 18,
+                          color: _isFavorite ? Colors.red : theme.colorScheme.primary,
+                        ),
                       ),
                     ),
                   ),
@@ -527,7 +557,7 @@ class _BreedCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
+                    widget.name,
                     style: theme.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
@@ -545,7 +575,7 @@ class _BreedCard extends StatelessWidget {
                       const SizedBox(width: 3),
                       Expanded(
                         child: Text(
-                          origin,
+                          widget.origin,
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
                           ),
@@ -918,6 +948,7 @@ class _FloatingNavBarState extends State<_FloatingNavBar> {
     {'icon': Icons.pets_rounded, 'label': 'نژادها'},
     {'icon': Icons.search_rounded, 'label': 'جستجو'},
     {'icon': Icons.lightbulb_rounded, 'label': 'دانستنی\u200Cها'},
+    {'icon': Icons.favorite_rounded, 'label': 'علاقه\u200Cمندی'},
     {'icon': Icons.person_rounded, 'label': 'پروفایل'},
   ];
 
@@ -952,7 +983,24 @@ class _FloatingNavBarState extends State<_FloatingNavBar> {
                 label: _items[index]['label'] as String,
                 isSelected: isSelected,
                 theme: theme,
-                onTap: () => setState(() => _selectedIndex = index),
+                onTap: () {
+                  setState(() => _selectedIndex = index);
+                  if (index == 4) {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (_, _, _) => const FavoritesScreen(),
+                        transitionsBuilder: (_, animation, _, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
+                        transitionDuration: const Duration(milliseconds: 250),
+                      ),
+                    );
+                  }
+                },
               );
             }),
           ),
