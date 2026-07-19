@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/cat_breed.dart';
 import '../utils/app_images.dart';
 import '../services/favorites_service.dart';
+import '../widgets/breed_placeholder.dart';
 import 'breed_detail_screen.dart';
 
 class BreedsScreen extends StatefulWidget {
@@ -359,11 +360,11 @@ class _BreedGridCardState extends State<_BreedGridCard> {
                             child: child,
                           );
                         },
-                        errorBuilder: (_, _, _) => _buildPlaceholder(theme),
+                        errorBuilder: (_, _, _) => const BreedPlaceholder(iconSize: 40),
                       ),
                     )
                   else
-                    _buildPlaceholder(theme),
+                    const BreedPlaceholder(iconSize: 40),
                   Positioned(
                     top: 8,
                     right: 8,
@@ -470,28 +471,6 @@ class _BreedGridCardState extends State<_BreedGridCard> {
           ],
         ),
       ),
-      ),
-    );
-  }
-
-  Widget _buildPlaceholder(ThemeData theme) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            theme.colorScheme.primaryContainer,
-            theme.colorScheme.secondaryContainer,
-          ],
-        ),
-      ),
-      child: Center(
-        child: Icon(
-          Icons.pets_rounded,
-          size: 40,
-          color: theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.45),
-        ),
       ),
     );
   }

@@ -7,6 +7,7 @@ import 'breeds_screen.dart';
 import 'favorites_screen.dart';
 import 'settings_screen.dart';
 import '../services/favorites_service.dart';
+import '../widgets/breed_placeholder.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -552,25 +553,7 @@ class _BreedCardState extends State<_BreedCard> {
                         child: child,
                       );
                     },
-                    errorBuilder: (_, _, _) => Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            theme.colorScheme.primaryContainer,
-                            theme.colorScheme.secondaryContainer,
-                          ],
-                        ),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.pets_rounded,
-                          size: 56,
-                          color: theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.5),
-                        ),
-                      ),
-                    ),
+                    errorBuilder: (_, _, _) => const BreedPlaceholder(),
                   ),
                   Positioned(
                     top: 10,
