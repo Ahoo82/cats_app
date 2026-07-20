@@ -47,7 +47,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     height: 44,
                     decoration: BoxDecoration(
                       color: theme.colorScheme.primaryContainer.withValues(alpha: 0.5),
-                      borderRadius: BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                     child: IconButton(
                       onPressed: () => Navigator.pop(context),

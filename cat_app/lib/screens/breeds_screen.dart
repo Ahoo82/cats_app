@@ -365,7 +365,7 @@ class _BreedGridCardState extends State<_BreedGridCard> {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withValues(alpha: 0.08),
-                              blurRadius: 4,
+                              blurRadius: 6,
                               offset: const Offset(0, 2),
                             ),
                           ],
@@ -429,7 +429,7 @@ class _BreedGridCardState extends State<_BreedGridCard> {
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
                       color: theme.colorScheme.secondaryContainer,
-                      borderRadius: BorderRadius.circular(6),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
                       breed.temperament.split(', ').first,

@@ -632,7 +632,7 @@ class _BreedCardState extends State<_BreedCard> {
                     ),
                     decoration: BoxDecoration(
                       color: theme.colorScheme.secondaryContainer,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                       child: Text(
                         widget.temperament,
@@ -738,7 +738,7 @@ class _LatestArticles extends StatelessWidget {
   static const _articles = [
     {
       'title': 'بهترین نژادهای گربه برای آپارتمان',
-      'summary': 'اگر در آپارتمان زندگی می\u200Cکنید، این نژادها最适合 سبک زندگی شما هستند.',
+      'summary': 'اگر در آپارتمان زندگی می\u200Cکنید، این نژادها مناسب\u200Cترین گزینه برای شما هستند.',
       'time': '۵ دقیقه',
       'icon': Icons.apartment_rounded,
     },
@@ -861,7 +861,7 @@ class _ArticleCard extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       color: theme.colorScheme.surfaceContainerHighest,
-                      borderRadius: BorderRadius.circular(6),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,

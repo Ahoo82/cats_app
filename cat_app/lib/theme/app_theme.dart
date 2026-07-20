@@ -33,7 +33,7 @@ class AppTheme {
       elevation: 0,
       shadowColor: Colors.black.withValues(alpha: 0.05),
       surfaceTintColor: Colors.transparent,
-      color: Colors.white,
+      color: _colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),

@@ -535,7 +535,7 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
               height: 42,
               decoration: BoxDecoration(
                 color: accent.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: BorderRadius.circular(16),
               ),
               child: Icon(icon, size: 22, color: accent),
             ),
@@ -588,7 +588,7 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
               height: 44,
               decoration: BoxDecoration(
                 color: theme.colorScheme.primaryContainer.withValues(alpha: 0.5),
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: BorderRadius.circular(16),
               ),
               child: Icon(icon, size: 22, color: theme.colorScheme.onPrimaryContainer),
             ),
@@ -596,6 +596,8 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
             Expanded(
               child: Text(
                 text,
+                maxLines: 12,
+                overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                   height: 1.7,
@@ -655,6 +657,8 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
             const SizedBox(height: 12),
             Text(
               content,
+              maxLines: 8,
+              overflow: TextOverflow.ellipsis,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                 height: 1.7,
@@ -710,6 +714,8 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
             Expanded(
               child: Text(
                 fact,
+                maxLines: 6,
+                overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                   height: 1.6,
