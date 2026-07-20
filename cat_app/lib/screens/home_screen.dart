@@ -132,6 +132,13 @@ class _WelcomeSection extends StatelessWidget {
 
   const _WelcomeSection({required this.theme});
 
+  static const _heroStyle = TextStyle(
+    fontSize: 46,
+    fontWeight: FontWeight.w800,
+    height: 1.1,
+    letterSpacing: -1.2,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -139,11 +146,7 @@ class _WelcomeSection extends StatelessWidget {
       children: [
         Text(
           'گربه\u200Cها',
-          style: TextStyle(
-            fontSize: 46,
-            fontWeight: FontWeight.w800,
-            height: 1.1,
-            letterSpacing: -1.2,
+          style: _heroStyle.copyWith(
             color: theme.colorScheme.primary,
           ),
         ),
@@ -1020,6 +1023,7 @@ class _FloatingNavBarState extends State<_FloatingNavBar> {
             children: List.generate(_items.length, (index) {
               final isSelected = _selectedIndex == index;
               return _NavItem(
+                key: ValueKey(index),
                 icon: _items[index]['icon'] as IconData,
                 label: _items[index]['label'] as String,
                 isSelected: isSelected,
@@ -1073,6 +1077,7 @@ class _NavItem extends StatelessWidget {
   final VoidCallback onTap;
 
   const _NavItem({
+    super.key,
     required this.icon,
     required this.label,
     required this.isSelected,
