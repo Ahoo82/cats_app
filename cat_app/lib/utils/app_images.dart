@@ -9,4 +9,8 @@ class AppImages {
   static const scottishFold = '$_path/scottish_fold.jpg';
   static const siamese = '$_path/siamese.jpg';
   static const ragdoll = '$_path/ragdoll.jpg';
+  static const bengal = '$_path/bengal.jpg';
+  static const sphynx = '$_path/sphynx.jpg';
+  static const abyssinian = '$_path/abyssinian.jpg';
+  static const turkishAngora = '$_path/turkish_angora.jpg';
 }

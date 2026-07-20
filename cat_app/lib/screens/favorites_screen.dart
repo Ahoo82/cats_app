@@ -100,34 +100,40 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     )
                   : Expanded(
                       key: const ValueKey('grid'),
-                      child: GridView.builder(
-                        padding: const EdgeInsets.symmetric(horizontal: 22),
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 14,
-                          crossAxisSpacing: 14,
-                          childAspectRatio: 0.58,
-                        ),
-                        itemCount: breeds.length,
-                        itemBuilder: (context, index) {
-                          final breed = breeds[index];
-                          return _FavoriteBreedCard(
-                            breed: breed,
-                            persianName: AppData.persianNames[breed.name] ?? breed.name,
-                            imagePath: AppData.breedImages[breed.name],
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                  pageBuilder: (_, _, _) => BreedDetailScreen(breed: breed),
-                                  transitionsBuilder: (_, animation, _, child) {
-                                    return FadeTransition(
-                                      opacity: animation,
-                                      child: child,
-                                    );
-                                  },
-                                  transitionDuration: const Duration(milliseconds: 250),
-                                ),
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          final columns = constraints.maxWidth >= 500 ? 3 : 2;
+
+                          return GridView.builder(
+                            padding: const EdgeInsets.symmetric(horizontal: 22),
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: columns,
+                              mainAxisSpacing: 14,
+                              crossAxisSpacing: 14,
+                              childAspectRatio: 0.58,
+                            ),
+                            itemCount: breeds.length,
+                            itemBuilder: (context, index) {
+                              final breed = breeds[index];
+                              return _FavoriteBreedCard(
+                                breed: breed,
+                                persianName: AppData.persianNames[breed.name] ?? breed.name,
+                                imagePath: AppData.breedImages[breed.name],
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (_, _, _) => BreedDetailScreen(breed: breed),
+                                      transitionsBuilder: (_, animation, _, child) {
+                                        return FadeTransition(
+                                          opacity: animation,
+                                          child: child,
+                                        );
+                                      },
+                                      transitionDuration: const Duration(milliseconds: 250),
+                                    ),
+                                  );
+                                },
                               );
                             },
                           );
@@ -179,7 +185,10 @@ class _FavoriteBreedCard extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest],
+              colors: [
+                theme.colorScheme.surface,
+                theme.colorScheme.surfaceContainerHighest,
+              ],
             ),
           ),
           child: Column(

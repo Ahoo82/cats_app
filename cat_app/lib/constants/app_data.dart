@@ -23,5 +23,9 @@ class AppData {
     'British Shorthair': AppImages.britishShorthair,
     'Scottish Fold': AppImages.scottishFold,
     'Ragdoll': AppImages.ragdoll,
+    'Bengal': AppImages.bengal,
+    'Sphynx': AppImages.sphynx,
+    'Abyssinian': AppImages.abyssinian,
+    'Turkish Angora': AppImages.turkishAngora,
   };
 }

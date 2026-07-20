@@ -100,18 +100,22 @@ class _BreedsScreenState extends State<BreedsScreen> {
                         ),
                       ),
                     )
-                  : GridView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 22),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 14,
-                        crossAxisSpacing: 14,
-                        childAspectRatio: 0.58,
-                      ),
-                      itemCount: breeds.length,
-                      itemBuilder: (context, index) {
-                        final breed = breeds[index];
-                        return _BreedGridCard(
+                  : LayoutBuilder(
+                      builder: (context, constraints) {
+                        final crossAxisCount = constraints.maxWidth >= 500 ? 3 : 2;
+
+                        return GridView.builder(
+                          padding: const EdgeInsets.symmetric(horizontal: 22),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: crossAxisCount,
+                            mainAxisSpacing: 14,
+                            crossAxisSpacing: 14,
+                            childAspectRatio: 0.58,
+                          ),
+                          itemCount: breeds.length,
+                          itemBuilder: (context, index) {
+                            final breed = breeds[index];
+                            return _BreedGridCard(
                           breed: breed,
                           persianName: AppData.persianNames[breed.name] ?? breed.name,
                           imagePath: AppData.breedImages[breed.name],
@@ -132,7 +136,9 @@ class _BreedsScreenState extends State<BreedsScreen> {
                           },
                         );
                       },
-                    ),
+                    );
+                  },
+                ),
             ),
           ],
         ),
@@ -354,7 +360,7 @@ class _BreedGridCardState extends State<_BreedGridCard> {
                         width: 36,
                         height: 36,
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.85),
+                          color: theme.colorScheme.surface.withValues(alpha: 0.85),
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
@@ -426,7 +432,7 @@ class _BreedGridCardState extends State<_BreedGridCard> {
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
-                      'دوستانه',
+                      breed.temperament.split(', ').first,
                       style: theme.textTheme.labelSmall?.copyWith(
                         fontWeight: FontWeight.w600,
                         color: theme.colorScheme.onSecondaryContainer,

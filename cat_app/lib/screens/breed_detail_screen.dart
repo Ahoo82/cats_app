@@ -204,7 +204,7 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
       leading: Container(
         margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.85),
+          color: theme.colorScheme.surface.withValues(alpha: 0.85),
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
@@ -226,7 +226,7 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
         Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.85),
+            color: theme.colorScheme.surface.withValues(alpha: 0.85),
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
@@ -247,7 +247,7 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
         Container(
           margin: const EdgeInsets.only(right: 12, top: 8, bottom: 8),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.85),
+            color: theme.colorScheme.surface.withValues(alpha: 0.85),
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(

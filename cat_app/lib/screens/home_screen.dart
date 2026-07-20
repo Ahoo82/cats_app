@@ -21,12 +21,12 @@ class HomeScreen extends StatelessWidget {
     {'icon': Icons.vaccines_rounded, 'title': 'واکسن و پزشکی', 'desc': 'واکسیناسیون و مراقبت\u200Cهای پزشکی'},
   ];
   static const _popularBreeds = <Map<String, Object>>[
-    {'name': 'Persian', 'origin': 'Iran (Persia)', 'image': AppImages.persian},
-    {'name': 'British Shorthair', 'origin': 'United Kingdom', 'image': AppImages.britishShorthair},
-    {'name': 'Maine Coon', 'origin': 'United States', 'image': AppImages.maineCoon},
-    {'name': 'Scottish Fold', 'origin': 'Scotland', 'image': AppImages.scottishFold},
-    {'name': 'Siamese', 'origin': 'Thailand', 'image': AppImages.siamese},
-    {'name': 'Ragdoll', 'origin': 'United States', 'image': AppImages.ragdoll},
+    {'name': 'Persian', 'origin': 'Iran (Persia)', 'image': AppImages.persian, 'temperament': 'آرام'},
+    {'name': 'British Shorthair', 'origin': 'United Kingdom', 'image': AppImages.britishShorthair, 'temperament': 'خونسرد'},
+    {'name': 'Maine Coon', 'origin': 'United States', 'image': AppImages.maineCoon, 'temperament': 'مهربان'},
+    {'name': 'Scottish Fold', 'origin': 'Scotland', 'image': AppImages.scottishFold, 'temperament': 'شیرین'},
+    {'name': 'Siamese', 'origin': 'Thailand', 'image': AppImages.siamese, 'temperament': 'باهوش'},
+    {'name': 'Ragdoll', 'origin': 'United States', 'image': AppImages.ragdoll, 'temperament': 'مهربان'},
   ];
 
   @override
@@ -210,7 +210,7 @@ class _WelcomeSection extends StatelessWidget {
                     width: 64,
                     height: 64,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.3),
+                      color: theme.colorScheme.surface.withValues(alpha: 0.25),
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
@@ -476,6 +476,7 @@ class _PopularBreedsList extends StatelessWidget {
             name: breed['name'] as String,
             origin: breed['origin'] as String,
             image: breed['image'] as String,
+            temperament: breed['temperament'] as String,
           );
         },
       ),
@@ -487,11 +488,13 @@ class _BreedCard extends StatefulWidget {
   final String name;
   final String origin;
   final String image;
+  final String temperament;
 
   const _BreedCard({
     required this.name,
     required this.origin,
     required this.image,
+    required this.temperament,
   });
 
   @override
@@ -566,7 +569,7 @@ class _BreedCardState extends State<_BreedCard> {
                         width: 36,
                         height: 36,
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.85),
+                          color: theme.colorScheme.surface.withValues(alpha: 0.85),
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
@@ -631,9 +634,9 @@ class _BreedCardState extends State<_BreedCard> {
                       color: theme.colorScheme.secondaryContainer,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Text(
-                      'دوستانه',
-                      style: theme.textTheme.labelSmall?.copyWith(
+                      child: Text(
+                        widget.temperament,
+                        style: theme.textTheme.labelSmall?.copyWith(
                         fontWeight: FontWeight.w600,
                         color: theme.colorScheme.onSecondaryContainer,
                       ),
@@ -1001,7 +1004,7 @@ class _FloatingNavBarState extends State<_FloatingNavBar> {
         child: Container(
           height: 68,
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.72),
+            color: theme.colorScheme.surface.withValues(alpha: 0.75),
             borderRadius: BorderRadius.circular(24),
             boxShadow: [
               BoxShadow(
