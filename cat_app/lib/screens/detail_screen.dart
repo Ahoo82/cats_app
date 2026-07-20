@@ -15,6 +15,7 @@ class DetailScreen extends StatelessWidget {
         title: Text(breed.name),
       ),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

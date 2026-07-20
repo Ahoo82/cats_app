@@ -227,6 +227,7 @@ class _BreedsScreenState extends State<BreedsScreen> {
     return SizedBox(
       height: 40,
       child: ListView.separated(
+        physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 22),
         itemCount: _filters.length,
@@ -370,9 +371,10 @@ class _BreedGridCardState extends State<_BreedGridCard> {
                     right: 8,
                     child: GestureDetector(
                       onTap: () => _service.toggle(breed.name),
+                      behavior: HitTestBehavior.opaque,
                       child: Container(
-                        width: 30,
-                        height: 30,
+                        width: 36,
+                        height: 36,
                         decoration: BoxDecoration(
                           color: Colors.white.withValues(alpha: 0.85),
                           shape: BoxShape.circle,

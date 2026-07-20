@@ -18,8 +18,8 @@ class AboutScreen extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                    width: 40,
-                    height: 40,
+                    width: 44,
+                    height: 44,
                     decoration: BoxDecoration(
                       color: theme.colorScheme.primaryContainer.withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(14),
@@ -104,8 +104,10 @@ class AboutScreen extends StatelessWidget {
                       color: theme.colorScheme.primary,
                     ),
                     const SizedBox(height: 14),
-                    Text(
-                      'ما به شما کمک می\u200Cکنیم تا بهترین همراه برای زندگی خود را انتخاب کنید و از او به بهترین شکل مراقبت کنید.',
+                Text(
+                  'ما به شما کمک می\u200Cکنیم تا بهترین همراه برای زندگی خود را انتخاب کنید و از او به بهترین شکل مراقبت کنید.',
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodyLarge?.copyWith(
                         color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                         height: 1.7,

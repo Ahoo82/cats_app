@@ -465,6 +465,7 @@ class _PopularBreedsList extends StatelessWidget {
     return SizedBox(
       height: 268,
       child: ListView.separated(
+        physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.zero,
         itemCount: breeds.length,
@@ -560,9 +561,10 @@ class _BreedCardState extends State<_BreedCard> {
                     right: 10,
                     child: GestureDetector(
                       onTap: () => _service.toggle(widget.name),
+                      behavior: HitTestBehavior.opaque,
                       child: Container(
-                        width: 32,
-                        height: 32,
+                        width: 36,
+                        height: 36,
                         decoration: BoxDecoration(
                           color: Colors.white.withValues(alpha: 0.85),
                           shape: BoxShape.circle,
@@ -953,6 +955,8 @@ class _DidYouKnow extends StatelessWidget {
             const SizedBox(height: 14),
             Text(
               'گربه\u200Cها می\u200Cتوانند بیش از ۱۰۰ صدای مختلف تولید کنند، در حالی که سگ\u200Cها تنها قادر به تولید حدود ۱۰ صدای مختلف هستند. گربه\u200Cها میو میو کردن را منحصراً برای ارتباط با انسان\u200Cها استفاده می\u200Cکنند.',
+              maxLines: 5,
+              overflow: TextOverflow.ellipsis,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurface.withValues(alpha: 0.65),
                 height: 1.6,
