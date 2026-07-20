@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/cat_breed.dart';
-import '../utils/app_images.dart';
+import '../constants/app_data.dart';
 import '../services/favorites_service.dart';
 import '../widgets/breed_placeholder.dart';
 
@@ -34,28 +34,6 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
   void _onChanged() {
     setState(() => _isFavorite = _service.isFavorite(widget.breed.name));
   }
-
-  static const _persianNames = <String, String>{
-    'Persian': 'پرشین',
-    'Siamese': 'سیامی',
-    'Maine Coon': 'مین کون',
-    'British Shorthair': 'بریتیش شورت\u200Cهیر',
-    'Bengal': 'بنگال',
-    'Scottish Fold': 'اسکاتیش فولد',
-    'Sphynx': 'اسفینکس',
-    'Ragdoll': 'رگدال',
-    'Abyssinian': 'حبشی',
-    'Turkish Angora': 'آنگورای ترکی',
-  };
-
-  static const _breedImages = <String, String>{
-    'Persian': AppImages.persian,
-    'Siamese': AppImages.siamese,
-    'Maine Coon': AppImages.maineCoon,
-    'British Shorthair': AppImages.britishShorthair,
-    'Scottish Fold': AppImages.scottishFold,
-    'Ragdoll': AppImages.ragdoll,
-  };
 
   static const _extraInfo = <String, Map<String, String>>{
     'Persian': {
@@ -154,8 +132,8 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final breed = widget.breed;
-    final persianName = _persianNames[breed.name] ?? breed.name;
-    final imagePath = _breedImages[breed.name];
+    final persianName = AppData.persianNames[breed.name] ?? breed.name;
+    final imagePath = AppData.breedImages[breed.name];
     final extra = _extraInfo[breed.name] ?? {};
 
     return Scaffold(

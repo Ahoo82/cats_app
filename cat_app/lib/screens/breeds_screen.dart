@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/cat_breed.dart';
-import '../utils/app_images.dart';
+import '../constants/app_data.dart';
 import '../services/favorites_service.dart';
 import '../widgets/breed_placeholder.dart';
 import 'breed_detail_screen.dart';
@@ -17,28 +17,6 @@ class _BreedsScreenState extends State<BreedsScreen> {
   final _selectedFilters = <String>{};
   final _searchController = TextEditingController();
   String _searchQuery = '';
-
-  static const _persianNames = <String, String>{
-    'Persian': 'پرشین',
-    'Siamese': 'سیامی',
-    'Maine Coon': 'مین کون',
-    'British Shorthair': 'بریتیش شورت\u200Cهیر',
-    'Bengal': 'بنگال',
-    'Scottish Fold': 'اسکاتیش فولد',
-    'Sphynx': 'اسفینکس',
-    'Ragdoll': 'رگدال',
-    'Abyssinian': 'حبشی',
-    'Turkish Angora': 'آنگورای ترکی',
-  };
-
-  static const _breedImages = <String, String>{
-    'Persian': AppImages.persian,
-    'Siamese': AppImages.siamese,
-    'Maine Coon': AppImages.maineCoon,
-    'British Shorthair': AppImages.britishShorthair,
-    'Scottish Fold': AppImages.scottishFold,
-    'Ragdoll': AppImages.ragdoll,
-  };
 
   static const _filters = [
     {'label': 'مو بلند', 'key': 'longhair'},
@@ -72,7 +50,7 @@ class _BreedsScreenState extends State<BreedsScreen> {
     if (_searchQuery.isNotEmpty) {
       final query = _searchQuery.toLowerCase();
       breeds = breeds.where((b) {
-        final persian = _persianNames[b.name] ?? '';
+        final persian = AppData.persianNames[b.name] ?? '';
         return b.name.toLowerCase().contains(query) ||
             persian.contains(query) ||
             b.origin.toLowerCase().contains(query);
@@ -135,8 +113,8 @@ class _BreedsScreenState extends State<BreedsScreen> {
                         final breed = breeds[index];
                         return _BreedGridCard(
                           breed: breed,
-                          persianName: _persianNames[breed.name] ?? breed.name,
-                          imagePath: _breedImages[breed.name],
+                          persianName: AppData.persianNames[breed.name] ?? breed.name,
+                          imagePath: AppData.breedImages[breed.name],
                           onTap: () {
                             Navigator.push(
                               context,
