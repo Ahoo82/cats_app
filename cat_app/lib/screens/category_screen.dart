@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 
+import '../models/article.dart';
+import 'article_detail_screen.dart';
+
 class CategoryScreen extends StatelessWidget {
   final IconData icon;
   final String title;
   final String subtitle;
-  final String featuredTitle;
-  final String featuredSummary;
-  final List<Map<String, String>> articles;
+  final Article featuredArticle;
+  final List<Article> articles;
 
   const CategoryScreen({
     super.key,
     required this.icon,
     required this.title,
     required this.subtitle,
-    required this.featuredTitle,
-    required this.featuredSummary,
+    required this.featuredArticle,
     required this.articles,
   });
 
@@ -71,7 +72,7 @@ class CategoryScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 12),
-              _buildFeaturedCard(theme),
+              _buildFeaturedCard(theme, context),
               const SizedBox(height: 28),
               Text(
                 'مطالب بیشتر',
@@ -84,7 +85,7 @@ class CategoryScreen extends StatelessWidget {
               const SizedBox(height: 12),
               ...articles.map((a) => Padding(
                     padding: const EdgeInsets.only(bottom: 12),
-                    child: _buildArticleTile(theme, a['title']!, a['time']!),
+                    child: _buildArticleTile(theme, context, a),
                   )),
               const SizedBox(height: 32),
             ],
@@ -140,7 +141,9 @@ class CategoryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFeaturedCard(ThemeData theme) {
+  Widget _buildFeaturedCard(ThemeData theme, BuildContext context) {
+    final article = featuredArticle;
+
     return Card(
       elevation: 0,
       shadowColor: Colors.black.withValues(alpha: 0.06),
@@ -148,63 +151,75 @@ class CategoryScreen extends StatelessWidget {
       color: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       clipBehavior: Clip.antiAlias,
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              theme.colorScheme.surface,
-              theme.colorScheme.surfaceContainerHighest,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (_, _, _) => ArticleDetailScreen(article: article),
+              transitionsBuilder: (_, animation, _, child) {
+                return FadeTransition(opacity: animation, child: child);
+              },
+              transitionDuration: const Duration(milliseconds: 250),
+            ),
+          );
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                theme.colorScheme.surface,
+                theme.colorScheme.surfaceContainerHighest,
+              ],
+            ),
+          ),
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primaryContainer.withValues(alpha: 0.5),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Icon(
+                  Icons.auto_stories_rounded,
+                  size: 24,
+                  color: theme.colorScheme.onPrimaryContainer,
+                ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      article.title,
+                      style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      article.summary,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.55),
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
-        ),
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: theme.colorScheme.primaryContainer.withValues(alpha: 0.5),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Icon(
-                Icons.auto_stories_rounded,
-                size: 24,
-                color: theme.colorScheme.onPrimaryContainer,
-              ),
-            ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    featuredTitle,
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    featuredSummary,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.55),
-                      height: 1.5,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
         ),
       ),
     );
   }
 
-  Widget _buildArticleTile(ThemeData theme, String title, String time) {
+  Widget _buildArticleTile(ThemeData theme, BuildContext context, Article article) {
     return Card(
       elevation: 0,
       shadowColor: Colors.black.withValues(alpha: 0.04),
@@ -224,14 +239,26 @@ class CategoryScreen extends StatelessWidget {
           ),
         ),
         child: ListTile(
+          onTap: () {
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (_, _, _) => ArticleDetailScreen(article: article),
+                transitionsBuilder: (_, animation, _, child) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
+                transitionDuration: const Duration(milliseconds: 250),
+              ),
+            );
+          },
           title: Text(
-            title,
+            article.title,
             style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           subtitle: Text(
-            time,
+            article.readingTime,
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurface.withValues(alpha: 0.45),
             ),
