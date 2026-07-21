@@ -13,4 +13,8 @@ class AppImages {
   static const sphynx = '$_path/sphynx.jpg';
   static const abyssinian = '$_path/abyssinian.jpg';
   static const turkishAngora = '$_path/turkish_angora.jpg';
+  static const domesticShorthair = '$_path/domestic_shorthair.jpg';
+  static const persianChinchilla = '$_path/persian_chinchilla.jpg';
+  static const himalayan = '$_path/himalayan.jpg';
+  static const exoticShorthair = '$_path/exotic_shorthair.jpg';
 }

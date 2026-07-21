@@ -173,4 +173,64 @@ const List<CatBreed> catBreeds = [
     coatType: 'Semi-long-haired',
     colors: ['White', 'Black', 'Blue', 'Red', 'Cream', 'Tortoiseshell'],
   ),
+  CatBreed(
+    name: 'Domestic Shorthair',
+    origin: 'Iran',
+    temperament: 'Independent, Adaptable, Playful',
+    description:
+        'The Domestic Shorthair is the most common cat in Iran, found in '
+        'nearly every neighborhood. They are hardy, adaptable cats with '
+        'round faces and short, dense coats. Their colors range from orange '
+        'tabby to black, white, and calico. They are independent yet '
+        'affectionate, making them perfect for first-time cat owners.',
+    lifeSpan: '12-18 years',
+    weight: '3-5 kg',
+    coatType: 'Short-haired',
+    colors: ['Orange Tabby', 'Black', 'White', 'Calico', 'Gray'],
+  ),
+  CatBreed(
+    name: 'Persian Chinchilla',
+    origin: 'Iran (Persia) / UK',
+    temperament: 'Calm, Elegant, Gentle',
+    description:
+        'The Persian Chinchilla is a stunning variant of the Persian breed '
+        'with a sparkling silver or golden coat tipped with darker color. '
+        'They have striking emerald-green eyes outlined in black, giving '
+        'them a dramatic "eyeliner" look. They are calm, elegant cats that '
+        'prefer a quiet environment and are deeply loyal to their owners.',
+    lifeSpan: '12-15 years',
+    weight: '3-5.5 kg',
+    coatType: 'Long-haired',
+    colors: ['Silver Tipped', 'Golden Tipped', 'Blue Tipped'],
+  ),
+  CatBreed(
+    name: 'Himalayan',
+    origin: 'United States (cross breed)',
+    temperament: 'Sweet, Gentle, Affectionate',
+    description:
+        'The Himalayan cat, also known as "Colourpoint Persian," is a '
+        'cross between Persian and Siamese. They have the luxurious long '
+        'coat of a Persian and the striking blue eyes and color-point '
+        'pattern of a Siamese. Himalayan cats are calm, sweet-natured, '
+        'and love being held and cuddled.',
+    lifeSpan: '12-15 years',
+    weight: '3.5-5.5 kg',
+    coatType: 'Long-haired',
+    colors: ['Seal Point', 'Blue Point', 'Chocolate Point', 'Lilac Point'],
+  ),
+  CatBreed(
+    name: 'Exotic Shorthair',
+    origin: 'United States',
+    temperament: 'Calm, Loving, Playful',
+    description:
+        'The Exotic Shorthair is essentially a short-haired Persian — same '
+        'round face, same sweet personality, but with a plush, dense coat '
+        'that requires much less grooming. They are nicknamed "the lazy '
+        'man\'s Persian." Exotics are calm and affectionate but also enjoy '
+        'playtime, making them one of the most popular breeds in Iran.',
+    lifeSpan: '12-15 years',
+    weight: '3-6 kg',
+    coatType: 'Short-haired',
+    colors: ['White', 'Cream', 'Blue', 'Red', 'Black', 'Tabby'],
+  ),
 ];

@@ -14,6 +14,10 @@ class AppData {
     'Ragdoll': 'رگدال',
     'Abyssinian': 'حبشی',
     'Turkish Angora': 'آنگورای ترکی',
+    'Domestic Shorthair': 'گربه خانگی مو\u200Cکوتاه',
+    'Persian Chinchilla': 'پرشین چین\u200Cچیلا',
+    'Himalayan': 'هیمالین',
+    'Exotic Shorthair': 'اکزاتیک مو کوتاه',
   };
 
   static const breedImages = <String, String>{
@@ -27,5 +31,9 @@ class AppData {
     'Sphynx': AppImages.sphynx,
     'Abyssinian': AppImages.abyssinian,
     'Turkish Angora': AppImages.turkishAngora,
+    'Domestic Shorthair': AppImages.domesticShorthair,
+    'Persian Chinchilla': AppImages.persianChinchilla,
+    'Himalayan': AppImages.himalayan,
+    'Exotic Shorthair': AppImages.exoticShorthair,
   };
 }

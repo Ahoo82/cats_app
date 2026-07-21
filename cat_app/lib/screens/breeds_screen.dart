@@ -26,11 +26,11 @@ class _BreedsScreenState extends State<BreedsScreen> {
     {'label': 'مناسب خانواده', 'key': 'family'},
   ];
 
-  static const _longhair = {'Persian', 'Maine Coon', 'Ragdoll', 'Turkish Angora'};
-  static const _shorthair = {'Siamese', 'British Shorthair', 'Bengal', 'Scottish Fold', 'Sphynx', 'Abyssinian'};
+  static const _longhair = {'Persian', 'Maine Coon', 'Ragdoll', 'Turkish Angora', 'Persian Chinchilla', 'Himalayan'};
+  static const _shorthair = {'Siamese', 'British Shorthair', 'Bengal', 'Scottish Fold', 'Sphynx', 'Abyssinian', 'Domestic Shorthair', 'Exotic Shorthair'};
   static const _large = {'Maine Coon', 'British Shorthair', 'Ragdoll', 'Bengal'};
-  static const _small = {'Siamese', 'Scottish Fold', 'Sphynx', 'Abyssinian', 'Turkish Angora'};
-  static const _family = {'Persian', 'Maine Coon', 'British Shorthair', 'Ragdoll', 'Scottish Fold'};
+  static const _small = {'Siamese', 'Scottish Fold', 'Sphynx', 'Abyssinian', 'Turkish Angora', 'Domestic Shorthair', 'Persian Chinchilla', 'Himalayan', 'Exotic Shorthair'};
+  static const _family = {'Persian', 'Maine Coon', 'British Shorthair', 'Ragdoll', 'Scottish Fold', 'Persian Chinchilla', 'Himalayan', 'Exotic Shorthair', 'Domestic Shorthair'};
 
   List<CatBreed> get _filteredBreeds {
     var breeds = catBreeds.toList();

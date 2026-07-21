@@ -38,93 +38,157 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
   static const _extraInfo = <String, Map<String, String>>{
     'Persian': {
       'suitableForChildren': 'بله، بسیار آرام و مهربان',
-      'activityLevel': 'کم',
+      'energyLevel': 'کم',
+      'groomingLevel': 'زیاد',
+      'indoorSuitability': 'عالی',
+      'careDifficulty': 'متوسط',
       'healthIssues': 'مشکلات تنفسی، بیماری\u200Cهای چشمی، کلیه پلی\u200Cکیستیک',
       'nutrition': 'غذای خشک با کیفیت بالا، ۲ وعده در روز',
       'care': 'شانه زدن روزانه، تمیز کردن چشم\u200Cها، حمام ماهانه',
-      'funFacts':
-          'پرشین\u200Cها یکی از قدیمی\u200Cترین نژادهای گربه هستند و قدمت آنها به ایران باستان باز می\u200Cگردد.',
+      'funFacts': 'پرشین\u200Cها یکی از قدیمی\u200Cترین نژادهای گربه هستند و قدمت آنها به ایران باستان باز می\u200Cگردد.',
     },
     'Siamese': {
       'suitableForChildren': 'بله، اجتماعی و بازیگوش',
-      'activityLevel': 'متوسط',
+      'energyLevel': 'زیاد',
+      'groomingLevel': 'کم',
+      'indoorSuitability': 'خوب',
+      'careDifficulty': 'آسان',
       'healthIssues': 'مشکلات تنفسی، بیماری\u200Cهای دندانی',
       'nutrition': 'غذای پرپروتئین، ۲ تا ۳ وعده کوچک در روز',
       'care': 'برس زدن هفتگی، تمیز کردن دندان\u200Cها',
-      'funFacts':
-          'سیامی\u200Cها به "گربه\u200Cهای سخنگو" معروف هستند و صدای بلند و خاصی دارند.',
+      'funFacts': 'سیامی\u200Cها به "گربه\u200Cهای سخنگو" معروف هستند و صدای بلند و خاصی دارند.',
     },
     'Maine Coon': {
       'suitableForChildren': 'بله، عالی برای خانواده',
-      'activityLevel': 'متوسط',
+      'energyLevel': 'متوسط',
+      'groomingLevel': 'متوسط',
+      'indoorSuitability': 'خوب',
+      'careDifficulty': 'متوسط',
       'healthIssues': 'دیسپلازی مفصل ران، کاردیومیوپاتی',
       'nutrition': 'غذای مخصوص نژادهای بزرگ، ۲ وعده در روز',
       'care': 'برس زدن ۲-۳ بار در هفته، کوتاه کردن ناخن\u200Cها',
-      'funFacts':
-          'مین کون بزرگترین نژاد گربه خانگی است و برخی از آنها به ۱۰ کیلوگرم هم می\u200Cرسند.',
+      'funFacts': 'مین کون بزرگترین نژاد گربه خانگی است و برخی از آنها به ۱۰ کیلوگرم هم می\u200Cرسند.',
     },
     'British Shorthair': {
       'suitableForChildren': 'بله، آرام و صبور',
-      'activityLevel': 'کم',
+      'energyLevel': 'کم',
+      'groomingLevel': 'کم',
+      'indoorSuitability': 'عالی',
+      'careDifficulty': 'آسان',
       'healthIssues': 'چاقی، بیماری\u200Cهای قلبی',
       'nutrition': 'کنترل کالری، ۲ وعده در روز',
       'care': 'برس زدن هفتگی، کنترل وزن',
-      'funFacts':
-          'این نژاد الهام\u200Cبخش شخصیت گربه چشایر در داستان آلیس در سرزمین عجایب است.',
+      'funFacts': 'این نژاد الهام\u200Cبخش شخصیت گربه چشایر در داستان آلیس در سرزمین عجایب است.',
     },
     'Bengal': {
       'suitableForChildren': 'بله، پرانرژی و بازیگوش',
-      'activityLevel': 'زیاد',
+      'energyLevel': 'زیاد',
+      'groomingLevel': 'کم',
+      'indoorSuitability': 'متوسط',
+      'careDifficulty': 'متوسط',
       'healthIssues': 'بیماری\u200Cهای کلیوی، مشکلات مفصلی',
       'nutrition': 'غذای پرپروتئین، ۲-۳ وعده در روز',
       'care': 'برس زدن هفتگی، بازی و فعالیت روزانه ضروری',
-      'funFacts':
-          'بنگال\u200Cها عاشق آب هستند و ممکن است با شما دوش بگیرند!',
+      'funFacts': 'بنگال\u200Cها عاشق آب هستند و ممکن است با شما دوش بگیرند!',
     },
     'Scottish Fold': {
       'suitableForChildren': 'بله، آرام و سازگار',
-      'activityLevel': 'کم تا متوسط',
+      'energyLevel': 'کم',
+      'groomingLevel': 'کم',
+      'indoorSuitability': 'عالی',
+      'careDifficulty': 'آسان',
       'healthIssues': 'آرتروز، مشکلات غضروفی',
       'nutrition': 'غذای تقویت\u200Cکننده مفاصل، ۲ وعده در روز',
       'care': 'برس زدن هفتگی، تمیز کردن گوش\u200Cها',
-      'funFacts':
-          'اسکاتیش فولدها به خاطر گوش\u200Cهای تا شده\u200Cشان معروف هستند و اغلب در حالت "بودا" می\u200Cنشینند.',
+      'funFacts': 'اسکاتیش فولدها به خاطر گوش\u200Cهای تا شده\u200Cشان معروف هستند و اغلب در حالت "بودا" می\u200Cنشینند.',
     },
     'Sphynx': {
       'suitableForChildren': 'بله، مهربان و اجتماعی',
-      'activityLevel': 'زیاد',
+      'energyLevel': 'زیاد',
+      'groomingLevel': 'زیاد',
+      'indoorSuitability': 'عالی',
+      'careDifficulty': 'دشوار',
       'healthIssues': 'مشکلات پوستی، حساسیت به دما',
       'nutrition': 'غذای پرکالری، ۳ وعده در روز',
       'care': 'حمام هفتگی، تمیز کردن پوست، محافظت از سرما',
-      'funFacts':
-          'اسفینکس\u200Cها با وجود نداشتن مو، دمای بدن بالاتری دارند و مانند یک بطری آب گرم هستند!',
+      'funFacts': 'اسفینکس\u200Cها با وجود نداشتن مو، دمای بدن بالاتری دارند و مانند یک بطری آب گرم هستند!',
     },
     'Ragdoll': {
       'suitableForChildren': 'بله، فوق\u200Cالعاده مهربان',
-      'activityLevel': 'کم',
+      'energyLevel': 'کم',
+      'groomingLevel': 'متوسط',
+      'indoorSuitability': 'عالی',
+      'careDifficulty': 'آسان',
       'healthIssues': 'کاردیومیوپاتی، مشکلات ادراری',
       'nutrition': 'غذای با کیفیت، ۲ وعده در روز',
       'care': 'برس زدن ۲ بار در هفته، مراقبت از دندان\u200Cها',
-      'funFacts':
-          'رگدال\u200Cها وقتی بغل می\u200Cشوند کاملاً شل می\u200Cشوند، مثل یک عروسک پارچه\u200Cای!',
+      'funFacts': 'رگدال\u200Cها وقتی بغل می\u200Cشوند کاملاً شل می\u200Cشوند، مثل یک عروسک پارچه\u200Cای!',
     },
     'Abyssinian': {
       'suitableForChildren': 'بله، ولی نیاز به توجه دارد',
-      'activityLevel': 'زیاد',
+      'energyLevel': 'زیاد',
+      'groomingLevel': 'کم',
+      'indoorSuitability': 'خوب',
+      'careDifficulty': 'متوسط',
       'healthIssues': 'بیماری\u200Cهای کلیوی، کم\u200Cخونی',
       'nutrition': 'غذای پرپروتئین، ۲ وعده در روز',
       'care': 'برس زدن هفتگی، بازی و فعالیت روزانه ضروری',
-      'funFacts':
-          'حبشی\u200Cها یکی از قدیمی\u200Cترین نژادهای جهان هستند و شبیه گربه\u200Cهای مصر باستان می\u200Cباشند.',
+      'funFacts': 'حبشی\u200Cها یکی از قدیمی\u200Cترین نژادهای جهان هستند و شبیه گربه\u200Cهای مصر باستان می\u200Cباشند.',
     },
     'Turkish Angora': {
       'suitableForChildren': 'بله، مهربان و بازیگوش',
-      'activityLevel': 'متوسط',
+      'energyLevel': 'متوسط',
+      'groomingLevel': 'متوسط',
+      'indoorSuitability': 'خوب',
+      'careDifficulty': 'متوسط',
       'healthIssues': 'ناشنوایی در گربه\u200Cهای سفید، بیماری\u200Cهای قلبی',
       'nutrition': 'غذای با کیفیت متعادل، ۲ وعده در روز',
       'care': 'برس زدن ۲ بار در هفته، مراقبت از چشم\u200Cها',
-      'funFacts':
-          'بسیاری از آنگوراهای ترکی چشمانی با دو رنگ متفاوت دارند که بسیار زیباست.',
+      'funFacts': 'بسیاری از آنگوراهای ترکی چشمانی با دو رنگ متفاوت دارند که بسیار زیباست.',
+    },
+    'Domestic Shorthair': {
+      'suitableForChildren': 'بله، بسیار سازگار و مهربان',
+      'energyLevel': 'متوسط',
+      'groomingLevel': 'کم',
+      'indoorSuitability': 'عالی',
+      'careDifficulty': 'آسان',
+      'healthIssues': 'به طور کلی سالم، گاهی مشکلات دندانی',
+      'nutrition': 'غذای متعادل، ۲ وعده در روز',
+      'care': 'برس زدن هفتگی، حمام در صورت نیاز',
+      'funFacts': 'گربه\u200Cهای خانگی موکوتاه رایج\u200Cترین گربه در ایران هستند و در هر کوچه و خانه\u200Cای دیده می\u200Cشوند.',
+    },
+    'Persian Chinchilla': {
+      'suitableForChildren': 'بله، آرام و مهربان',
+      'energyLevel': 'کم',
+      'groomingLevel': 'زیاد',
+      'indoorSuitability': 'عالی',
+      'careDifficulty': 'متوسط',
+      'healthIssues': 'مشکلات چشمی، بیماری\u200Cهای تنفسی',
+      'nutrition': 'غذای خشک با کیفیت، ۲ وعده در روز',
+      'care': 'شانه زدن روزانه، تمیز کردن چشم\u200Cها',
+      'funFacts': 'پرشین چین\u200Cچیلا با چشمان سبز زمردی و خط چشم مشکی خود یکی از زیباترین نژادهای گربه در جهان است.',
+    },
+    'Himalayan': {
+      'suitableForChildren': 'بله، بسیار آرام و مهربان',
+      'energyLevel': 'کم',
+      'groomingLevel': 'زیاد',
+      'indoorSuitability': 'عالی',
+      'careDifficulty': 'متوسط',
+      'healthIssues': 'مشکلات تنفسی، بیماری\u200Cهای چشمی، کلیه پلی\u200Cکیستیک',
+      'nutrition': 'غذای خشک با کیفیت بالا، ۲ وعده در روز',
+      'care': 'شانه زدن روزانه، تمیز کردن چشم\u200Cها و صورت',
+      'funFacts': 'هیمالین\u200Cها ترکیبی از زیبایی پرشین و چشمان آبی سیامی هستند.',
+    },
+    'Exotic Shorthair': {
+      'suitableForChildren': 'بله، مهربان و بازیگوش',
+      'energyLevel': 'کم',
+      'groomingLevel': 'کم',
+      'indoorSuitability': 'عالی',
+      'careDifficulty': 'آسان',
+      'healthIssues': 'مشکلات چشمی، بیماری\u200Cهای تنفسی',
+      'nutrition': 'غذای متعادل، ۲ وعده در روز',
+      'care': 'برس زدن هفتگی، تمیز کردن چشم\u200Cها',
+      'funFacts': 'اکزاتیک مو کوتاه همان پرشین است با موهای کوتاه! به آن "پرشین موکوتاه" هم می\u200Cگویند.',
     },
   };
 
@@ -439,7 +503,7 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
             theme,
             Icons.directions_run_rounded,
             'سطح انرژی',
-            _energyLevel(extra['activityLevel']),
+            extra['energyLevel'] ?? '--',
             theme.colorScheme.tertiary,
           ),
         ),
@@ -447,9 +511,9 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
         Expanded(
           child: _buildIndicatorCard(
             theme,
-            Icons.child_care_rounded,
-            'مناسب خانواده',
-            _familyLevel(extra['suitableForChildren']),
+            Icons.home_rounded,
+            'مناسب آپارتمان',
+            extra['indoorSuitability'] ?? '--',
             theme.colorScheme.secondary,
           ),
         ),
@@ -458,46 +522,13 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
           child: _buildIndicatorCard(
             theme,
             Icons.brush_rounded,
-            'نگهداری',
-            _careLevel(extra['activityLevel']),
+            'نظافت',
+            extra['groomingLevel'] ?? '--',
             theme.colorScheme.primary,
           ),
         ),
       ],
     );
-  }
-
-  String _energyLevel(String? activity) {
-    switch (activity) {
-      case 'زیاد':
-        return 'بالا';
-      case 'متوسط':
-        return 'متوسط';
-      case 'کم':
-        return 'پایین';
-      default:
-        return '--';
-    }
-  }
-
-  String _familyLevel(String? suitable) {
-    if (suitable == null) return '--';
-    if (suitable.contains('عالی') || suitable.contains('فوق')) return 'عالی';
-    if (suitable.contains('بله')) return 'خوب';
-    return 'متوسط';
-  }
-
-  String _careLevel(String? activity) {
-    switch (activity) {
-      case 'زیاد':
-        return 'متوسط';
-      case 'متوسط':
-        return 'کم';
-      case 'کم':
-        return 'آسان';
-      default:
-        return '--';
-    }
   }
 
   Widget _buildIndicatorCard(
@@ -576,7 +607,10 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest],
+            colors: [
+              theme.colorScheme.surface,
+              theme.colorScheme.surfaceContainerHighest,
+            ],
           ),
         ),
         padding: const EdgeInsets.all(18),
@@ -626,7 +660,10 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest],
+            colors: [
+              theme.colorScheme.surface,
+              theme.colorScheme.surfaceContainerHighest,
+            ],
           ),
         ),
         padding: const EdgeInsets.all(18),
@@ -728,4 +765,3 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
     );
   }
 }
-
