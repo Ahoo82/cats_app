@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Replace with custom paw/cat icon vector -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M54,40 C54,40 46,48 38,48 C30,48 26,42 26,36 L26,30 C26,26 30,30 34,32 C36,32 36,28 32,26 C28,24 28,20 32,20 C36,20 40,24 42,28 C44,24 48,20 52,20 C56,20 56,24 52,26 C48,28 48,32 50,32 C54,30 58,26 58,30 L58,36 C58,42 54,48 46,48 C38,48 30,40 30,40 M30,40 C30,40 28,48 34,52 C40,52 44,46 44,46 M44,46 C44,46 48,52 54,52 C60,48 58,40 58,40" />
+</vector>
