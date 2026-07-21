@@ -9,6 +9,7 @@ import 'settings_screen.dart';
 import '../services/favorites_service.dart';
 import '../widgets/breed_placeholder.dart';
 import '../config/brand_config.dart';
+import 'category_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -29,6 +30,101 @@ class HomeScreen extends StatelessWidget {
     {'name': 'Siamese', 'origin': 'Thailand', 'image': AppImages.siamese, 'temperament': 'باهوش'},
     {'name': 'Ragdoll', 'origin': 'United States', 'image': AppImages.ragdoll, 'temperament': 'مهربان'},
   ];
+
+  static void _navigateToCategory(BuildContext context, int index) {
+    Widget page;
+
+    switch (index) {
+      case 0:
+        page = const BreedsScreen();
+      case 1:
+        page = const CategoryScreen(
+          icon: Icons.restaurant_rounded,
+          title: 'تغذیه',
+          subtitle: 'هر آنچه باید درباره غذای گربه بدانید؛ از تغذیه بچه گربه تا رژیم غذایی گربه بالغ و غذاهای ممنوع.',
+          featuredTitle: 'راهنمای کامل تغذیه گربه',
+          featuredSummary: 'با شناخت نیازهای غذایی گربه خود در هر سن، سلامت و طول عمر او را تضمین کنید.',
+          articles: [
+            {'title': 'بهترین غذاهای خشک برای گربه', 'time': '۸ دقیقه'},
+            {'title': 'غذاهای خانگی مجاز برای گربه', 'time': '۶ دقیقه'},
+            {'title': 'چه غذاهایی برای گربه سمی است؟', 'time': '۵ دقیقه'},
+            {'title': 'برنامه غذایی بچه گربه', 'time': '۷ دقیقه'},
+            {'title': 'آب و اهمیت هیدراتاسیون', 'time': '۴ دقیقه'},
+          ],
+        );
+      case 2:
+        page = const CategoryScreen(
+          icon: Icons.medical_services_rounded,
+          title: 'سلامت',
+          subtitle: 'راهنمای جامع حفظ سلامت گربه؛ از معاینات دوره\u200Cای تا تشخیص علائم بیماری\u200Cهای شایع.',
+          featuredTitle: 'علائم هشداردهنده در گربه\u200Cها',
+          featuredSummary: 'با شناخت این علائم می\u200Cتوانید بیماری را زود تشخیص دهید و از مشکلات جدی جلوگیری کنید.',
+          articles: [
+            {'title': 'واکسن\u200Cهای ضروری گربه', 'time': '۶ دقیقه'},
+            {'title': 'بیماری\u200Cهای شایع در گربه\u200Cها', 'time': '۱۰ دقیقه'},
+            {'title': 'اهمیت معاینه سالانه دامپزشکی', 'time': '۵ دقیقه'},
+            {'title': 'انگل\u200Cها و راههای پیشگیری', 'time': '۷ دقیقه'},
+            {'title': 'سلامت دهان و دندان گربه', 'time': '۵ دقیقه'},
+          ],
+        );
+      case 3:
+        page = const CategoryScreen(
+          icon: Icons.school_rounded,
+          title: 'آموزش',
+          subtitle: 'همه چیز درباره تربیت گربه؛ از آموزش دستشویی تا اصلاح رفتارهای ناخواسته و ترفندهای جذاب.',
+          featuredTitle: 'چگونه گربه خود را تربیت کنیم',
+          featuredSummary: 'برخلاف تصور عمومی، گربه\u200Cها کاملاً آموزش\u200Cپذیر هستند. با این روش\u200Cها شروع کنید.',
+          articles: [
+            {'title': 'آموزش دستشویی به بچه گربه', 'time': '۶ دقیقه'},
+            {'title': 'چگونه گربه را از چنگ زدن به مبل بازداریم', 'time': '۵ دقیقه'},
+            {'title': 'ترفندهای جذاب برای آموزش گربه', 'time': '۸ دقیقه'},
+            {'title': 'رفع رفتار گاز گرفتن در گربه', 'time': '۵ دقیقه'},
+            {'title': 'آموزش فرمان\u200Cهای ساده به گربه', 'time': '۷ دقیقه'},
+          ],
+        );
+      case 4:
+        page = const CategoryScreen(
+          icon: Icons.sports_esports_rounded,
+          title: 'سرگرمی',
+          subtitle: 'ایده\u200Cهای خلاقانه برای سرگرم کردن گربه؛ از اسباب\u200Cبازی\u200Cهای دست\u200Cساز تا بازی\u200Cهای تعاملی.',
+          featuredTitle: 'بهترین اسباب\u200Cبازی\u200Cهای گربه',
+          featuredSummary: 'با انتخاب اسباب\u200Cبازی مناسب، گربه خود را سرگرم و فعال نگه دارید و از چاقی جلوگیری کنید.',
+          articles: [
+            {'title': 'اسباب\u200Cبازی\u200Cهای دست\u200Cساز برای گربه', 'time': '۶ دقیقه'},
+            {'title': 'بازی\u200Cهای تعاملی با گربه', 'time': '۵ دقیقه'},
+            {'title': 'چگونه یک درخت گربه خانگی بسازیم', 'time': '۱۰ دقیقه'},
+            {'title': 'اسباب\u200Cبازی\u200Cهای پازلی و هوشی', 'time': '۷ دقیقه'},
+            {'title': 'بهترین اپلیکیشن\u200Cهای سرگرمی گربه', 'time': '۴ دقیقه'},
+          ],
+        );
+      default:
+        page = const CategoryScreen(
+          icon: Icons.vaccines_rounded,
+          title: 'واکسن و پزشکی',
+          subtitle: 'برنامه کامل واکسیناسیون گربه و راهنمای مراقبت\u200Cهای پزشکی پیشگیرانه برای حفظ سلامت.',
+          featuredTitle: 'برنامه واکسیناسیون گربه',
+          featuredSummary: 'با رعایت برنامه منظم واکسیناسیون، از گربه خود در برابر بیماری\u200Cهای خطرناک محافظت کنید.',
+          articles: [
+            {'title': 'واکسن\u200Cهای سه\u200Cگانه و چهارگانه', 'time': '۷ دقیقه'},
+            {'title': 'برنامه واکسیناسیون بچه گربه', 'time': '۶ دقیقه'},
+            {'title': 'عوارض جانبی واکسن در گربه', 'time': '۵ دقیقه'},
+            {'title': 'ضدعفونی و انگل\u200Cزدایی', 'time': '۶ دقیقه'},
+            {'title': 'مراقبت\u200Cهای بعد از جراحی عقیم\u200Cسازی', 'time': '۸ دقیقه'},
+          ],
+        );
+    }
+
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (_, _, _) => page,
+        transitionsBuilder: (_, animation, _, child) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+        transitionDuration: const Duration(milliseconds: 250),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -338,21 +434,7 @@ class _CategoryGrid extends StatelessWidget {
             icon: categories[index]['icon'] as IconData,
             title: categories[index]['title'] as String,
             description: categories[index]['desc'] as String,
-            onTap: index == 0
-                ? () => Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (_, _, _) => const BreedsScreen(),
-                    transitionsBuilder: (_, animation, _, child) {
-                      return FadeTransition(
-                        opacity: animation,
-                        child: child,
-                      );
-                    },
-                    transitionDuration: const Duration(milliseconds: 250),
-                  ),
-                )
-                : null,
+            onTap: () => HomeScreen._navigateToCategory(context, index),
       ),
     );
   },
