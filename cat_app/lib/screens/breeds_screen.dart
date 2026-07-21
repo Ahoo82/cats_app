@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/cat_breed.dart';
-import '../constants/app_data.dart';
+import '../data/breed_repository.dart';
 import '../services/favorites_service.dart';
 import '../widgets/breed_placeholder.dart';
 import 'breed_detail_screen.dart';
@@ -26,22 +26,16 @@ class _BreedsScreenState extends State<BreedsScreen> {
     {'label': 'مناسب خانواده', 'key': 'family'},
   ];
 
-  static const _longhair = {'Persian', 'Maine Coon', 'Ragdoll', 'Turkish Angora', 'Persian Chinchilla', 'Himalayan'};
-  static const _shorthair = {'Siamese', 'British Shorthair', 'Bengal', 'Scottish Fold', 'Sphynx', 'Abyssinian', 'Domestic Shorthair', 'Exotic Shorthair'};
-  static const _large = {'Maine Coon', 'British Shorthair', 'Ragdoll', 'Bengal'};
-  static const _small = {'Siamese', 'Scottish Fold', 'Sphynx', 'Abyssinian', 'Turkish Angora', 'Domestic Shorthair', 'Persian Chinchilla', 'Himalayan', 'Exotic Shorthair'};
-  static const _family = {'Persian', 'Maine Coon', 'British Shorthair', 'Ragdoll', 'Scottish Fold', 'Persian Chinchilla', 'Himalayan', 'Exotic Shorthair', 'Domestic Shorthair'};
-
   List<CatBreed> get _filteredBreeds {
     var breeds = catBreeds.toList();
 
     if (_selectedFilters.isNotEmpty) {
       final sets = <Set<String>>[];
-      if (_selectedFilters.contains('longhair')) sets.add(_longhair);
-      if (_selectedFilters.contains('shorthair')) sets.add(_shorthair);
-      if (_selectedFilters.contains('large')) sets.add(_large);
-      if (_selectedFilters.contains('small')) sets.add(_small);
-      if (_selectedFilters.contains('family')) sets.add(_family);
+      if (_selectedFilters.contains('longhair')) sets.add(BreedRepository.longhair);
+      if (_selectedFilters.contains('shorthair')) sets.add(BreedRepository.shorthair);
+      if (_selectedFilters.contains('large')) sets.add(BreedRepository.large);
+      if (_selectedFilters.contains('small')) sets.add(BreedRepository.small);
+      if (_selectedFilters.contains('family')) sets.add(BreedRepository.family);
 
       final allowed = sets.reduce((a, b) => a.union(b));
       breeds = breeds.where((b) => allowed.contains(b.name)).toList();
@@ -50,7 +44,7 @@ class _BreedsScreenState extends State<BreedsScreen> {
     if (_searchQuery.isNotEmpty) {
       final query = _searchQuery.toLowerCase();
       breeds = breeds.where((b) {
-        final persian = AppData.persianNames[b.name] ?? '';
+        final persian = BreedRepository.persianNames[b.name] ?? '';
         return b.name.toLowerCase().contains(query) ||
             persian.contains(query) ||
             b.origin.toLowerCase().contains(query);
@@ -117,8 +111,8 @@ class _BreedsScreenState extends State<BreedsScreen> {
                             final breed = breeds[index];
                             return _BreedGridCard(
                           breed: breed,
-                          persianName: AppData.persianNames[breed.name] ?? breed.name,
-                          imagePath: AppData.breedImages[breed.name],
+                          persianName: BreedRepository.persianNames[breed.name] ?? breed.name,
+                          imagePath: BreedRepository.breedImages[breed.name],
                           onTap: () {
                             Navigator.push(
                               context,

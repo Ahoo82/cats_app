@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/cat_breed.dart';
-import '../constants/app_data.dart';
+import '../data/breed_repository.dart';
 import '../services/favorites_service.dart';
 import '../widgets/breed_placeholder.dart';
 
@@ -35,170 +35,13 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
     setState(() => _isFavorite = _service.isFavorite(widget.breed.name));
   }
 
-  static const _extraInfo = <String, Map<String, String>>{
-    'Persian': {
-      'suitableForChildren': 'بله، بسیار آرام و مهربان',
-      'energyLevel': 'کم',
-      'groomingLevel': 'زیاد',
-      'indoorSuitability': 'عالی',
-      'careDifficulty': 'متوسط',
-      'healthIssues': 'مشکلات تنفسی، بیماری\u200Cهای چشمی، کلیه پلی\u200Cکیستیک',
-      'nutrition': 'غذای خشک با کیفیت بالا، ۲ وعده در روز',
-      'care': 'شانه زدن روزانه، تمیز کردن چشم\u200Cها، حمام ماهانه',
-      'funFacts': 'پرشین\u200Cها یکی از قدیمی\u200Cترین نژادهای گربه هستند و قدمت آنها به ایران باستان باز می\u200Cگردد.',
-    },
-    'Siamese': {
-      'suitableForChildren': 'بله، اجتماعی و بازیگوش',
-      'energyLevel': 'زیاد',
-      'groomingLevel': 'کم',
-      'indoorSuitability': 'خوب',
-      'careDifficulty': 'آسان',
-      'healthIssues': 'مشکلات تنفسی، بیماری\u200Cهای دندانی',
-      'nutrition': 'غذای پرپروتئین، ۲ تا ۳ وعده کوچک در روز',
-      'care': 'برس زدن هفتگی، تمیز کردن دندان\u200Cها',
-      'funFacts': 'سیامی\u200Cها به "گربه\u200Cهای سخنگو" معروف هستند و صدای بلند و خاصی دارند.',
-    },
-    'Maine Coon': {
-      'suitableForChildren': 'بله، عالی برای خانواده',
-      'energyLevel': 'متوسط',
-      'groomingLevel': 'متوسط',
-      'indoorSuitability': 'خوب',
-      'careDifficulty': 'متوسط',
-      'healthIssues': 'دیسپلازی مفصل ران، کاردیومیوپاتی',
-      'nutrition': 'غذای مخصوص نژادهای بزرگ، ۲ وعده در روز',
-      'care': 'برس زدن ۲-۳ بار در هفته، کوتاه کردن ناخن\u200Cها',
-      'funFacts': 'مین کون بزرگترین نژاد گربه خانگی است و برخی از آنها به ۱۰ کیلوگرم هم می\u200Cرسند.',
-    },
-    'British Shorthair': {
-      'suitableForChildren': 'بله، آرام و صبور',
-      'energyLevel': 'کم',
-      'groomingLevel': 'کم',
-      'indoorSuitability': 'عالی',
-      'careDifficulty': 'آسان',
-      'healthIssues': 'چاقی، بیماری\u200Cهای قلبی',
-      'nutrition': 'کنترل کالری، ۲ وعده در روز',
-      'care': 'برس زدن هفتگی، کنترل وزن',
-      'funFacts': 'این نژاد الهام\u200Cبخش شخصیت گربه چشایر در داستان آلیس در سرزمین عجایب است.',
-    },
-    'Bengal': {
-      'suitableForChildren': 'بله، پرانرژی و بازیگوش',
-      'energyLevel': 'زیاد',
-      'groomingLevel': 'کم',
-      'indoorSuitability': 'متوسط',
-      'careDifficulty': 'متوسط',
-      'healthIssues': 'بیماری\u200Cهای کلیوی، مشکلات مفصلی',
-      'nutrition': 'غذای پرپروتئین، ۲-۳ وعده در روز',
-      'care': 'برس زدن هفتگی، بازی و فعالیت روزانه ضروری',
-      'funFacts': 'بنگال\u200Cها عاشق آب هستند و ممکن است با شما دوش بگیرند!',
-    },
-    'Scottish Fold': {
-      'suitableForChildren': 'بله، آرام و سازگار',
-      'energyLevel': 'کم',
-      'groomingLevel': 'کم',
-      'indoorSuitability': 'عالی',
-      'careDifficulty': 'آسان',
-      'healthIssues': 'آرتروز، مشکلات غضروفی',
-      'nutrition': 'غذای تقویت\u200Cکننده مفاصل، ۲ وعده در روز',
-      'care': 'برس زدن هفتگی، تمیز کردن گوش\u200Cها',
-      'funFacts': 'اسکاتیش فولدها به خاطر گوش\u200Cهای تا شده\u200Cشان معروف هستند و اغلب در حالت "بودا" می\u200Cنشینند.',
-    },
-    'Sphynx': {
-      'suitableForChildren': 'بله، مهربان و اجتماعی',
-      'energyLevel': 'زیاد',
-      'groomingLevel': 'زیاد',
-      'indoorSuitability': 'عالی',
-      'careDifficulty': 'دشوار',
-      'healthIssues': 'مشکلات پوستی، حساسیت به دما',
-      'nutrition': 'غذای پرکالری، ۳ وعده در روز',
-      'care': 'حمام هفتگی، تمیز کردن پوست، محافظت از سرما',
-      'funFacts': 'اسفینکس\u200Cها با وجود نداشتن مو، دمای بدن بالاتری دارند و مانند یک بطری آب گرم هستند!',
-    },
-    'Ragdoll': {
-      'suitableForChildren': 'بله، فوق\u200Cالعاده مهربان',
-      'energyLevel': 'کم',
-      'groomingLevel': 'متوسط',
-      'indoorSuitability': 'عالی',
-      'careDifficulty': 'آسان',
-      'healthIssues': 'کاردیومیوپاتی، مشکلات ادراری',
-      'nutrition': 'غذای با کیفیت، ۲ وعده در روز',
-      'care': 'برس زدن ۲ بار در هفته، مراقبت از دندان\u200Cها',
-      'funFacts': 'رگدال\u200Cها وقتی بغل می\u200Cشوند کاملاً شل می\u200Cشوند، مثل یک عروسک پارچه\u200Cای!',
-    },
-    'Abyssinian': {
-      'suitableForChildren': 'بله، ولی نیاز به توجه دارد',
-      'energyLevel': 'زیاد',
-      'groomingLevel': 'کم',
-      'indoorSuitability': 'خوب',
-      'careDifficulty': 'متوسط',
-      'healthIssues': 'بیماری\u200Cهای کلیوی، کم\u200Cخونی',
-      'nutrition': 'غذای پرپروتئین، ۲ وعده در روز',
-      'care': 'برس زدن هفتگی، بازی و فعالیت روزانه ضروری',
-      'funFacts': 'حبشی\u200Cها یکی از قدیمی\u200Cترین نژادهای جهان هستند و شبیه گربه\u200Cهای مصر باستان می\u200Cباشند.',
-    },
-    'Turkish Angora': {
-      'suitableForChildren': 'بله، مهربان و بازیگوش',
-      'energyLevel': 'متوسط',
-      'groomingLevel': 'متوسط',
-      'indoorSuitability': 'خوب',
-      'careDifficulty': 'متوسط',
-      'healthIssues': 'ناشنوایی در گربه\u200Cهای سفید، بیماری\u200Cهای قلبی',
-      'nutrition': 'غذای با کیفیت متعادل، ۲ وعده در روز',
-      'care': 'برس زدن ۲ بار در هفته، مراقبت از چشم\u200Cها',
-      'funFacts': 'بسیاری از آنگوراهای ترکی چشمانی با دو رنگ متفاوت دارند که بسیار زیباست.',
-    },
-    'Domestic Shorthair': {
-      'suitableForChildren': 'بله، بسیار سازگار و مهربان',
-      'energyLevel': 'متوسط',
-      'groomingLevel': 'کم',
-      'indoorSuitability': 'عالی',
-      'careDifficulty': 'آسان',
-      'healthIssues': 'به طور کلی سالم، گاهی مشکلات دندانی',
-      'nutrition': 'غذای متعادل، ۲ وعده در روز',
-      'care': 'برس زدن هفتگی، حمام در صورت نیاز',
-      'funFacts': 'گربه\u200Cهای خانگی موکوتاه رایج\u200Cترین گربه در ایران هستند و در هر کوچه و خانه\u200Cای دیده می\u200Cشوند.',
-    },
-    'Persian Chinchilla': {
-      'suitableForChildren': 'بله، آرام و مهربان',
-      'energyLevel': 'کم',
-      'groomingLevel': 'زیاد',
-      'indoorSuitability': 'عالی',
-      'careDifficulty': 'متوسط',
-      'healthIssues': 'مشکلات چشمی، بیماری\u200Cهای تنفسی',
-      'nutrition': 'غذای خشک با کیفیت، ۲ وعده در روز',
-      'care': 'شانه زدن روزانه، تمیز کردن چشم\u200Cها',
-      'funFacts': 'پرشین چین\u200Cچیلا با چشمان سبز زمردی و خط چشم مشکی خود یکی از زیباترین نژادهای گربه در جهان است.',
-    },
-    'Himalayan': {
-      'suitableForChildren': 'بله، بسیار آرام و مهربان',
-      'energyLevel': 'کم',
-      'groomingLevel': 'زیاد',
-      'indoorSuitability': 'عالی',
-      'careDifficulty': 'متوسط',
-      'healthIssues': 'مشکلات تنفسی، بیماری\u200Cهای چشمی، کلیه پلی\u200Cکیستیک',
-      'nutrition': 'غذای خشک با کیفیت بالا، ۲ وعده در روز',
-      'care': 'شانه زدن روزانه، تمیز کردن چشم\u200Cها و صورت',
-      'funFacts': 'هیمالین\u200Cها ترکیبی از زیبایی پرشین و چشمان آبی سیامی هستند.',
-    },
-    'Exotic Shorthair': {
-      'suitableForChildren': 'بله، مهربان و بازیگوش',
-      'energyLevel': 'کم',
-      'groomingLevel': 'کم',
-      'indoorSuitability': 'عالی',
-      'careDifficulty': 'آسان',
-      'healthIssues': 'مشکلات چشمی، بیماری\u200Cهای تنفسی',
-      'nutrition': 'غذای متعادل، ۲ وعده در روز',
-      'care': 'برس زدن هفتگی، تمیز کردن چشم\u200Cها',
-      'funFacts': 'اکزاتیک مو کوتاه همان پرشین است با موهای کوتاه! به آن "پرشین موکوتاه" هم می\u200Cگویند.',
-    },
-  };
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final breed = widget.breed;
-    final persianName = AppData.persianNames[breed.name] ?? breed.name;
-    final imagePath = AppData.breedImages[breed.name];
-    final extra = _extraInfo[breed.name] ?? {};
+    final persianName = BreedRepository.persianNames[breed.name] ?? breed.name;
+    final imagePath = BreedRepository.breedImages[breed.name];
+    final extra = BreedRepository.extraInfo[breed.name] ?? {};
 
     return Scaffold(
       body: CustomScrollView(

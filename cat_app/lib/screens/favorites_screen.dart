@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/cat_breed.dart';
-import '../constants/app_data.dart';
+import '../data/breed_repository.dart';
 import '../services/favorites_service.dart';
 import '../widgets/breed_placeholder.dart';
 import 'breed_detail_screen.dart';
@@ -117,8 +117,8 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                               final breed = breeds[index];
                               return _FavoriteBreedCard(
                                 breed: breed,
-                                persianName: AppData.persianNames[breed.name] ?? breed.name,
-                                imagePath: AppData.breedImages[breed.name],
+                            persianName: BreedRepository.persianNames[breed.name] ?? breed.name,
+                            imagePath: BreedRepository.breedImages[breed.name],
                                 onTap: () {
                                   Navigator.push(
                                     context,
