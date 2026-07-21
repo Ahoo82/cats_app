@@ -3,6 +3,7 @@ import 'screens/home_screen.dart';
 import 'theme/app_theme.dart';
 import 'services/favorites_service.dart';
 import 'services/settings_service.dart';
+import 'config/brand_config.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +39,7 @@ class _CatAppState extends State<CatApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Cat Encyclopedia',
+      title: BrandConfig.appNameEn,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

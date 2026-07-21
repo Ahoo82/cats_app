@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../config/brand_config.dart';
+
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
 
@@ -73,7 +75,7 @@ class AboutScreen extends StatelessWidget {
               ),
               const SizedBox(height: 28),
               Text(
-                'گربه\u200Cها',
+                BrandConfig.appName,
                 style: theme.textTheme.headlineLarge?.copyWith(
                   fontWeight: FontWeight.w800,
                   fontSize: 34,
@@ -81,7 +83,7 @@ class AboutScreen extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'مرجع جامع شناخت، نگهداری و سلامت گربه\u200Cها',
+                BrandConfig.subtitle,
                 style: theme.textTheme.bodyLarge?.copyWith(
                   color: theme.colorScheme.onSurface.withValues(alpha: 0.55),
                   height: 1.5,
@@ -124,7 +126,7 @@ class AboutScreen extends StatelessWidget {
                 _buildCreditRow(theme, 'راهنما', 'دامپزشکان متخصص'),
               ]),
               const SizedBox(height: 10),
-              _buildInfoRow(theme, 'نسخه', '1.0.0'),
+              _buildInfoRow(theme, 'نسخه', BrandConfig.version),
               const SizedBox(height: 10),
               _buildInfoRow(theme, 'پلتفرم', 'Android • iOS • Web'),
               const SizedBox(height: 40),

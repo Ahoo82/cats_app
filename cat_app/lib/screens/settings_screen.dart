@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../services/settings_service.dart';
+import '../config/brand_config.dart';
 import 'about_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -79,7 +80,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 14),
               _buildAboutTile(theme),
               const SizedBox(height: 2),
-              _buildInfoTile(theme, Icons.info_outline_rounded, 'نسخه', '1.0.0'),
+              _buildInfoTile(theme, Icons.info_outline_rounded, 'نسخه', BrandConfig.version),
               const SizedBox(height: 28),
               _buildSectionTitle(theme, 'پشتیبانی'),
               const SizedBox(height: 14),

@@ -8,6 +8,7 @@ import 'favorites_screen.dart';
 import 'settings_screen.dart';
 import '../services/favorites_service.dart';
 import '../widgets/breed_placeholder.dart';
+import '../config/brand_config.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -145,14 +146,14 @@ class _WelcomeSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'گربه\u200Cها',
+          BrandConfig.appName,
           style: _heroStyle.copyWith(
             color: theme.colorScheme.primary,
           ),
         ),
         const SizedBox(height: 10),
         Text(
-          'مرجع جامع شناخت، نگهداری و سلامت گربه\u200Cها',
+          BrandConfig.subtitle,
           style: theme.textTheme.bodyLarge?.copyWith(
             color: theme.colorScheme.onSurface.withValues(alpha: 0.55),
             height: 1.6,
@@ -232,7 +233,7 @@ class _WelcomeSection extends StatelessWidget {
               const SizedBox(width: 22),
               Expanded(
                 child: Text(
-                  'همه چیز برای داشتن یک گربه سالم و شاد',
+                  BrandConfig.heroTagline,
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: theme.colorScheme.onPrimaryContainer,
