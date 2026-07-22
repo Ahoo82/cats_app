@@ -1,5 +1,17 @@
 import '../utils/app_images.dart';
 
+class BreedImages {
+  final String adultImage;
+  final String kittenImage;
+  final List<String> gallery;
+
+  const BreedImages({
+    required this.adultImage,
+    required this.kittenImage,
+    this.gallery = const [],
+  });
+}
+
 class BreedRepository {
   BreedRepository._();
 
@@ -20,38 +32,21 @@ class BreedRepository {
     'Exotic Shorthair': 'اکزاتیک مو کوتاه',
   };
 
-  static const breedImages = <String, String>{
-    'Persian': AppImages.persian,
-    'Siamese': AppImages.siamese,
-    'Maine Coon': AppImages.maineCoon,
-    'British Shorthair': AppImages.britishShorthair,
-    'Scottish Fold': AppImages.scottishFold,
-    'Ragdoll': AppImages.ragdoll,
-    'Bengal': AppImages.bengal,
-    'Sphynx': AppImages.sphynx,
-    'Abyssinian': AppImages.abyssinian,
-    'Turkish Angora': AppImages.turkishAngora,
-    'Domestic Shorthair': AppImages.domesticShorthair,
-    'Persian Chinchilla': AppImages.persianChinchilla,
-    'Himalayan': AppImages.himalayan,
-    'Exotic Shorthair': AppImages.exoticShorthair,
-  };
-
-  static const breedKittenImages = <String, String>{
-    'Persian': AppImages.persianKitten,
-    'Siamese': AppImages.siameseKitten,
-    'Maine Coon': AppImages.maineCoonKitten,
-    'British Shorthair': AppImages.britishShorthairKitten,
-    'Scottish Fold': AppImages.scottishFoldKitten,
-    'Ragdoll': AppImages.ragdollKitten,
-    'Bengal': AppImages.bengalKitten,
-    'Sphynx': AppImages.sphynxKitten,
-    'Abyssinian': AppImages.abyssinianKitten,
-    'Turkish Angora': AppImages.turkishAngoraKitten,
-    'Domestic Shorthair': AppImages.domesticShorthairKitten,
-    'Persian Chinchilla': AppImages.persianChinchillaKitten,
-    'Himalayan': AppImages.himalayanKitten,
-    'Exotic Shorthair': AppImages.exoticShorthairKitten,
+  static const breedImages = <String, BreedImages>{
+    'Persian': BreedImages(adultImage: AppImages.persian, kittenImage: AppImages.persianKitten),
+    'Siamese': BreedImages(adultImage: AppImages.siamese, kittenImage: AppImages.siameseKitten),
+    'Maine Coon': BreedImages(adultImage: AppImages.maineCoon, kittenImage: AppImages.maineCoonKitten),
+    'British Shorthair': BreedImages(adultImage: AppImages.britishShorthair, kittenImage: AppImages.britishShorthairKitten),
+    'Scottish Fold': BreedImages(adultImage: AppImages.scottishFold, kittenImage: AppImages.scottishFoldKitten),
+    'Ragdoll': BreedImages(adultImage: AppImages.ragdoll, kittenImage: AppImages.ragdollKitten),
+    'Bengal': BreedImages(adultImage: AppImages.bengal, kittenImage: AppImages.bengalKitten),
+    'Sphynx': BreedImages(adultImage: AppImages.sphynx, kittenImage: AppImages.sphynxKitten),
+    'Abyssinian': BreedImages(adultImage: AppImages.abyssinian, kittenImage: AppImages.abyssinianKitten),
+    'Turkish Angora': BreedImages(adultImage: AppImages.turkishAngora, kittenImage: AppImages.turkishAngoraKitten),
+    'Domestic Shorthair': BreedImages(adultImage: AppImages.domesticShorthair, kittenImage: AppImages.domesticShorthairKitten),
+    'Persian Chinchilla': BreedImages(adultImage: AppImages.persianChinchilla, kittenImage: AppImages.persianChinchillaKitten),
+    'Himalayan': BreedImages(adultImage: AppImages.himalayan, kittenImage: AppImages.himalayanKitten),
+    'Exotic Shorthair': BreedImages(adultImage: AppImages.exoticShorthair, kittenImage: AppImages.exoticShorthairKitten),
   };
 
   static const popularBreeds = ['Persian', 'British Shorthair', 'Maine Coon', 'Scottish Fold', 'Siamese', 'Ragdoll'];

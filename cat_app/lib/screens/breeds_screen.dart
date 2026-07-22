@@ -187,7 +187,7 @@ class _BreedsScreenState extends State<BreedsScreen> {
                             return _BreedGridCard(
                           breed: breed,
                           persianName: BreedRepository.persianNames[breed.name] ?? breed.name,
-                          imagePath: BreedRepository.breedImages[breed.name],
+                          imagePath: BreedRepository.breedImages[breed.name]?.adultImage,
                           onTap: () {
                             Navigator.push(
                               context,

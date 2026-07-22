@@ -250,7 +250,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _buildBreedResult(ThemeData theme, CatBreed breed) {
     final persianName = BreedRepository.persianNames[breed.name] ?? breed.name;
-    final imagePath = BreedRepository.breedImages[breed.name];
+    final imagePath = BreedRepository.breedImages[breed.name]?.adultImage;
 
     return Card(
       elevation: 0,

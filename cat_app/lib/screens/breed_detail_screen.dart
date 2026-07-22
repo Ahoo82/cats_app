@@ -39,8 +39,8 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
     final theme = Theme.of(context);
     final breed = widget.breed;
     final persianName = BreedRepository.persianNames[breed.name] ?? breed.name;
-    final imagePath = BreedRepository.breedImages[breed.name];
-    final kittenImagePath = BreedRepository.breedKittenImages[breed.name];
+    final imagePath = BreedRepository.breedImages[breed.name]?.adultImage;
+    final kittenImagePath = BreedRepository.breedImages[breed.name]?.kittenImage;
     final extra = BreedRepository.extraInfo[breed.name] ?? {};
 
     return Scaffold(

@@ -116,7 +116,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                               return _FavoriteBreedCard(
                                 breed: breed,
                             persianName: BreedRepository.persianNames[breed.name] ?? breed.name,
-                            imagePath: BreedRepository.breedImages[breed.name],
+                            imagePath: BreedRepository.breedImages[breed.name]?.adultImage,
                                 onTap: () {
                                   Navigator.push(
                                     context,
