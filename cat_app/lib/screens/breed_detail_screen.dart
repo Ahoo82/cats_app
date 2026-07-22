@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/cat_breed.dart';
 import '../data/breed_repository.dart';
 import '../services/favorites_service.dart';
+import 'placeholder_screen.dart';
 
 class BreedDetailScreen extends StatefulWidget {
   final CatBreed breed;
@@ -148,7 +149,17 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
               color: theme.colorScheme.onSurface,
               size: 20,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, PageRouteBuilder(
+                pageBuilder: (_, _, _) => const PlaceholderScreen(
+                  icon: Icons.ios_share_rounded,
+                  title: 'اشتراک\u200Cگذاری',
+                  description: 'قابلیت اشتراک\u200Cگذاری اطلاعات نژادها به زودی اضافه می\u200Cشود.',
+                ),
+                transitionsBuilder: (_, animation, _, child) => FadeTransition(opacity: animation, child: child),
+                transitionDuration: const Duration(milliseconds: 250),
+              ));
+            },
           ),
         ),
         Container(

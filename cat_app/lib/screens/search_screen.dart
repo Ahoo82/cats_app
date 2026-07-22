@@ -67,8 +67,8 @@ class _SearchScreenState extends State<SearchScreen> {
     if (_query.isEmpty) return [];
     final q = _query.toLowerCase();
     return BreedRepository.articleSearchEntries.where((a) {
-      return a['title']!.toLowerCase().contains(q) ||
-          a['summary']!.toLowerCase().contains(q);
+      return (a['title'] ?? '').toLowerCase().contains(q) ||
+          (a['summary'] ?? '').toLowerCase().contains(q);
     }).toList();
   }
 
@@ -340,10 +340,10 @@ class _SearchScreenState extends State<SearchScreen> {
           Navigator.push(context, PageRouteBuilder(
             pageBuilder: (_, _, _) => ArticleDetailScreen(
               article: Article(
-                title: article['title']!,
-                summary: article['summary']!,
+                title: article['title'] ?? '',
+                summary: article['summary'] ?? '',
                 readingTime: article['readingTime'] ?? article['category'] ?? '',
-                content: article['summary']!,
+                content: article['summary'] ?? '',
                 icon: '',
               ),
             ),
@@ -359,16 +359,16 @@ class _SearchScreenState extends State<SearchScreen> {
           child: Row(children: [
             Expanded(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(article['title']!, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis),
+                Text(article['title'] ?? '', style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis),
                 const SizedBox(height: 4),
-                Text(article['summary']!, style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.5)), maxLines: 2, overflow: TextOverflow.ellipsis),
+                Text(article['summary'] ?? '', style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.5)), maxLines: 2, overflow: TextOverflow.ellipsis),
               ]),
             ),
             const SizedBox(width: 8),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               decoration: BoxDecoration(color: theme.colorScheme.primaryContainer, borderRadius: BorderRadius.circular(6)),
-              child: Text(article['category']!, style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onPrimaryContainer, fontWeight: FontWeight.w600)),
+              child: Text(article['category'] ?? '', style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onPrimaryContainer, fontWeight: FontWeight.w600)),
             ),
           ]),
         ),

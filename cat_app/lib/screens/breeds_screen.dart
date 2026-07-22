@@ -59,8 +59,8 @@ class _BreedsScreenState extends State<BreedsScreen> {
 
     final query = _searchQuery.toLowerCase();
     return BreedRepository.articleSearchEntries.where((a) {
-      return a['title']!.toLowerCase().contains(query) ||
-          a['summary']!.toLowerCase().contains(query);
+      return (a['title'] ?? '').toLowerCase().contains(query) ||
+          (a['summary'] ?? '').toLowerCase().contains(query);
     }).toList();
   }
 
@@ -142,12 +142,12 @@ class _BreedsScreenState extends State<BreedsScreen> {
                                         ),
                                         child: Row(children: [
                                           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                            Text(a['title']!, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis),
+                                            Text(a['title'] ?? '', style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis),
                                             const SizedBox(height: 2),
-                                            Text(a['summary']!, style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.5)), maxLines: 1, overflow: TextOverflow.ellipsis),
+                                            Text(a['summary'] ?? '', style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.5)), maxLines: 1, overflow: TextOverflow.ellipsis),
                                           ])),
                                           const SizedBox(width: 8),
-                                          Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3), decoration: BoxDecoration(color: theme.colorScheme.primaryContainer, borderRadius: BorderRadius.circular(6)), child: Text(a['category']!, style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onPrimaryContainer, fontWeight: FontWeight.w600))),
+                                          Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3), decoration: BoxDecoration(color: theme.colorScheme.primaryContainer, borderRadius: BorderRadius.circular(6)), child: Text(a['category'] ?? '', style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onPrimaryContainer, fontWeight: FontWeight.w600))),
                                         ]),
                                       ),
                                     ),
