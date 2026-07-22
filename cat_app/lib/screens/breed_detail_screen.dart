@@ -232,6 +232,8 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
                   const SizedBox(height: 4),
                   Text(
                     breed.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.bodyLarge?.copyWith(
                       color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
                     ),

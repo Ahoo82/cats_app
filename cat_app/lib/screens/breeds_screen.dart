@@ -466,6 +466,8 @@ class _BreedGridCardState extends State<_BreedGridCard> {
                   const SizedBox(height: 1),
                   Text(
                     breed.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.onSurface.withValues(alpha: 0.45),
                       fontWeight: FontWeight.w500,

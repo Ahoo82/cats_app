@@ -199,6 +199,8 @@ class CategoryScreen extends StatelessWidget {
                   children: [
                     Text(
                       article.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(height: 8),
