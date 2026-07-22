@@ -56,12 +56,12 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 250),
-              child: breeds.isEmpty
-                  ? Expanded(
-                      key: const ValueKey('empty'),
-                      child: Center(
+            Expanded(
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 250),
+                child: breeds.isEmpty
+                    ? Center(
+                        key: const ValueKey('empty'),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -96,11 +96,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                             ),
                           ],
                         ),
-                      ),
-                    )
-                  : Expanded(
-                      key: const ValueKey('grid'),
-                      child: LayoutBuilder(
+                      )
+                    : LayoutBuilder(
+                        key: const ValueKey('grid'),
                         builder: (context, constraints) {
                           final columns = constraints.maxWidth >= 500 ? 3 : 2;
 
@@ -139,7 +137,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           );
                         },
                       ),
-                    ),
+              ),
             ),
           ],
         ),

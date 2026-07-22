@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../models/cat_breed.dart';
 import '../data/breed_repository.dart';
 import '../services/favorites_service.dart';
-import '../widgets/breed_placeholder.dart';
 
 class BreedDetailScreen extends StatefulWidget {
   final CatBreed breed;
@@ -41,13 +40,14 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
     final breed = widget.breed;
     final persianName = BreedRepository.persianNames[breed.name] ?? breed.name;
     final imagePath = BreedRepository.breedImages[breed.name];
+    final kittenImagePath = BreedRepository.breedKittenImages[breed.name];
     final extra = BreedRepository.extraInfo[breed.name] ?? {};
 
     return Scaffold(
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
-          _buildHeader(theme, breed, persianName, imagePath),
+          _buildHeader(theme, breed, persianName, imagePath, kittenImagePath),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(22, 24, 22, 40),
@@ -103,7 +103,7 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
     );
   }
 
-  Widget _buildHeader(ThemeData theme, CatBreed breed, String persianName, String? imagePath) {
+  Widget _buildHeader(ThemeData theme, CatBreed breed, String persianName, String? imagePath, String? kittenPath) {
     return SliverAppBar(
       expandedHeight: 280,
       pinned: true,
@@ -177,26 +177,7 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
         background: Stack(
           fit: StackFit.expand,
           children: [
-            if (imagePath != null)
-              Hero(
-                tag: 'breed-image-${breed.name}',
-                child: Image.asset(
-                  imagePath,
-                  fit: BoxFit.cover,
-                  frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                    if (wasSynchronouslyLoaded) return child;
-                    return AnimatedOpacity(
-                      opacity: frame == null ? 0 : 1,
-                      duration: const Duration(milliseconds: 250),
-                      curve: Curves.easeOut,
-                      child: child,
-                    );
-                  },
-                  errorBuilder: (_, _, _) => const BreedPlaceholder(iconSize: 72),
-                ),
-              )
-            else
-              const BreedPlaceholder(iconSize: 72),
+            _buildImageGallery(theme, breed, imagePath, kittenPath),
             Positioned(
               left: 0,
               right: 0,
@@ -243,6 +224,80 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildImageGallery(ThemeData theme, CatBreed breed, String? imagePath, String? kittenPath) {
+    final images = [
+      {'path': imagePath, 'label': 'بالغ'},
+      {'path': kittenPath, 'label': 'بچه\u200Cگربه'},
+    ];
+
+    return PageView.builder(
+      itemCount: images.length,
+      itemBuilder: (context, index) {
+        final img = images[index];
+        if (img['path'] != null) {
+          return Hero(
+            tag: 'breed-image-${breed.name}-$index',
+            child: Image.asset(
+              img['path']!,
+              fit: BoxFit.cover,
+              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                if (wasSynchronouslyLoaded) return child;
+                return AnimatedOpacity(
+                  opacity: frame == null ? 0 : 1,
+                  duration: const Duration(milliseconds: 250),
+                  curve: Curves.easeOut,
+                  child: child,
+                );
+              },
+              errorBuilder: (_, _, _) => _buildGalleryPlaceholder(theme, img['label']!),
+            ),
+          );
+        }
+        return _buildGalleryPlaceholder(theme, img['label']!);
+      },
+    );
+  }
+
+  Widget _buildGalleryPlaceholder(ThemeData theme, String label) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            theme.colorScheme.primaryContainer,
+            theme.colorScheme.secondaryContainer,
+          ],
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.pets_rounded,
+            size: 64,
+            color: theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.35),
+          ),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              label,
+              style: theme.textTheme.labelMedium?.copyWith(
+                color: theme.colorScheme.onPrimaryContainer,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

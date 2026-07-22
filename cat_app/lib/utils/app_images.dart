@@ -17,4 +17,19 @@ class AppImages {
   static const persianChinchilla = '$_path/persian_chinchilla.jpg';
   static const himalayan = '$_path/himalayan.jpg';
   static const exoticShorthair = '$_path/exotic_shorthair.jpg';
+
+  static const persianKitten = '$_path/persian_kitten.jpg';
+  static const britishShorthairKitten = '$_path/british_shorthair_kitten.jpg';
+  static const maineCoonKitten = '$_path/maine_coon_kitten.jpg';
+  static const scottishFoldKitten = '$_path/scottish_fold_kitten.jpg';
+  static const siameseKitten = '$_path/siamese_kitten.jpg';
+  static const ragdollKitten = '$_path/ragdoll_kitten.jpg';
+  static const bengalKitten = '$_path/bengal_kitten.jpg';
+  static const sphynxKitten = '$_path/sphynx_kitten.jpg';
+  static const abyssinianKitten = '$_path/abyssinian_kitten.jpg';
+  static const turkishAngoraKitten = '$_path/turkish_angora_kitten.jpg';
+  static const domesticShorthairKitten = '$_path/domestic_shorthair_kitten.jpg';
+  static const persianChinchillaKitten = '$_path/persian_chinchilla_kitten.jpg';
+  static const himalayanKitten = '$_path/himalayan_kitten.jpg';
+  static const exoticShorthairKitten = '$_path/exotic_shorthair_kitten.jpg';
 }

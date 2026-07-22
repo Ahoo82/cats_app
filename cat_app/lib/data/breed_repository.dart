@@ -37,6 +37,23 @@ class BreedRepository {
     'Exotic Shorthair': AppImages.exoticShorthair,
   };
 
+  static const breedKittenImages = <String, String>{
+    'Persian': AppImages.persianKitten,
+    'Siamese': AppImages.siameseKitten,
+    'Maine Coon': AppImages.maineCoonKitten,
+    'British Shorthair': AppImages.britishShorthairKitten,
+    'Scottish Fold': AppImages.scottishFoldKitten,
+    'Ragdoll': AppImages.ragdollKitten,
+    'Bengal': AppImages.bengalKitten,
+    'Sphynx': AppImages.sphynxKitten,
+    'Abyssinian': AppImages.abyssinianKitten,
+    'Turkish Angora': AppImages.turkishAngoraKitten,
+    'Domestic Shorthair': AppImages.domesticShorthairKitten,
+    'Persian Chinchilla': AppImages.persianChinchillaKitten,
+    'Himalayan': AppImages.himalayanKitten,
+    'Exotic Shorthair': AppImages.exoticShorthairKitten,
+  };
+
   static const popularBreeds = ['Persian', 'British Shorthair', 'Maine Coon', 'Scottish Fold', 'Siamese', 'Ragdoll'];
 
   static const longhair = {'Persian', 'Maine Coon', 'Ragdoll', 'Turkish Angora', 'Persian Chinchilla', 'Himalayan'};
