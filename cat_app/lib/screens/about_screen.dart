@@ -120,7 +120,7 @@ class AboutScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 36),
-              _buildSection(theme, 'اعتباردهی', [
+              _buildSection(theme, 'دست\u200Cاندرکاران', [
                 _buildCreditRow(theme, 'طراحی و توسعه', 'آهو'),
                 _buildCreditRow(theme, 'محتوای آموزشی', 'تیم گربه\u200Cها'),
                 _buildCreditRow(theme, 'راهنما', 'دامپزشکان متخصص'),

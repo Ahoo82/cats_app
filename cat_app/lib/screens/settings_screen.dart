@@ -133,7 +133,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           },
           title: Text('حالت تاریک', style: theme.textTheme.bodyLarge),
           subtitle: Text(
-            isDark ? 'روشن' : 'خاموش',
+            isDark ? 'فعال' : 'غیرفعال',
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
             ),
@@ -177,7 +177,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         child: ListTile(
           onTap: () => _settings.cycleFontSize(),
-          title: Text('سایز فونت', style: theme.textTheme.bodyLarge),
+          title: Text('اندازه قلم', style: theme.textTheme.bodyLarge),
           subtitle: Text(
             _settings.fontLabel,
             style: theme.textTheme.bodySmall?.copyWith(

@@ -80,7 +80,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                             ),
                             const SizedBox(height: 20),
                             Text(
-                              'هنوز علاقه\u200Cمندی نداری',
+                              'هنوز علاقه\u200Cمندی ندارید',
                               style: theme.textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
@@ -88,7 +88,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'با زدن دکمه قلب، نژادهای مورد علاقه\u200Cات رو ذخیره کن',
+                              'با زدن دکمه قلب، نژادهای مورد علاقه\u200Cتان را ذخیره کنید',
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
                               ),
