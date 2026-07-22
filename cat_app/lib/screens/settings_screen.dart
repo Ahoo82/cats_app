@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../services/settings_service.dart';
 import '../config/brand_config.dart';
 import 'about_screen.dart';
+import 'placeholder_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -84,9 +85,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 28),
               _buildSectionTitle(theme, 'پشتیبانی'),
               const SizedBox(height: 14),
-              _buildLinkTile(theme, Icons.mail_outline_rounded, 'تماس با ما'),
+              _buildLinkTile(theme, Icons.mail_outline_rounded, 'تماس با ما', onTap: () {
+                Navigator.push(context, PageRouteBuilder(
+                  pageBuilder: (_, _, _) => const PlaceholderScreen(icon: Icons.mail_outline_rounded, title: 'تماس با ما', description: 'بخش ارتباط با تیم پشتیبانی به زودی راه\u200Cاندازی می\u200Cشود.'),
+                  transitionsBuilder: (_, animation, _, child) => FadeTransition(opacity: animation, child: child),
+                  transitionDuration: const Duration(milliseconds: 250),
+                ));
+              }),
               const SizedBox(height: 2),
-              _buildLinkTile(theme, Icons.shield_outlined, 'حریم خصوصی'),
+              _buildLinkTile(theme, Icons.shield_outlined, 'حریم خصوصی', onTap: () {
+                Navigator.push(context, PageRouteBuilder(
+                  pageBuilder: (_, _, _) => const PlaceholderScreen(icon: Icons.shield_outlined, title: 'حریم خصوصی', description: 'سیاست\u200Cنامه حریم خصوصی و شرایط استفاده از اپلیکیشن به زودی منتشر می\u200Cشود.'),
+                  transitionsBuilder: (_, animation, _, child) => FadeTransition(opacity: animation, child: child),
+                  transitionDuration: const Duration(milliseconds: 250),
+                ));
+              }),
               const SizedBox(height: 40),
             ],
           ),
@@ -311,7 +324,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget _buildLinkTile(ThemeData theme, IconData icon, String title) {
+  Widget _buildLinkTile(ThemeData theme, IconData icon, String title, {VoidCallback? onTap}) {
     return Card(
       elevation: 0,
       shadowColor: Colors.black.withValues(alpha: 0.04),
@@ -328,7 +341,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
         child: ListTile(
-          onTap: () {},
+          onTap: onTap,
           title: Text(title, style: theme.textTheme.bodyLarge),
           leading: Container(
             width: 40,
