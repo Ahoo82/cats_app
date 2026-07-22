@@ -220,6 +220,19 @@ class _BreedsScreenState extends State<BreedsScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 22),
       child: Row(
         children: [
+          Container(
+            width: 44, height: 44,
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primaryContainer.withValues(alpha: 0.5),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: Icon(Icons.arrow_back_rounded, size: 22, color: theme.colorScheme.onSurface),
+              padding: EdgeInsets.zero,
+            ),
+          ),
+          const SizedBox(width: 14),
           Text(
             'نژادهای گربه',
             style: theme.textTheme.headlineMedium?.copyWith(

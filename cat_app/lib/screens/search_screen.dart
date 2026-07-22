@@ -342,7 +342,7 @@ class _SearchScreenState extends State<SearchScreen> {
               article: Article(
                 title: article['title']!,
                 summary: article['summary']!,
-                readingTime: '',
+                readingTime: article['readingTime'] ?? article['category'] ?? '',
                 content: article['summary']!,
                 icon: '',
               ),
