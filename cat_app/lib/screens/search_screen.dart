@@ -280,7 +280,20 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: SizedBox(
                   width: 48, height: 48,
                   child: imagePath != null
-                      ? Image.asset(imagePath, fit: BoxFit.cover, errorBuilder: (_, _, _) => _buildBreedIcon(theme))
+                      ? Image.asset(
+                          imagePath,
+                          fit: BoxFit.cover,
+                          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                            if (wasSynchronouslyLoaded) return child;
+                            return AnimatedOpacity(
+                              opacity: frame == null ? 0 : 1,
+                              duration: const Duration(milliseconds: 250),
+                              curve: Curves.easeOut,
+                              child: child,
+                            );
+                          },
+                          errorBuilder: (_, _, _) => _buildBreedIcon(theme),
+                        )
                       : _buildBreedIcon(theme),
                 ),
               ),
