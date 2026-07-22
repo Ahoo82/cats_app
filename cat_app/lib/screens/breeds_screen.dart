@@ -19,8 +19,8 @@ class _BreedsScreenState extends State<BreedsScreen> {
   String _searchQuery = '';
 
   static const _filters = [
-    {'label': 'مو بلند', 'key': 'longhair'},
-    {'label': 'مو کوتاه', 'key': 'shorthair'},
+    {'label': 'مو\u200Cبلند', 'key': 'longhair'},
+    {'label': 'مو\u200Cکوتاه', 'key': 'shorthair'},
     {'label': 'جثه بزرگ', 'key': 'large'},
     {'label': 'جثه کوچک', 'key': 'small'},
     {'label': 'مناسب خانواده', 'key': 'family'},
