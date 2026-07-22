@@ -10,6 +10,7 @@ import '../services/favorites_service.dart';
 import '../widgets/breed_placeholder.dart';
 import '../config/brand_config.dart';
 import 'category_screen.dart';
+import 'search_screen.dart';
 import '../models/article.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -397,7 +398,18 @@ class _SearchBar extends StatelessWidget {
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(20),
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (_, _, _) => const SearchScreen(),
+                transitionsBuilder: (_, animation, _, child) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
+                transitionDuration: const Duration(milliseconds: 250),
+              ),
+            );
+          },
           hoverColor: theme.colorScheme.onSurface.withValues(alpha: 0.03),
           borderRadius: BorderRadius.circular(20),
           child: Padding(
@@ -1139,16 +1151,24 @@ class _FloatingNavBarState extends State<_FloatingNavBar> {
                 theme: theme,
                 onTap: () {
                   setState(() => _selectedIndex = index);
-                  if (index == 1 || index == 2 || index == 3) {
+                  if (index == 1 || index == 3) {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
                         pageBuilder: (_, _, _) => const BreedsScreen(),
                         transitionsBuilder: (_, animation, _, child) {
-                          return FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          );
+                          return FadeTransition(opacity: animation, child: child);
+                        },
+                        transitionDuration: const Duration(milliseconds: 250),
+                      ),
+                    );
+                  } else if (index == 2) {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (_, _, _) => const SearchScreen(),
+                        transitionsBuilder: (_, animation, _, child) {
+                          return FadeTransition(opacity: animation, child: child);
                         },
                         transitionDuration: const Duration(milliseconds: 250),
                       ),
