@@ -1139,7 +1139,21 @@ class _FloatingNavBarState extends State<_FloatingNavBar> {
                 theme: theme,
                 onTap: () {
                   setState(() => _selectedIndex = index);
-                  if (index == 4) {
+                  if (index == 1 || index == 2 || index == 3) {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (_, _, _) => const BreedsScreen(),
+                        transitionsBuilder: (_, animation, _, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
+                        transitionDuration: const Duration(milliseconds: 250),
+                      ),
+                    );
+                  } else if (index == 4) {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
