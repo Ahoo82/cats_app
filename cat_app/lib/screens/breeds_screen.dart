@@ -400,7 +400,7 @@ class _BreedGridCardState extends State<_BreedGridCard> {
                 children: [
                   if (widget.imagePath != null)
                     Hero(
-                      tag: 'breed-image-${breed.name}',
+                      tag: 'breed-image-${breed.name}-0',
                       child: Image.asset(
                         widget.imagePath!,
                         fit: BoxFit.cover,

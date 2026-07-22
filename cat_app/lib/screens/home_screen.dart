@@ -3,7 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../utils/app_images.dart';
+import '../models/cat_breed.dart';
 import 'breeds_screen.dart';
+import 'breed_detail_screen.dart';
+import 'article_detail_screen.dart';
 import 'favorites_screen.dart';
 import 'settings_screen.dart';
 import '../services/favorites_service.dart';
@@ -596,11 +599,25 @@ class _PopularBreedsList extends StatelessWidget {
         separatorBuilder: (_, _) => const SizedBox(width: 14),
         itemBuilder: (context, index) {
           final breed = breeds[index];
+          final name = breed['name'] as String;
+          final catBreed = catBreeds.firstWhere((b) => b.name == name);
           return _BreedCard(
-            name: breed['name'] as String,
+            name: name,
             origin: breed['origin'] as String,
             image: breed['image'] as String,
             temperament: breed['temperament'] as String,
+            onTap: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (_, _, _) => BreedDetailScreen(breed: catBreed),
+                  transitionsBuilder: (_, animation, _, child) {
+                    return FadeTransition(opacity: animation, child: child);
+                  },
+                  transitionDuration: const Duration(milliseconds: 250),
+                ),
+              );
+            },
           );
         },
       ),
@@ -613,12 +630,14 @@ class _BreedCard extends StatefulWidget {
   final String origin;
   final String image;
   final String temperament;
+  final VoidCallback? onTap;
 
   const _BreedCard({
     required this.name,
     required this.origin,
     required this.image,
     required this.temperament,
+    this.onTap,
   });
 
   @override
@@ -894,6 +913,24 @@ class _LatestArticles extends StatelessWidget {
             summary: article['summary'] as String,
             time: article['time'] as String,
             theme: theme,
+            onTap: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (_, _, _) => ArticleDetailScreen(
+                    article: Article(
+                      title: article['title'] as String,
+                      summary: article['summary'] as String,
+                      readingTime: article['time'] as String,
+                    ),
+                  ),
+                  transitionsBuilder: (_, animation, _, child) {
+                    return FadeTransition(opacity: animation, child: child);
+                  },
+                  transitionDuration: const Duration(milliseconds: 250),
+                ),
+              );
+            },
           ),
         );
       }).toList(),
@@ -907,6 +944,7 @@ class _ArticleCard extends StatelessWidget {
   final String summary;
   final String time;
   final ThemeData theme;
+  final VoidCallback? onTap;
 
   const _ArticleCard({
     required this.icon,
@@ -914,6 +952,7 @@ class _ArticleCard extends StatelessWidget {
     required this.summary,
     required this.time,
     required this.theme,
+    this.onTap,
   });
 
   @override
@@ -923,11 +962,12 @@ class _ArticleCard extends StatelessWidget {
       shadowColor: Colors.black.withValues(alpha: 0.06),
       surfaceTintColor: Colors.transparent,
       color: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       clipBehavior: Clip.antiAlias,
-      child: Container(
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -1017,6 +1057,7 @@ class _ArticleCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
       ),
     );
   }

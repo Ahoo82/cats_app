@@ -9,7 +9,9 @@ class Article {
     required this.title,
     required this.summary,
     required this.readingTime,
-    required this.content,
-    required this.icon,
+    this.content = '',
+    this.icon = '',
   });
+
+  String get displayContent => content.isNotEmpty ? content : summary;
 }

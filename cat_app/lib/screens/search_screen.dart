@@ -3,7 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/breed_repository.dart';
 import '../models/cat_breed.dart';
+import '../models/article.dart';
 import 'breed_detail_screen.dart';
+import 'article_detail_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -333,7 +335,22 @@ class _SearchScreenState extends State<SearchScreen> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () => _saveRecent(_query),
+        onTap: () {
+          _saveRecent(_query);
+          Navigator.push(context, PageRouteBuilder(
+            pageBuilder: (_, _, _) => ArticleDetailScreen(
+              article: Article(
+                title: article['title']!,
+                summary: article['summary']!,
+                readingTime: '',
+                content: article['summary']!,
+                icon: '',
+              ),
+            ),
+            transitionsBuilder: (_, animation, _, child) => FadeTransition(opacity: animation, child: child),
+            transitionDuration: const Duration(milliseconds: 250),
+          ));
+        },
         child: Container(
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(

@@ -96,7 +96,7 @@ class ArticleDetailScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                article.content,
+                article.displayContent,
                 style: theme.textTheme.bodyLarge?.copyWith(
                   height: 2.0,
                   color: theme.colorScheme.onSurface.withValues(alpha: 0.75),
