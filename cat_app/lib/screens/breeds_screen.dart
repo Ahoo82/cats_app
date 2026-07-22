@@ -54,6 +54,16 @@ class _BreedsScreenState extends State<BreedsScreen> {
     return breeds;
   }
 
+  List<Map<String, String>> get _matchingArticles {
+    if (_searchQuery.isEmpty) return [];
+
+    final query = _searchQuery.toLowerCase();
+    return BreedRepository.articleSearchEntries.where((a) {
+      return a['title']!.toLowerCase().contains(query) ||
+          a['summary']!.toLowerCase().contains(query);
+    }).toList();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -72,6 +82,8 @@ class _BreedsScreenState extends State<BreedsScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final breeds = _filteredBreeds;
+    final articles = _matchingArticles;
+    final isSearching = _searchQuery.isNotEmpty;
 
     return Scaffold(
       body: SafeArea(
@@ -85,16 +97,79 @@ class _BreedsScreenState extends State<BreedsScreen> {
             _buildFilters(theme),
             const SizedBox(height: 16),
             Expanded(
-              child: breeds.isEmpty
-                  ? Center(
-                      child: Text(
-                        'نژادی یافت نشد',
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
-                        ),
+              child: breeds.isEmpty && isSearching
+                  ? SingleChildScrollView(
+                      padding: const EdgeInsets.symmetric(horizontal: 22),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 16),
+                          Container(
+                            padding: const EdgeInsets.all(24),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  theme.colorScheme.surface,
+                                  theme.colorScheme.surfaceContainerHighest,
+                                ],
+                              ),
+                            ),
+                            child: Column(
+                              children: [
+                                Icon(Icons.search_off_rounded, size: 40, color: theme.colorScheme.onSurface.withValues(alpha: 0.3)),
+                                const SizedBox(height: 12),
+                                Text('نژادی با این مشخصات یافت نشد',
+                                  style: theme.textTheme.titleSmall?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.5)),
+                                  textAlign: TextAlign.center,
+                                ),
+                                if (articles.isNotEmpty) ...[
+                                  const SizedBox(height: 8),
+                                  Text('اما ${articles.length} مقاله مرتبط پیدا شد:',
+                                    style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.primary, fontWeight: FontWeight.w600)),
+                                  const SizedBox(height: 12),
+                                  ...articles.take(5).map((a) => Padding(
+                                    padding: const EdgeInsets.only(bottom: 8),
+                                    child: Card(
+                                      elevation: 0, shadowColor: Colors.black.withValues(alpha: 0.04), surfaceTintColor: Colors.transparent, color: Colors.transparent,
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(14),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(12),
+                                          gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest]),
+                                        ),
+                                        child: Row(children: [
+                                          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                            Text(a['title']!, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis),
+                                            const SizedBox(height: 2),
+                                            Text(a['summary']!, style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.5)), maxLines: 1, overflow: TextOverflow.ellipsis),
+                                          ])),
+                                          const SizedBox(width: 8),
+                                          Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3), decoration: BoxDecoration(color: theme.colorScheme.primaryContainer, borderRadius: BorderRadius.circular(6)), child: Text(a['category']!, style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onPrimaryContainer, fontWeight: FontWeight.w600))),
+                                        ]),
+                                      ),
+                                    ),
+                                  )),
+                                ],
+                                const SizedBox(height: 12),
+                                Text('فیلترها را تغییر دهید یا عبارت دیگری جستجو کنید',
+                                  style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.35)), textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     )
-                  : LayoutBuilder(
+                  : breeds.isEmpty
+                      ? Center(
+                          child: Text('نژادی یافت نشد',
+                            style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.4)),
+                          ),
+                        )
+                      : LayoutBuilder(
                       builder: (context, constraints) {
                         final crossAxisCount = constraints.maxWidth >= 500 ? 3 : 2;
 
