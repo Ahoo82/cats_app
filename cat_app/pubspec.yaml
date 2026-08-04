@@ -35,7 +35,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   shared_preferences: ^2.5.0
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -60,6 +59,20 @@ flutter:
 
   assets:
     - assets/images/breeds/
+    - assets/images/breeds/persian/
+    - assets/images/breeds/siamese/
+    - assets/images/breeds/maine_coon/
+    - assets/images/breeds/british_shorthair/
+    - assets/images/breeds/bengal/
+    - assets/images/breeds/scottish_fold/
+    - assets/images/breeds/sphynx/
+    - assets/images/breeds/ragdoll/
+    - assets/images/breeds/abyssinian/
+    - assets/images/breeds/turkish_angora/
+    - assets/images/breeds/domestic_shorthair/
+    - assets/images/breeds/persian_chinchilla/
+    - assets/images/breeds/himalayan/
+    - assets/images/breeds/exotic_shorthair/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

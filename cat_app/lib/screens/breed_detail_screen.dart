@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/cat_breed.dart';
 import '../data/breed_repository.dart';
 import '../services/favorites_service.dart';
+import '../utils/image_alignment.dart';
 import 'placeholder_screen.dart';
 
 class BreedDetailScreen extends StatefulWidget {
@@ -240,9 +241,10 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
   }
 
   Widget _buildImageGallery(ThemeData theme, CatBreed breed, String? imagePath, String? kittenPath) {
+    final kitten = kittenPath ?? imagePath;
     final images = [
       {'path': imagePath, 'label': 'بالغ'},
-      {'path': kittenPath, 'label': 'بچه\u200Cگربه'},
+      {'path': kitten, 'label': 'بچه\u200Cگربه'},
     ];
 
     return PageView.builder(
@@ -252,19 +254,27 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
         if (img['path'] != null) {
           return Hero(
             tag: 'breed-image-${breed.name}-$index',
-            child: Image.asset(
-              img['path']!,
-              fit: BoxFit.cover,
-              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                if (wasSynchronouslyLoaded) return child;
-                return AnimatedOpacity(
-                  opacity: frame == null ? 0 : 1,
-                  duration: const Duration(milliseconds: 250),
-                  curve: Curves.easeOut,
-                  child: child,
-                );
-              },
-              errorBuilder: (_, _, _) => _buildGalleryPlaceholder(theme, img['label']!),
+            child: Container(
+              color: theme.colorScheme.surface,
+              alignment: Alignment.topCenter,
+              child: AspectRatio(
+                aspectRatio: 4 / 3,
+                child: Image.asset(
+                  img['path']!,
+                  fit: BoxFit.contain,
+                  alignment: Alignment.topCenter,
+                  frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                    if (wasSynchronouslyLoaded) return child;
+                    return AnimatedOpacity(
+                      opacity: frame == null ? 0 : 1,
+                      duration: const Duration(milliseconds: 250),
+                      curve: Curves.easeOut,
+                      child: child,
+                    );
+                  },
+                  errorBuilder: (_, _, _) => _buildGalleryPlaceholder(theme, img['label']!),
+                ),
+              ),
             ),
           );
         }

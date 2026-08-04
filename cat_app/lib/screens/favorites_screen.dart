@@ -4,6 +4,7 @@ import '../models/cat_breed.dart';
 import '../data/breed_repository.dart';
 import '../services/favorites_service.dart';
 import '../widgets/breed_placeholder.dart';
+import '../utils/image_alignment.dart';
 import 'breed_detail_screen.dart';
 
 class FavoritesScreen extends StatefulWidget {
@@ -209,25 +210,29 @@ class _FavoriteBreedCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 110,
+              AspectRatio(
+                aspectRatio: 3 / 2,
                 child: imagePath != null
                     ? Hero(
                         tag: 'fav-breed-${breed.name}',
-                        child: Image.asset(
-                          imagePath!,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                            if (wasSynchronouslyLoaded) return child;
-                            return AnimatedOpacity(
-                              opacity: frame == null ? 0 : 1,
-                              duration: const Duration(milliseconds: 250),
-                              curve: Curves.easeOut,
-                              child: child,
-                            );
-                          },
-                          errorBuilder: (_, _, _) => const BreedPlaceholder(iconSize: 40),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.asset(
+                            imagePath!,
+                            fit: BoxFit.cover,
+                            alignment: ImageAlignment.forBreed(breed.name),
+                            width: double.infinity,
+                            frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                              if (wasSynchronouslyLoaded) return child;
+                              return AnimatedOpacity(
+                                opacity: frame == null ? 0 : 1,
+                                duration: const Duration(milliseconds: 250),
+                                curve: Curves.easeOut,
+                                child: child,
+                              );
+                            },
+                            errorBuilder: (_, _, _) => const BreedPlaceholder(iconSize: 40),
+                          ),
                         ),
                       )
                     : const BreedPlaceholder(iconSize: 40),

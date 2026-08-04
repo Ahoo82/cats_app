@@ -285,6 +285,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ? Image.asset(
                           imagePath,
                           fit: BoxFit.cover,
+                    alignment: Alignment(0, -0.15),
                           frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
                             if (wasSynchronouslyLoaded) return child;
                             return AnimatedOpacity(

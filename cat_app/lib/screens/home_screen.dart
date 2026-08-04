@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../utils/app_images.dart';
+import '../utils/image_alignment.dart';
 import '../models/cat_breed.dart';
 import 'breeds_screen.dart';
 import 'breed_detail_screen.dart';
@@ -727,24 +728,28 @@ class _BreedCardState extends State<_BreedCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(
-              height: 140,
+            AspectRatio(
+              aspectRatio: 3 / 2,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  Image.asset(
-                    widget.image,
-                    fit: BoxFit.cover,
-                    frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                      if (wasSynchronouslyLoaded) return child;
-                      return AnimatedOpacity(
-                        opacity: frame == null ? 0 : 1,
-                        duration: const Duration(milliseconds: 250),
-                        curve: Curves.easeOut,
-                        child: child,
-                      );
-                    },
-                    errorBuilder: (_, _, _) => const BreedPlaceholder(),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.asset(
+                      widget.image,
+                      fit: BoxFit.cover,
+                      alignment: ImageAlignment.forBreed(widget.name),
+                      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                        if (wasSynchronouslyLoaded) return child;
+                        return AnimatedOpacity(
+                          opacity: frame == null ? 0 : 1,
+                          duration: const Duration(milliseconds: 250),
+                          curve: Curves.easeOut,
+                          child: child,
+                        );
+                      },
+                      errorBuilder: (_, _, _) => const BreedPlaceholder(),
+                    ),
                   ),
                   Positioned(
                     top: 10,
