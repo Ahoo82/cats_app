@@ -42,7 +42,8 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
     final breed = widget.breed;
     final persianName = BreedRepository.persianNames[breed.name] ?? breed.name;
     final imagePath = BreedRepository.breedImages[breed.name]?.adultImage;
-    final kittenImagePath = BreedRepository.breedImages[breed.name]?.kittenImage;
+    final kittenImagePath =
+        BreedRepository.breedImages[breed.name]?.kittenImage;
     final extra = BreedRepository.extraInfo[breed.name] ?? {};
 
     return Scaffold(
@@ -95,7 +96,11 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
                     _buildFunFactCard(theme, extra['funFacts']!),
                     const SizedBox(height: 28),
                   ],
-                  _buildDescriptionCard(theme, breed.description, Icons.info_outline_rounded),
+                  _buildDescriptionCard(
+                    theme,
+                    breed.description,
+                    Icons.info_outline_rounded,
+                  ),
                 ],
               ),
             ),
@@ -105,7 +110,13 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
     );
   }
 
-  Widget _buildHeader(ThemeData theme, CatBreed breed, String persianName, String? imagePath, String? kittenPath) {
+  Widget _buildHeader(
+    ThemeData theme,
+    CatBreed breed,
+    String persianName,
+    String? imagePath,
+    String? kittenPath,
+  ) {
     return SliverAppBar(
       expandedHeight: 280,
       pinned: true,
@@ -123,6 +134,7 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
           ],
         ),
         child: IconButton(
+          tooltip: 'بازگشت',
           icon: Icon(
             Icons.arrow_back_rounded,
             color: theme.colorScheme.onSurface,
@@ -145,26 +157,32 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
             ],
           ),
           child: IconButton(
+            tooltip: 'اشتراک\u200Cگذاری',
             icon: Icon(
               Icons.ios_share_rounded,
               color: theme.colorScheme.onSurface,
               size: 20,
             ),
             onPressed: () {
-              Navigator.push(context, PageRouteBuilder(
-                pageBuilder: (_, _, _) => const PlaceholderScreen(
-                  icon: Icons.ios_share_rounded,
-                  title: 'اشتراک\u200Cگذاری',
-                  description: 'قابلیت اشتراک\u200Cگذاری اطلاعات نژادها به زودی اضافه می\u200Cشود.',
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (_, _, _) => const PlaceholderScreen(
+                    icon: Icons.ios_share_rounded,
+                    title: 'اشتراک\u200Cگذاری',
+                    description:
+                        'قابلیت اشتراک\u200Cگذاری اطلاعات نژادها به زودی اضافه می\u200Cشود.',
+                  ),
+                  transitionsBuilder: (_, animation, _, child) =>
+                      FadeTransition(opacity: animation, child: child),
+                  transitionDuration: const Duration(milliseconds: 250),
                 ),
-                transitionsBuilder: (_, animation, _, child) => FadeTransition(opacity: animation, child: child),
-                transitionDuration: const Duration(milliseconds: 250),
-              ));
+              );
             },
           ),
         ),
         Container(
-          margin: const EdgeInsets.only(right: 12, top: 8, bottom: 8),
+          margin: const EdgeInsetsDirectional.fromSTEB(8, 8, 12, 8),
           decoration: BoxDecoration(
             color: theme.colorScheme.surface.withValues(alpha: 0.85),
             shape: BoxShape.circle,
@@ -176,9 +194,17 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
             ],
           ),
           child: IconButton(
+            tooltip: _isFavorite
+                ? 'حذف از علاقه\u200Cمندی'
+                : 'افزودن به علاقه\u200Cمندی',
+            isSelected: _isFavorite,
             icon: Icon(
-              _isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-              color: _isFavorite ? theme.colorScheme.error : theme.colorScheme.onSurface,
+              _isFavorite
+                  ? Icons.favorite_rounded
+                  : Icons.favorite_border_rounded,
+              color: _isFavorite
+                  ? theme.colorScheme.error
+                  : theme.colorScheme.onSurface,
               size: 20,
             ),
             onPressed: () => _service.toggle(widget.breed.name),
@@ -240,7 +266,12 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
     );
   }
 
-  Widget _buildImageGallery(ThemeData theme, CatBreed breed, String? imagePath, String? kittenPath) {
+  Widget _buildImageGallery(
+    ThemeData theme,
+    CatBreed breed,
+    String? imagePath,
+    String? kittenPath,
+  ) {
     final kitten = kittenPath ?? imagePath;
     final images = [
       {'path': imagePath, 'label': 'بالغ'},
@@ -255,7 +286,7 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
           return Hero(
             tag: 'breed-image-${breed.name}-$index',
             child: Container(
-              color: theme.colorScheme.surface,
+              color: Colors.transparent,
               alignment: Alignment.topCenter,
               child: AspectRatio(
                 aspectRatio: 4 / 3,
@@ -263,16 +294,18 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
                   img['path']!,
                   fit: BoxFit.contain,
                   alignment: Alignment.topCenter,
-                  frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                    if (wasSynchronouslyLoaded) return child;
-                    return AnimatedOpacity(
-                      opacity: frame == null ? 0 : 1,
-                      duration: const Duration(milliseconds: 250),
-                      curve: Curves.easeOut,
-                      child: child,
-                    );
-                  },
-                  errorBuilder: (_, _, _) => _buildGalleryPlaceholder(theme, img['label']!),
+                  frameBuilder:
+                      (context, child, frame, wasSynchronouslyLoaded) {
+                        if (wasSynchronouslyLoaded) return child;
+                        return AnimatedOpacity(
+                          opacity: frame == null ? 0 : 1,
+                          duration: const Duration(milliseconds: 250),
+                          curve: Curves.easeOut,
+                          child: child,
+                        );
+                      },
+                  errorBuilder: (_, _, _) =>
+                      _buildGalleryPlaceholder(theme, img['label']!),
                 ),
               ),
             ),
@@ -307,8 +340,10 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
             decoration: BoxDecoration(
-              color: theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(10),
+              color: theme.colorScheme.onPrimaryContainer.withValues(
+                alpha: 0.1,
+              ),
+              borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
               label,
@@ -403,10 +438,12 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
               color: theme.colorScheme.onPrimaryContainer,
             ),
           ),
-          backgroundColor: theme.colorScheme.primaryContainer.withValues(alpha: 0.5),
+          backgroundColor: theme.colorScheme.primaryContainer.withValues(
+            alpha: 0.5,
+          ),
           side: BorderSide.none,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -464,19 +501,14 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
       shadowColor: Colors.black.withValues(alpha: 0.04),
       surfaceTintColor: Colors.transparent,
       color: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              accent.withValues(alpha: 0.06),
-              theme.colorScheme.surface,
-            ],
+            colors: [accent.withValues(alpha: 0.06), theme.colorScheme.surface],
           ),
         ),
         padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
@@ -519,9 +551,7 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
       shadowColor: Colors.black.withValues(alpha: 0.04),
       surfaceTintColor: Colors.transparent,
       color: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       clipBehavior: Clip.antiAlias,
       child: Container(
         decoration: BoxDecoration(
@@ -542,10 +572,16 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                color: theme.colorScheme.primaryContainer.withValues(alpha: 0.5),
+                color: theme.colorScheme.primaryContainer.withValues(
+                  alpha: 0.5,
+                ),
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Icon(icon, size: 22, color: theme.colorScheme.onPrimaryContainer),
+              child: Icon(
+                icon,
+                size: 22,
+                color: theme.colorScheme.onPrimaryContainer,
+              ),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -566,15 +602,18 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
     );
   }
 
-  Widget _buildInfoCard(ThemeData theme, IconData icon, String title, String content) {
+  Widget _buildInfoCard(
+    ThemeData theme,
+    IconData icon,
+    String title,
+    String content,
+  ) {
     return Card(
       elevation: 0,
       shadowColor: Colors.black.withValues(alpha: 0.04),
       surfaceTintColor: Colors.transparent,
       color: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       clipBehavior: Clip.antiAlias,
       child: Container(
         decoration: BoxDecoration(
@@ -635,9 +674,7 @@ class _BreedDetailScreenState extends State<BreedDetailScreen> {
       shadowColor: Colors.black.withValues(alpha: 0.04),
       surfaceTintColor: Colors.transparent,
       color: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       clipBehavior: Clip.antiAlias,
       child: Container(
         decoration: BoxDecoration(

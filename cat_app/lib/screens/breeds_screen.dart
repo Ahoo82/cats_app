@@ -32,8 +32,10 @@ class _BreedsScreenState extends State<BreedsScreen> {
 
     if (_selectedFilters.isNotEmpty) {
       final sets = <Set<String>>[];
-      if (_selectedFilters.contains('longhair')) sets.add(BreedRepository.longhair);
-      if (_selectedFilters.contains('shorthair')) sets.add(BreedRepository.shorthair);
+      if (_selectedFilters.contains('longhair'))
+        sets.add(BreedRepository.longhair);
+      if (_selectedFilters.contains('shorthair'))
+        sets.add(BreedRepository.shorthair);
       if (_selectedFilters.contains('large')) sets.add(BreedRepository.large);
       if (_selectedFilters.contains('small')) sets.add(BreedRepository.small);
       if (_selectedFilters.contains('family')) sets.add(BreedRepository.family);
@@ -119,44 +121,157 @@ class _BreedsScreenState extends State<BreedsScreen> {
                             ),
                             child: Column(
                               children: [
-                                Icon(Icons.search_off_rounded, size: 40, color: theme.colorScheme.onSurface.withValues(alpha: 0.3)),
+                                Icon(
+                                  Icons.search_off_rounded,
+                                  size: 40,
+                                  color: theme.colorScheme.onSurface.withValues(
+                                    alpha: 0.3,
+                                  ),
+                                ),
                                 const SizedBox(height: 12),
-                                Text('نژادی با این مشخصات یافت نشد',
-                                  style: theme.textTheme.titleSmall?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.5)),
+                                Text(
+                                  'نژادی با این مشخصات یافت نشد',
+                                  style: theme.textTheme.titleSmall?.copyWith(
+                                    color: theme.colorScheme.onSurface
+                                        .withValues(alpha: 0.5),
+                                  ),
                                   textAlign: TextAlign.center,
                                 ),
                                 if (articles.isNotEmpty) ...[
                                   const SizedBox(height: 8),
-                                  Text('اما ${articles.length} مقاله مرتبط پیدا شد:',
-                                    style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.primary, fontWeight: FontWeight.w600)),
-                                  const SizedBox(height: 12),
-                                  ...articles.take(5).map((a) => Padding(
-                                    padding: const EdgeInsets.only(bottom: 8),
-                                    child: Card(
-                                      elevation: 0, shadowColor: Colors.black.withValues(alpha: 0.04), surfaceTintColor: Colors.transparent, color: Colors.transparent,
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                      child: Container(
-                                        padding: const EdgeInsets.all(14),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(12),
-                                          gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest]),
-                                        ),
-                                        child: Row(children: [
-                                          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                            Text(a['title'] ?? '', style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis),
-                                            const SizedBox(height: 2),
-                                            Text(a['summary'] ?? '', style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.5)), maxLines: 1, overflow: TextOverflow.ellipsis),
-                                          ])),
-                                          const SizedBox(width: 8),
-                                          Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3), decoration: BoxDecoration(color: theme.colorScheme.primaryContainer, borderRadius: BorderRadius.circular(6)), child: Text(a['category'] ?? '', style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onPrimaryContainer, fontWeight: FontWeight.w600))),
-                                        ]),
-                                      ),
+                                  Text(
+                                    'اما ${articles.length} مقاله مرتبط پیدا شد:',
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color: theme.colorScheme.primary,
+                                      fontWeight: FontWeight.w600,
                                     ),
-                                  )),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  ...articles
+                                      .take(5)
+                                      .map(
+                                        (a) => Padding(
+                                          padding: const EdgeInsets.only(
+                                            bottom: 8,
+                                          ),
+                                          child: Card(
+                                            elevation: 0,
+                                            shadowColor: Colors.black
+                                                .withValues(alpha: 0.04),
+                                            surfaceTintColor:
+                                                Colors.transparent,
+                                            color: Colors.transparent,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            child: Container(
+                                              padding: const EdgeInsets.all(14),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                gradient: LinearGradient(
+                                                  begin: Alignment.topLeft,
+                                                  end: Alignment.bottomRight,
+                                                  colors: [
+                                                    theme.colorScheme.surface,
+                                                    theme
+                                                        .colorScheme
+                                                        .surfaceContainerHighest,
+                                                  ],
+                                                ),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          a['title'] ?? '',
+                                                          style: theme
+                                                              .textTheme
+                                                              .bodyMedium
+                                                              ?.copyWith(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                              ),
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 2,
+                                                        ),
+                                                        Text(
+                                                          a['summary'] ?? '',
+                                                          style: theme
+                                                              .textTheme
+                                                              .bodySmall
+                                                              ?.copyWith(
+                                                                color: theme
+                                                                    .colorScheme
+                                                                    .onSurface
+                                                                    .withValues(
+                                                                      alpha:
+                                                                          0.5,
+                                                                    ),
+                                                              ),
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  Container(
+                                                    padding:
+                                                        const EdgeInsets.symmetric(
+                                                          horizontal: 8,
+                                                          vertical: 3,
+                                                        ),
+                                                    decoration: BoxDecoration(
+                                                      color: theme
+                                                          .colorScheme
+                                                          .primaryContainer,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            12,
+                                                          ),
+                                                    ),
+                                                    child: Text(
+                                                      a['category'] ?? '',
+                                                      style: theme
+                                                          .textTheme
+                                                          .labelSmall
+                                                          ?.copyWith(
+                                                            color: theme
+                                                                .colorScheme
+                                                                .onPrimaryContainer,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                 ],
                                 const SizedBox(height: 12),
-                                Text('فیلترها را تغییر دهید یا عبارت دیگری جستجو کنید',
-                                  style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.35)), textAlign: TextAlign.center,
+                                Text(
+                                  'فیلترها را تغییر دهید یا عبارت دیگری جستجو کنید',
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: theme.colorScheme.onSurface
+                                        .withValues(alpha: 0.35),
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
                               ],
                             ),
@@ -165,50 +280,66 @@ class _BreedsScreenState extends State<BreedsScreen> {
                       ),
                     )
                   : breeds.isEmpty
-                      ? Center(
-                          child: Text('نژادی یافت نشد',
-                            style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.4)),
+                  ? Center(
+                      child: Text(
+                        'نژادی یافت نشد',
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          color: theme.colorScheme.onSurface.withValues(
+                            alpha: 0.4,
                           ),
-                        )
-                      : LayoutBuilder(
+                        ),
+                      ),
+                    )
+                  : LayoutBuilder(
                       builder: (context, constraints) {
-                        final crossAxisCount = constraints.maxWidth >= 500 ? 3 : 2;
+                        final crossAxisCount = constraints.maxWidth >= 500
+                            ? 3
+                            : 2;
 
                         return GridView.builder(
                           padding: const EdgeInsets.symmetric(horizontal: 22),
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: crossAxisCount,
-                            mainAxisSpacing: 14,
-                            crossAxisSpacing: 14,
-                            childAspectRatio: 0.58,
-                          ),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: crossAxisCount,
+                                mainAxisSpacing: 14,
+                                crossAxisSpacing: 14,
+                                childAspectRatio: 0.58,
+                              ),
                           itemCount: breeds.length,
                           itemBuilder: (context, index) {
                             final breed = breeds[index];
                             return _BreedGridCard(
-                          breed: breed,
-                          persianName: BreedRepository.persianNames[breed.name] ?? breed.name,
-                          imagePath: BreedRepository.breedImages[breed.name]?.adultImage,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageRouteBuilder(
-                                pageBuilder: (_, _, _) => BreedDetailScreen(breed: breed),
-                                transitionsBuilder: (_, animation, _, child) {
-                                  return FadeTransition(
-                                    opacity: animation,
-                                    child: child,
-                                  );
-                                },
-                                transitionDuration: const Duration(milliseconds: 250),
-                              ),
+                              breed: breed,
+                              persianName:
+                                  BreedRepository.persianNames[breed.name] ??
+                                  breed.name,
+                              imagePath: BreedRepository
+                                  .breedImages[breed.name]
+                                  ?.adultImage,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder: (_, _, _) =>
+                                        BreedDetailScreen(breed: breed),
+                                    transitionsBuilder:
+                                        (_, animation, _, child) {
+                                          return FadeTransition(
+                                            opacity: animation,
+                                            child: child,
+                                          );
+                                        },
+                                    transitionDuration: const Duration(
+                                      milliseconds: 250,
+                                    ),
+                                  ),
+                                );
+                              },
                             );
                           },
                         );
                       },
-                    );
-                  },
-                ),
+                    ),
             ),
           ],
         ),
@@ -222,14 +353,20 @@ class _BreedsScreenState extends State<BreedsScreen> {
       child: Row(
         children: [
           Container(
-            width: 44, height: 44,
+            width: 44,
+            height: 44,
             decoration: BoxDecoration(
               color: theme.colorScheme.primaryContainer.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(16),
             ),
             child: IconButton(
+              tooltip: 'بازگشت',
               onPressed: () => Navigator.pop(context),
-              icon: Icon(Icons.arrow_back_rounded, size: 22, color: theme.colorScheme.onSurface),
+              icon: Icon(
+                Icons.arrow_back_rounded,
+                size: 22,
+                color: theme.colorScheme.onSurface,
+              ),
               padding: EdgeInsets.zero,
             ),
           ),
@@ -282,7 +419,10 @@ class _BreedsScreenState extends State<BreedsScreen> {
               color: theme.colorScheme.onSurface.withValues(alpha: 0.35),
             ),
             border: InputBorder.none,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 18,
+              vertical: 14,
+            ),
           ),
           style: theme.textTheme.bodyLarge,
         ),
@@ -386,9 +526,7 @@ class _BreedGridCardState extends State<_BreedGridCard> {
       shadowColor: Colors.black.withValues(alpha: 0.08),
       surfaceTintColor: Colors.transparent,
       color: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: widget.onTap,
@@ -396,58 +534,67 @@ class _BreedGridCardState extends State<_BreedGridCard> {
         splashColor: theme.colorScheme.primary.withValues(alpha: 0.08),
         highlightColor: theme.colorScheme.primary.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(20),
-        child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest],
+        child: Ink(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                theme.colorScheme.surface,
+                theme.colorScheme.surfaceContainerHighest,
+              ],
+            ),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AspectRatio(
-              aspectRatio: 3 / 2,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  if (widget.imagePath != null)
-                    Hero(
-                      tag: 'breed-image-${breed.name}-0',
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AspectRatio(
+                aspectRatio: 3 / 2,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    if (widget.imagePath != null)
+                      Hero(
+                        tag: 'breed-image-${breed.name}-0',
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
                           child: Image.asset(
-                          widget.imagePath!,
-                          fit: BoxFit.cover,
-                          alignment: ImageAlignment.forBreed(breed.name),
-                          width: double.infinity,
-                          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                            if (wasSynchronouslyLoaded) return child;
-                            return AnimatedOpacity(
-                              opacity: frame == null ? 0 : 1,
-                              duration: const Duration(milliseconds: 250),
-                              curve: Curves.easeOut,
-                              child: child,
-                            );
-                          },
-                          errorBuilder: (_, _, _) => const BreedPlaceholder(iconSize: 40),
+                            widget.imagePath!,
+                            fit: BoxFit.cover,
+                            alignment: ImageAlignment.forBreed(breed.name),
+                            width: double.infinity,
+                            frameBuilder:
+                                (
+                                  context,
+                                  child,
+                                  frame,
+                                  wasSynchronouslyLoaded,
+                                ) {
+                                  if (wasSynchronouslyLoaded) return child;
+                                  return AnimatedOpacity(
+                                    opacity: frame == null ? 0 : 1,
+                                    duration: const Duration(milliseconds: 250),
+                                    curve: Curves.easeOut,
+                                    child: child,
+                                  );
+                                },
+                            errorBuilder: (_, _, _) =>
+                                const BreedPlaceholder(iconSize: 40),
+                          ),
                         ),
-                      ),
-                    )
-                  else
-                    const BreedPlaceholder(iconSize: 40),
-                  Positioned(
-                    top: 8,
-                    right: 8,
-                    child: GestureDetector(
-                      onTap: () => _service.toggle(breed.name),
-                      behavior: HitTestBehavior.opaque,
+                      )
+                    else
+                      const BreedPlaceholder(iconSize: 40),
+                    Positioned(
+                      top: 8,
+                      right: 8,
                       child: Container(
                         width: 36,
                         height: 36,
                         decoration: BoxDecoration(
-                          color: theme.colorScheme.surface.withValues(alpha: 0.85),
+                          color: theme.colorScheme.surface.withValues(
+                            alpha: 0.85,
+                          ),
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
@@ -457,95 +604,127 @@ class _BreedGridCardState extends State<_BreedGridCard> {
                             ),
                           ],
                         ),
-                        child: Icon(
-                          _isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-                          size: 16,
-                          color: _isFavorite ? theme.colorScheme.error : theme.colorScheme.primary,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.persianName,
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 1),
-                  Text(
-                    breed.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.45),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_on_outlined,
-                        size: 12,
-                        color: theme.colorScheme.primary.withValues(alpha: 0.6),
-                      ),
-                      const SizedBox(width: 2),
-                      Expanded(
-                        child: Text(
-                          breed.origin,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
-                            fontSize: 11,
+                        child: Semantics(
+                          button: true,
+                          selected: _isFavorite,
+                          label: _isFavorite
+                              ? 'حذف از علاقه\u200Cمندی'
+                              : 'افزودن به علاقه\u200Cمندی',
+                          child: Material(
+                            color: Colors.transparent,
+                            shape: const CircleBorder(),
+                            clipBehavior: Clip.antiAlias,
+                            child: InkWell(
+                              customBorder: const CircleBorder(),
+                              onTap: () => _service.toggle(breed.name),
+                              child: Center(
+                                child: Icon(
+                                  _isFavorite
+                                      ? Icons.favorite_rounded
+                                      : Icons.favorite_border_rounded,
+                                  size: 16,
+                                  color: _isFavorite
+                                      ? theme.colorScheme.error
+                                      : theme.colorScheme.primary,
+                                ),
+                              ),
+                            ),
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.secondaryContainer,
-                      borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Text(
-                      breed.temperament.split(', ').first,
-                      style: theme.textTheme.labelSmall?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: theme.colorScheme.onSecondaryContainer,
-                        fontSize: 10,
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.persianName,
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 1),
+                    Text(
+                      breed.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurface.withValues(
+                          alpha: 0.45,
+                        ),
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    breed.description,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
-                      height: 1.35,
-                      fontSize: 11,
+                    const SizedBox(height: 6),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.location_on_outlined,
+                          size: 12,
+                          color: theme.colorScheme.primary.withValues(
+                            alpha: 0.6,
+                          ),
+                        ),
+                        const SizedBox(width: 2),
+                        Expanded(
+                          child: Text(
+                            breed.origin,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.onSurface.withValues(
+                                alpha: 0.5,
+                              ),
+                              fontSize: 11,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.secondaryContainer,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        breed.temperament.split(', ').first,
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: theme.colorScheme.onSecondaryContainer,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      breed.description,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurface.withValues(
+                          alpha: 0.5,
+                        ),
+                        height: 1.35,
+                        fontSize: 11,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
       ),
     );
   }

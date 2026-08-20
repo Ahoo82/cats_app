@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'screens/home_screen.dart';
 import 'theme/app_theme.dart';
 import 'services/favorites_service.dart';
@@ -44,14 +45,17 @@ class _CatAppState extends State<CatApp> {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: _settings.themeMode,
+      locale: const Locale('fa', 'IR'),
+      supportedLocales: const [Locale('fa', 'IR'), Locale('en', 'US')],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
       builder: (context, child) {
         return MediaQuery.withClampedTextScaling(
           minScaleFactor: 0.85,
           maxScaleFactor: 1.2,
           child: MediaQuery(
-            data: MediaQuery.of(context).copyWith(
-              textScaler: TextScaler.linear(_settings.fontScale),
-            ),
+            data: MediaQuery.of(
+              context,
+            ).copyWith(textScaler: TextScaler.linear(_settings.fontScale)),
             child: child!,
           ),
         );

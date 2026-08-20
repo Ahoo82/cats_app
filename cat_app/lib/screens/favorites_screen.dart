@@ -52,14 +52,22 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               child: Row(
                 children: [
                   Container(
-                    width: 44, height: 44,
+                    width: 44,
+                    height: 44,
                     decoration: BoxDecoration(
-                      color: theme.colorScheme.primaryContainer.withValues(alpha: 0.5),
+                      color: theme.colorScheme.primaryContainer.withValues(
+                        alpha: 0.5,
+                      ),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: IconButton(
+                      tooltip: 'بازگشت',
                       onPressed: () => Navigator.pop(context),
-                      icon: Icon(Icons.arrow_back_rounded, size: 22, color: theme.colorScheme.onSurface),
+                      icon: Icon(
+                        Icons.arrow_back_rounded,
+                        size: 22,
+                        color: theme.colorScheme.onSurface,
+                      ),
                       padding: EdgeInsets.zero,
                     ),
                   ),
@@ -87,13 +95,16 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                               width: 80,
                               height: 80,
                               decoration: BoxDecoration(
-                                color: theme.colorScheme.primaryContainer.withValues(alpha: 0.4),
+                                color: theme.colorScheme.primaryContainer
+                                    .withValues(alpha: 0.4),
                                 borderRadius: BorderRadius.circular(24),
                               ),
                               child: Icon(
                                 Icons.favorite_border_rounded,
                                 size: 36,
-                                color: theme.colorScheme.primary.withValues(alpha: 0.5),
+                                color: theme.colorScheme.primary.withValues(
+                                  alpha: 0.5,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 20),
@@ -101,14 +112,18 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                               'هنوز علاقه\u200Cمندی ندارید',
                               style: theme.textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.w600,
-                                color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                                color: theme.colorScheme.onSurface.withValues(
+                                  alpha: 0.5,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 8),
                             Text(
                               'با زدن دکمه قلب، نژادهای مورد علاقه\u200Cتان را ذخیره کنید',
                               style: theme.textTheme.bodyMedium?.copyWith(
-                                color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+                                color: theme.colorScheme.onSurface.withValues(
+                                  alpha: 0.4,
+                                ),
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -122,31 +137,40 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
                           return GridView.builder(
                             padding: const EdgeInsets.symmetric(horizontal: 22),
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: columns,
-                              mainAxisSpacing: 14,
-                              crossAxisSpacing: 14,
-                              childAspectRatio: 0.58,
-                            ),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: columns,
+                                  mainAxisSpacing: 14,
+                                  crossAxisSpacing: 14,
+                                  childAspectRatio: 0.58,
+                                ),
                             itemCount: breeds.length,
                             itemBuilder: (context, index) {
                               final breed = breeds[index];
                               return _FavoriteBreedCard(
                                 breed: breed,
-                            persianName: BreedRepository.persianNames[breed.name] ?? breed.name,
-                            imagePath: BreedRepository.breedImages[breed.name]?.adultImage,
+                                persianName:
+                                    BreedRepository.persianNames[breed.name] ??
+                                    breed.name,
+                                imagePath: BreedRepository
+                                    .breedImages[breed.name]
+                                    ?.adultImage,
                                 onTap: () {
                                   Navigator.push(
                                     context,
                                     PageRouteBuilder(
-                                      pageBuilder: (_, _, _) => BreedDetailScreen(breed: breed),
-                                      transitionsBuilder: (_, animation, _, child) {
-                                        return FadeTransition(
-                                          opacity: animation,
-                                          child: child,
-                                        );
-                                      },
-                                      transitionDuration: const Duration(milliseconds: 250),
+                                      pageBuilder: (_, _, _) =>
+                                          BreedDetailScreen(breed: breed),
+                                      transitionsBuilder:
+                                          (_, animation, _, child) {
+                                            return FadeTransition(
+                                              opacity: animation,
+                                              child: child,
+                                            );
+                                          },
+                                      transitionDuration: const Duration(
+                                        milliseconds: 250,
+                                      ),
                                     ),
                                   );
                                 },
@@ -186,9 +210,7 @@ class _FavoriteBreedCard extends StatelessWidget {
       shadowColor: Colors.black.withValues(alpha: 0.08),
       surfaceTintColor: Colors.transparent,
       color: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
@@ -196,7 +218,7 @@ class _FavoriteBreedCard extends StatelessWidget {
         splashColor: theme.colorScheme.primary.withValues(alpha: 0.08),
         highlightColor: theme.colorScheme.primary.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(20),
-        child: Container(
+        child: Ink(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -222,16 +244,23 @@ class _FavoriteBreedCard extends StatelessWidget {
                             fit: BoxFit.cover,
                             alignment: ImageAlignment.forBreed(breed.name),
                             width: double.infinity,
-                            frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                              if (wasSynchronouslyLoaded) return child;
-                              return AnimatedOpacity(
-                                opacity: frame == null ? 0 : 1,
-                                duration: const Duration(milliseconds: 250),
-                                curve: Curves.easeOut,
-                                child: child,
-                              );
-                            },
-                            errorBuilder: (_, _, _) => const BreedPlaceholder(iconSize: 40),
+                            frameBuilder:
+                                (
+                                  context,
+                                  child,
+                                  frame,
+                                  wasSynchronouslyLoaded,
+                                ) {
+                                  if (wasSynchronouslyLoaded) return child;
+                                  return AnimatedOpacity(
+                                    opacity: frame == null ? 0 : 1,
+                                    duration: const Duration(milliseconds: 250),
+                                    curve: Curves.easeOut,
+                                    child: child,
+                                  );
+                                },
+                            errorBuilder: (_, _, _) =>
+                                const BreedPlaceholder(iconSize: 40),
                           ),
                         ),
                       )

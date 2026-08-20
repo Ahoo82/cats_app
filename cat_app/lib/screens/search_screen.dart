@@ -91,27 +91,37 @@ class _SearchScreenState extends State<SearchScreen> {
               child: !hasResults
                   ? _buildRecentSearches(theme)
                   : isEmpty
-                      ? _buildEmptyState(theme)
-                      : SingleChildScrollView(
-                          padding: const EdgeInsets.symmetric(horizontal: 22),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              if (breeds.isNotEmpty) ...[
-                                _buildSectionTitle(theme, 'نژادها (${breeds.length})'),
-                                const SizedBox(height: 10),
-                                ...breeds.take(5).map((b) => _buildBreedResult(theme, b)),
-                                const SizedBox(height: 20),
-                              ],
-                              if (articles.isNotEmpty) ...[
-                                _buildSectionTitle(theme, 'مقالات (${articles.length})'),
-                                const SizedBox(height: 10),
-                                ...articles.take(5).map((a) => _buildArticleResult(theme, a)),
-                              ],
-                              const SizedBox(height: 32),
-                            ],
-                          ),
-                        ),
+                  ? _buildEmptyState(theme)
+                  : SingleChildScrollView(
+                      padding: const EdgeInsets.symmetric(horizontal: 22),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (breeds.isNotEmpty) ...[
+                            _buildSectionTitle(
+                              theme,
+                              'نژادها (${breeds.length})',
+                            ),
+                            const SizedBox(height: 10),
+                            ...breeds
+                                .take(5)
+                                .map((b) => _buildBreedResult(theme, b)),
+                            const SizedBox(height: 20),
+                          ],
+                          if (articles.isNotEmpty) ...[
+                            _buildSectionTitle(
+                              theme,
+                              'مقالات (${articles.length})',
+                            ),
+                            const SizedBox(height: 10),
+                            ...articles
+                                .take(5)
+                                .map((a) => _buildArticleResult(theme, a)),
+                          ],
+                          const SizedBox(height: 32),
+                        ],
+                      ),
+                    ),
             ),
           ],
         ),
@@ -132,8 +142,13 @@ class _SearchScreenState extends State<SearchScreen> {
               borderRadius: BorderRadius.circular(16),
             ),
             child: IconButton(
+              tooltip: 'بازگشت',
               onPressed: () => Navigator.pop(context),
-              icon: Icon(Icons.arrow_back_rounded, size: 22, color: theme.colorScheme.onSurface),
+              icon: Icon(
+                Icons.arrow_back_rounded,
+                size: 22,
+                color: theme.colorScheme.onSurface,
+              ),
               padding: EdgeInsets.zero,
             ),
           ),
@@ -144,7 +159,13 @@ class _SearchScreenState extends State<SearchScreen> {
               decoration: BoxDecoration(
                 color: theme.colorScheme.surface,
                 borderRadius: BorderRadius.circular(20),
-                boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 3))],
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
               ),
               child: TextField(
                 controller: _controller,
@@ -153,16 +174,32 @@ class _SearchScreenState extends State<SearchScreen> {
                 onSubmitted: (_) => _saveRecent(_query),
                 decoration: InputDecoration(
                   hintText: 'جستجوی نژاد، بیماری، غذا...',
-                  hintStyle: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.35)),
-                  prefixIcon: Icon(Icons.search_rounded, size: 20, color: theme.colorScheme.onSurface.withValues(alpha: 0.35)),
+                  hintStyle: theme.textTheme.bodyLarge?.copyWith(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.35),
+                  ),
+                  prefixIcon: Icon(
+                    Icons.search_rounded,
+                    size: 20,
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.35),
+                  ),
                   suffixIcon: _query.isNotEmpty
                       ? IconButton(
-                          icon: Icon(Icons.close_rounded, size: 20, color: theme.colorScheme.onSurface.withValues(alpha: 0.4)),
+                          tooltip: 'پاک کردن متن',
+                          icon: Icon(
+                            Icons.close_rounded,
+                            size: 20,
+                            color: theme.colorScheme.onSurface.withValues(
+                              alpha: 0.4,
+                            ),
+                          ),
                           onPressed: () => _controller.clear(),
                         )
                       : null,
                   border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 18,
+                    vertical: 14,
+                  ),
                 ),
                 style: theme.textTheme.bodyLarge,
               ),
@@ -182,7 +219,14 @@ class _SearchScreenState extends State<SearchScreen> {
           if (_recent.isNotEmpty) ...[
             Row(
               children: [
-                Text('جستجوهای اخیر', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600, color: theme.colorScheme.onSurface.withValues(alpha: 0.45), fontSize: 13)),
+                Text(
+                  'جستجوهای اخیر',
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.45),
+                    fontSize: 13,
+                  ),
+                ),
                 const Spacer(),
                 GestureDetector(
                   onTap: () async {
@@ -190,7 +234,13 @@ class _SearchScreenState extends State<SearchScreen> {
                     await prefs.remove(_recentKey);
                     setState(() => _recent = []);
                   },
-                  child: Text('پاک کردن', style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.primary, fontWeight: FontWeight.w600)),
+                  child: Text(
+                    'پاک کردن',
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: theme.colorScheme.primary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -198,16 +248,23 @@ class _SearchScreenState extends State<SearchScreen> {
             Wrap(
               spacing: 8,
               runSpacing: 8,
-              children: _recent.map((r) => ActionChip(
-                label: Text(r, style: const TextStyle(fontSize: 13)),
-                onPressed: () {
-                  _controller.text = r;
-                  _saveRecent(r);
-                },
-                backgroundColor: theme.colorScheme.surfaceContainerHighest,
-                side: BorderSide.none,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              )).toList(),
+              children: _recent
+                  .map(
+                    (r) => ActionChip(
+                      label: Text(r, style: const TextStyle(fontSize: 13)),
+                      onPressed: () {
+                        _controller.text = r;
+                        _saveRecent(r);
+                      },
+                      backgroundColor:
+                          theme.colorScheme.surfaceContainerHighest,
+                      side: BorderSide.none,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
             const SizedBox(height: 28),
           ],
@@ -216,9 +273,20 @@ class _SearchScreenState extends State<SearchScreen> {
               padding: const EdgeInsets.only(top: 40),
               child: Column(
                 children: [
-                  Icon(Icons.search_rounded, size: 48, color: theme.colorScheme.onSurface.withValues(alpha: 0.15)),
+                  Icon(
+                    Icons.search_rounded,
+                    size: 48,
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.15),
+                  ),
                   const SizedBox(height: 14),
-                  Text('جستجو در نژادها و مقالات', style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.35))),
+                  Text(
+                    'جستجو در نژادها و مقالات',
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      color: theme.colorScheme.onSurface.withValues(
+                        alpha: 0.35,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -235,11 +303,25 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.search_off_rounded, size: 56, color: theme.colorScheme.onSurface.withValues(alpha: 0.2)),
+            Icon(
+              Icons.search_off_rounded,
+              size: 56,
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+            ),
             const SizedBox(height: 16),
-            Text('نتیجه\u200Cای یافت نشد', style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.4))),
+            Text(
+              'نتیجه\u200Cای یافت نشد',
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+              ),
+            ),
             const SizedBox(height: 8),
-            Text('عبارت دیگری را جستجو کنید', style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.3))),
+            Text(
+              'عبارت دیگری را جستجو کنید',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.3),
+              ),
+            ),
           ],
         ),
       ),
@@ -247,7 +329,14 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _buildSectionTitle(ThemeData theme, String title) {
-    return Text(title, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600, color: theme.colorScheme.onSurface.withValues(alpha: 0.45), fontSize: 13));
+    return Text(
+      title,
+      style: theme.textTheme.titleSmall?.copyWith(
+        fontWeight: FontWeight.w600,
+        color: theme.colorScheme.onSurface.withValues(alpha: 0.45),
+        fontSize: 13,
+      ),
+    );
   }
 
   Widget _buildBreedResult(ThemeData theme, CatBreed breed) {
@@ -264,56 +353,103 @@ class _SearchScreenState extends State<SearchScreen> {
       child: InkWell(
         onTap: () {
           _saveRecent(_query);
-          Navigator.push(context, PageRouteBuilder(
-            pageBuilder: (_, _, _) => BreedDetailScreen(breed: breed),
-            transitionsBuilder: (_, animation, _, child) => FadeTransition(opacity: animation, child: child),
-            transitionDuration: const Duration(milliseconds: 250),
-          ));
+          Navigator.push(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (_, _, _) => BreedDetailScreen(breed: breed),
+              transitionsBuilder: (_, animation, _, child) =>
+                  FadeTransition(opacity: animation, child: child),
+              transitionDuration: const Duration(milliseconds: 250),
+            ),
+          );
         },
-        child: Container(
-          padding: const EdgeInsets.all(14),
+        child: Ink(
           decoration: BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest]),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                theme.colorScheme.surface,
+                theme.colorScheme.surfaceContainerHighest,
+              ],
+            ),
           ),
-          child: Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: SizedBox(
-                  width: 48, height: 48,
-                  child: imagePath != null
-                      ? Image.asset(
-                          imagePath,
-                          fit: BoxFit.cover,
-                    alignment: Alignment(0, -0.15),
-                          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                            if (wasSynchronouslyLoaded) return child;
-                            return AnimatedOpacity(
-                              opacity: frame == null ? 0 : 1,
-                              duration: const Duration(milliseconds: 250),
-                              curve: Curves.easeOut,
-                              child: child,
-                            );
-                          },
-                          errorBuilder: (_, _, _) => _buildBreedIcon(theme),
-                        )
-                      : _buildBreedIcon(theme),
+          child: Padding(
+            padding: const EdgeInsets.all(14),
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: SizedBox(
+                    width: 48,
+                    height: 48,
+                    child: imagePath != null
+                        ? Image.asset(
+                            imagePath,
+                            fit: BoxFit.cover,
+                            alignment: Alignment(0, -0.15),
+                            frameBuilder:
+                                (
+                                  context,
+                                  child,
+                                  frame,
+                                  wasSynchronouslyLoaded,
+                                ) {
+                                  if (wasSynchronouslyLoaded) return child;
+                                  return AnimatedOpacity(
+                                    opacity: frame == null ? 0 : 1,
+                                    duration: const Duration(milliseconds: 250),
+                                    curve: Curves.easeOut,
+                                    child: child,
+                                  );
+                                },
+                            errorBuilder: (_, _, _) => _buildBreedIcon(theme),
+                          )
+                        : _buildBreedIcon(theme),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(persianName, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
-                  const SizedBox(height: 2),
-                  Row(children: [
-                    Icon(Icons.location_on_outlined, size: 12, color: theme.colorScheme.primary.withValues(alpha: 0.6)),
-                    const SizedBox(width: 2),
-                    Text(breed.name, style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.5))),
-                  ]),
-                ]),
-              ),
-              Icon(Icons.chevron_left_rounded, size: 20, color: theme.colorScheme.onSurface.withValues(alpha: 0.25)),
-            ],
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        persianName,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_on_outlined,
+                            size: 12,
+                            color: theme.colorScheme.primary.withValues(
+                              alpha: 0.6,
+                            ),
+                          ),
+                          const SizedBox(width: 2),
+                          Text(
+                            breed.name,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.onSurface.withValues(
+                                alpha: 0.5,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  Icons.chevron_left_rounded,
+                  size: 20,
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.25),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -322,8 +458,21 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _buildBreedIcon(ThemeData theme) {
     return Container(
-      decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [theme.colorScheme.primaryContainer, theme.colorScheme.secondaryContainer])),
-      child: Icon(Icons.pets_rounded, size: 24, color: theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.4)),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            theme.colorScheme.primaryContainer,
+            theme.colorScheme.secondaryContainer,
+          ],
+        ),
+      ),
+      child: Icon(
+        Icons.pets_rounded,
+        size: 24,
+        color: theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.4),
+      ),
     );
   }
 
@@ -338,40 +487,87 @@ class _SearchScreenState extends State<SearchScreen> {
       child: InkWell(
         onTap: () {
           _saveRecent(_query);
-          Navigator.push(context, PageRouteBuilder(
-            pageBuilder: (_, _, _) => ArticleDetailScreen(
-              article: Article(
-                title: article['title'] ?? '',
-                summary: article['summary'] ?? '',
-                readingTime: article['readingTime'] ?? article['category'] ?? '',
-                content: article['summary'] ?? '',
-                icon: '',
+          Navigator.push(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (_, _, _) => ArticleDetailScreen(
+                article: Article(
+                  title: article['title'] ?? '',
+                  summary: article['summary'] ?? '',
+                  readingTime:
+                      article['readingTime'] ?? article['category'] ?? '',
+                  content: article['summary'] ?? '',
+                  icon: '',
+                ),
               ),
+              transitionsBuilder: (_, animation, _, child) =>
+                  FadeTransition(opacity: animation, child: child),
+              transitionDuration: const Duration(milliseconds: 250),
             ),
-            transitionsBuilder: (_, animation, _, child) => FadeTransition(opacity: animation, child: child),
-            transitionDuration: const Duration(milliseconds: 250),
-          ));
+          );
         },
-        child: Container(
-          padding: const EdgeInsets.all(14),
+        child: Ink(
           decoration: BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest]),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                theme.colorScheme.surface,
+                theme.colorScheme.surfaceContainerHighest,
+              ],
+            ),
           ),
-          child: Row(children: [
-            Expanded(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(article['title'] ?? '', style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis),
-                const SizedBox(height: 4),
-                Text(article['summary'] ?? '', style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.5)), maxLines: 2, overflow: TextOverflow.ellipsis),
-              ]),
+          child: Padding(
+            padding: const EdgeInsets.all(14),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        article['title'] ?? '',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        article['summary'] ?? '',
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurface.withValues(
+                            alpha: 0.5,
+                          ),
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 3,
+                  ),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    article['category'] ?? '',
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: theme.colorScheme.onPrimaryContainer,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(width: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-              decoration: BoxDecoration(color: theme.colorScheme.primaryContainer, borderRadius: BorderRadius.circular(6)),
-              child: Text(article['category'] ?? '', style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onPrimaryContainer, fontWeight: FontWeight.w600)),
-            ),
-          ]),
+          ),
         ),
       ),
     );

@@ -23,10 +23,13 @@ class AboutScreen extends StatelessWidget {
                     width: 44,
                     height: 44,
                     decoration: BoxDecoration(
-                      color: theme.colorScheme.primaryContainer.withValues(alpha: 0.5),
+                      color: theme.colorScheme.primaryContainer.withValues(
+                        alpha: 0.5,
+                      ),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: IconButton(
+                      tooltip: 'بازگشت',
                       onPressed: () => Navigator.pop(context),
                       icon: Icon(
                         Icons.arrow_back_rounded,
@@ -95,8 +98,10 @@ class AboutScreen extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.primaryContainer.withValues(alpha: 0.25),
-                  borderRadius: BorderRadius.circular(24),
+                  color: theme.colorScheme.primaryContainer.withValues(
+                    alpha: 0.25,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
                   children: [
@@ -106,12 +111,14 @@ class AboutScreen extends StatelessWidget {
                       color: theme.colorScheme.primary,
                     ),
                     const SizedBox(height: 14),
-                Text(
-                  'ما به شما کمک می\u200Cکنیم تا بهترین همراه برای زندگی خود را انتخاب کنید و از او به بهترین شکل مراقبت کنید.',
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
+                    Text(
+                      'ما به شما کمک می\u200Cکنیم تا بهترین همراه برای زندگی خود را انتخاب کنید و از او به بهترین شکل مراقبت کنید.',
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodyLarge?.copyWith(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                        color: theme.colorScheme.onSurface.withValues(
+                          alpha: 0.7,
+                        ),
                         height: 1.7,
                       ),
                       textAlign: TextAlign.center,
@@ -162,7 +169,9 @@ class AboutScreen extends StatelessWidget {
           shadowColor: Colors.black.withValues(alpha: 0.04),
           surfaceTintColor: Colors.transparent,
           color: Colors.transparent,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
           clipBehavior: Clip.antiAlias,
           child: Container(
             decoration: BoxDecoration(
@@ -193,7 +202,9 @@ class AboutScreen extends StatelessWidget {
       ),
       leading: CircleAvatar(
         radius: 18,
-        backgroundColor: theme.colorScheme.primaryContainer.withValues(alpha: 0.4),
+        backgroundColor: theme.colorScheme.primaryContainer.withValues(
+          alpha: 0.4,
+        ),
         child: Icon(
           Icons.person_rounded,
           size: 18,
@@ -231,7 +242,9 @@ class AboutScreen extends StatelessWidget {
               color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
             ),
           ),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
       ),
     );

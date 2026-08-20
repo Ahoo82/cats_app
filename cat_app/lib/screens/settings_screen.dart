@@ -48,10 +48,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     width: 44,
                     height: 44,
                     decoration: BoxDecoration(
-                      color: theme.colorScheme.primaryContainer.withValues(alpha: 0.5),
+                      color: theme.colorScheme.primaryContainer.withValues(
+                        alpha: 0.5,
+                      ),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: IconButton(
+                      tooltip: 'بازگشت',
                       onPressed: () => Navigator.pop(context),
                       icon: Icon(
                         Icons.arrow_back_rounded,
@@ -81,25 +84,58 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 14),
               _buildAboutTile(theme),
               const SizedBox(height: 2),
-              _buildInfoTile(theme, Icons.info_outline_rounded, 'نسخه', BrandConfig.version),
+              _buildInfoTile(
+                theme,
+                Icons.info_outline_rounded,
+                'نسخه',
+                BrandConfig.version,
+              ),
               const SizedBox(height: 28),
               _buildSectionTitle(theme, 'پشتیبانی'),
               const SizedBox(height: 14),
-              _buildLinkTile(theme, Icons.mail_outline_rounded, 'تماس با ما', onTap: () {
-                Navigator.push(context, PageRouteBuilder(
-                  pageBuilder: (_, _, _) => const PlaceholderScreen(icon: Icons.mail_outline_rounded, title: 'تماس با ما', description: 'بخش ارتباط با تیم پشتیبانی به زودی راه\u200Cاندازی می\u200Cشود.'),
-                  transitionsBuilder: (_, animation, _, child) => FadeTransition(opacity: animation, child: child),
-                  transitionDuration: const Duration(milliseconds: 250),
-                ));
-              }),
+              _buildLinkTile(
+                theme,
+                Icons.mail_outline_rounded,
+                'تماس با ما',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (_, _, _) => const PlaceholderScreen(
+                        icon: Icons.mail_outline_rounded,
+                        title: 'تماس با ما',
+                        description:
+                            'بخش ارتباط با تیم پشتیبانی به زودی راه\u200Cاندازی می\u200Cشود.',
+                      ),
+                      transitionsBuilder: (_, animation, _, child) =>
+                          FadeTransition(opacity: animation, child: child),
+                      transitionDuration: const Duration(milliseconds: 250),
+                    ),
+                  );
+                },
+              ),
               const SizedBox(height: 2),
-              _buildLinkTile(theme, Icons.shield_outlined, 'حریم خصوصی', onTap: () {
-                Navigator.push(context, PageRouteBuilder(
-                  pageBuilder: (_, _, _) => const PlaceholderScreen(icon: Icons.shield_outlined, title: 'حریم خصوصی', description: 'سیاست\u200Cنامه حریم خصوصی و شرایط استفاده از اپلیکیشن به زودی منتشر می\u200Cشود.'),
-                  transitionsBuilder: (_, animation, _, child) => FadeTransition(opacity: animation, child: child),
-                  transitionDuration: const Duration(milliseconds: 250),
-                ));
-              }),
+              _buildLinkTile(
+                theme,
+                Icons.shield_outlined,
+                'حریم خصوصی',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (_, _, _) => const PlaceholderScreen(
+                        icon: Icons.shield_outlined,
+                        title: 'حریم خصوصی',
+                        description:
+                            'سیاست\u200Cنامه حریم خصوصی و شرایط استفاده از اپلیکیشن به زودی منتشر می\u200Cشود.',
+                      ),
+                      transitionsBuilder: (_, animation, _, child) =>
+                          FadeTransition(opacity: animation, child: child),
+                      transitionDuration: const Duration(milliseconds: 250),
+                    ),
+                  );
+                },
+              ),
               const SizedBox(height: 40),
             ],
           ),
@@ -134,15 +170,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest],
+            colors: [
+              theme.colorScheme.surface,
+              theme.colorScheme.surfaceContainerHighest,
+            ],
           ),
         ),
         child: SwitchListTile(
           value: isDark,
           onChanged: (value) {
-            _settings.setThemeMode(
-              value ? ThemeMode.dark : ThemeMode.light,
-            );
+            _settings.setThemeMode(value ? ThemeMode.dark : ThemeMode.light);
           },
           title: Text('حالت تاریک', style: theme.textTheme.bodyLarge),
           subtitle: Text(
@@ -163,10 +200,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: Icon(
               isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
               size: 20,
-              color: isDark ? theme.colorScheme.primary : theme.colorScheme.onSurface.withValues(alpha: 0.4),
+              color: isDark
+                  ? theme.colorScheme.primary
+                  : theme.colorScheme.onSurface.withValues(alpha: 0.4),
             ),
           ),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
       ),
     );
@@ -180,12 +221,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
       color: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       clipBehavior: Clip.antiAlias,
-      child: Container(
+      child: Ink(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest],
+            colors: [
+              theme.colorScheme.surface,
+              theme.colorScheme.surfaceContainerHighest,
+            ],
           ),
         ),
         child: ListTile(
@@ -215,7 +259,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             size: 20,
             color: theme.colorScheme.onSurface.withValues(alpha: 0.3),
           ),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
       ),
     );
@@ -229,12 +275,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
       color: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       clipBehavior: Clip.antiAlias,
-      child: Container(
+      child: Ink(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest],
+            colors: [
+              theme.colorScheme.surface,
+              theme.colorScheme.surfaceContainerHighest,
+            ],
           ),
         ),
         child: ListTile(
@@ -275,13 +324,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
             size: 20,
             color: theme.colorScheme.onSurface.withValues(alpha: 0.3),
           ),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildInfoTile(ThemeData theme, IconData icon, String title, String value) {
+  Widget _buildInfoTile(
+    ThemeData theme,
+    IconData icon,
+    String title,
+    String value,
+  ) {
     return Card(
       elevation: 0,
       shadowColor: Colors.black.withValues(alpha: 0.04),
@@ -294,7 +350,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest],
+            colors: [
+              theme.colorScheme.surface,
+              theme.colorScheme.surfaceContainerHighest,
+            ],
           ),
         ),
         child: ListTile(
@@ -318,13 +377,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
               color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
             ),
           ),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildLinkTile(ThemeData theme, IconData icon, String title, {VoidCallback? onTap}) {
+  Widget _buildLinkTile(
+    ThemeData theme,
+    IconData icon,
+    String title, {
+    VoidCallback? onTap,
+  }) {
     return Card(
       elevation: 0,
       shadowColor: Colors.black.withValues(alpha: 0.04),
@@ -332,12 +398,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
       color: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       clipBehavior: Clip.antiAlias,
-      child: Container(
+      child: Ink(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [theme.colorScheme.surface, theme.colorScheme.surfaceContainerHighest],
+            colors: [
+              theme.colorScheme.surface,
+              theme.colorScheme.surfaceContainerHighest,
+            ],
           ),
         ),
         child: ListTile(
@@ -361,7 +430,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             size: 20,
             color: theme.colorScheme.onSurface.withValues(alpha: 0.3),
           ),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
       ),
     );
