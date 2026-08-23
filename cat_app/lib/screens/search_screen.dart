@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/breed_repository.dart';
+import '../data/article_repository.dart';
 import '../models/cat_breed.dart';
 import '../models/article.dart';
 import 'breed_detail_screen.dart';
@@ -487,18 +488,21 @@ class _SearchScreenState extends State<SearchScreen> {
       child: InkWell(
         onTap: () {
           _saveRecent(_query);
+          final fullArticle = ArticleRepository.byTitle(article['title'] ?? '');
           Navigator.push(
             context,
             PageRouteBuilder(
               pageBuilder: (_, _, _) => ArticleDetailScreen(
-                article: Article(
-                  title: article['title'] ?? '',
-                  summary: article['summary'] ?? '',
-                  readingTime:
-                      article['readingTime'] ?? article['category'] ?? '',
-                  content: article['summary'] ?? '',
-                  icon: '',
-                ),
+                article:
+                    fullArticle ??
+                    Article(
+                      title: article['title'] ?? '',
+                      summary: article['summary'] ?? '',
+                      readingTime:
+                          article['readingTime'] ?? article['category'] ?? '',
+                      content: article['summary'] ?? '',
+                      icon: '',
+                    ),
               ),
               transitionsBuilder: (_, animation, _, child) =>
                   FadeTransition(opacity: animation, child: child),
