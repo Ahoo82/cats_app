@@ -1,5 +1,7 @@
 name: Android Build
 
+# GitHub Actions workflow registration refresh
+
 on:
   workflow_dispatch:
 
