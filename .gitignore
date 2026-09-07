@@ -1,0 +1,4 @@
+# Local/unrelated artifacts — not part of the app source or release
+.claude/
+cat images/
+cat_app/temp_logs.txt
