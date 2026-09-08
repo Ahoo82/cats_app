@@ -534,7 +534,7 @@ class _CategoryCard extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 12, 16),
+            padding: const EdgeInsetsDirectional.fromSTEB(14, 16, 10, 16),
             child: Row(
               children: [
                 Container(
@@ -554,7 +554,7 @@ class _CategoryCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 16),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -565,7 +565,11 @@ class _CategoryCard extends StatelessWidget {
                         title,
                         style: theme.textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w700,
+                          fontSize: 13,
+                          height: 1.2,
                         ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 4),
                       Text(
@@ -576,13 +580,13 @@ class _CategoryCard extends StatelessWidget {
                           ),
                           height: 1.3,
                         ),
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(width: 4),
+                const SizedBox(width: 2),
                 Icon(
                   Icons.chevron_left_rounded,
                   size: 20,
@@ -1246,94 +1250,95 @@ class _FloatingNavBarState extends State<_FloatingNavBar> {
           ),
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: List.generate(_items.length, (index) {
               final isSelected = _selectedIndex == index;
-              return _NavItem(
-                key: ValueKey(index),
-                icon: _items[index]['icon'] as IconData,
-                label: _items[index]['label'] as String,
-                isSelected: isSelected,
-                theme: theme,
-                onTap: () {
-                  setState(() => _selectedIndex = index);
-                  if (index == 1) {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (_, _, _) => const BreedsScreen(),
-                        transitionsBuilder: (_, animation, _, child) {
-                          return FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          );
-                        },
-                        transitionDuration: const Duration(milliseconds: 250),
-                      ),
-                    );
-                  } else if (index == 3) {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (_, _, _) => const PlaceholderScreen(
-                          icon: Icons.lightbulb_rounded,
-                          title: 'دانستنی\u200Cها',
-                          description:
-                              'حقایق جالب، نکات آموزشی و اطلاعات مفید درباره گربه\u200Cها به زودی در این بخش قرار می\u200Cگیرد.',
+              return Expanded(
+                child: _NavItem(
+                  key: ValueKey(index),
+                  icon: _items[index]['icon'] as IconData,
+                  label: _items[index]['label'] as String,
+                  isSelected: isSelected,
+                  theme: theme,
+                  onTap: () {
+                    setState(() => _selectedIndex = index);
+                    if (index == 1) {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (_, _, _) => const BreedsScreen(),
+                          transitionsBuilder: (_, animation, _, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 250),
                         ),
-                        transitionsBuilder: (_, animation, _, child) {
-                          return FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          );
-                        },
-                        transitionDuration: const Duration(milliseconds: 250),
-                      ),
-                    );
-                  } else if (index == 2) {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (_, _, _) => const SearchScreen(),
-                        transitionsBuilder: (_, animation, _, child) {
-                          return FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          );
-                        },
-                        transitionDuration: const Duration(milliseconds: 250),
-                      ),
-                    );
-                  } else if (index == 4) {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (_, _, _) => const FavoritesScreen(),
-                        transitionsBuilder: (_, animation, _, child) {
-                          return FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          );
-                        },
-                        transitionDuration: const Duration(milliseconds: 250),
-                      ),
-                    );
-                  } else if (index == 5) {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (_, _, _) => const SettingsScreen(),
-                        transitionsBuilder: (_, animation, _, child) {
-                          return FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          );
-                        },
-                        transitionDuration: const Duration(milliseconds: 250),
-                      ),
-                    );
-                  }
-                },
+                      );
+                    } else if (index == 3) {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (_, _, _) => const PlaceholderScreen(
+                            icon: Icons.lightbulb_rounded,
+                            title: 'دانستنی\u200Cها',
+                            description:
+                                'حقایق جالب، نکات آموزشی و اطلاعات مفید درباره گربه\u200Cها به زودی در این بخش قرار می\u200Cگیرد.',
+                          ),
+                          transitionsBuilder: (_, animation, _, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 250),
+                        ),
+                      );
+                    } else if (index == 2) {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (_, _, _) => const SearchScreen(),
+                          transitionsBuilder: (_, animation, _, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 250),
+                        ),
+                      );
+                    } else if (index == 4) {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (_, _, _) => const FavoritesScreen(),
+                          transitionsBuilder: (_, animation, _, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 250),
+                        ),
+                      );
+                    } else if (index == 5) {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (_, _, _) => const SettingsScreen(),
+                          transitionsBuilder: (_, animation, _, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 250),
+                        ),
+                      );
+                    }
+                  },
+                ),
               );
             }),
           ),
@@ -1378,7 +1383,7 @@ class _NavItem extends StatelessWidget {
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 220),
             curve: Curves.easeOut,
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
             decoration: BoxDecoration(
               color: isSelected
                   ? theme.colorScheme.primaryContainer.withValues(alpha: 0.5)
@@ -1390,12 +1395,18 @@ class _NavItem extends StatelessWidget {
               children: [
                 Icon(icon, size: 22, color: color),
                 const SizedBox(height: 4),
-                Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                    color: color,
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: isSelected
+                          ? FontWeight.w700
+                          : FontWeight.w500,
+                      color: color,
+                    ),
                   ),
                 ),
               ],
