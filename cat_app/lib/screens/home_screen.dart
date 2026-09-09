@@ -557,15 +557,7 @@ class _CategoryCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
-                Text(
-                  title,
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    height: 1.2,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                _CategoryTitle(title: title, theme: theme),
                 const SizedBox(height: 4),
                 Text(
                   description,
@@ -581,6 +573,42 @@ class _CategoryCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Category-card title with a defensive fit: multi-word titles (e.g.
+/// "واکسن و پزشکی") wrap naturally at the whitespace boundary as normal.
+/// A single unbreakable word that is still slightly too wide for the card
+/// is shrunk to fit via [FittedBox] instead of being split
+/// character-by-character — this only engages when actually needed, it is
+/// not the normal rendering path.
+class _CategoryTitle extends StatelessWidget {
+  final String title;
+  final ThemeData theme;
+
+  const _CategoryTitle({required this.title, required this.theme});
+
+  @override
+  Widget build(BuildContext context) {
+    final style = theme.textTheme.titleSmall?.copyWith(
+      fontWeight: FontWeight.w700,
+      height: 1.2,
+    );
+
+    if (title.contains(' ')) {
+      return Text(
+        title,
+        style: style,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      );
+    }
+
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: AlignmentDirectional.centerStart,
+      child: Text(title, style: style, maxLines: 1, softWrap: false),
     );
   }
 }
